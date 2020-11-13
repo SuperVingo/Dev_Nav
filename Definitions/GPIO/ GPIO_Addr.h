@@ -1,4 +1,4 @@
-#ifndef __GPIO_GPIO_ADDRDR_H__     
+#ifndef __GPIO_GPIO_ADDR_H__     
 #define __GPIO_GPIO_ADDR_H__       
 
 #define GPIO_BASE_ADDR_1 0x11400000     
@@ -197,188 +197,188 @@
 //////////////////////////////////////////////////////
 //                  Address Part                    //
 //////////////////////////////////////////////////////
-#define GPIO_GPA0CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPA0CON_Offset
-#define GPIO_GPA0DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPA0DAT_Offset
-#define GPIO_GPA0PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPA0PUD_Offset
-#define GPIO_GPA0DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPA0DRV_Offset
-#define GPIO_GPA0CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPA0CONPDN_Offset
-#define GPIO_GPA0PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPA0PUDPDN_Offset
+#define GPIO_GPA0CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPA0CON_Offset)
+#define GPIO_GPA0DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPA0DAT_Offset)
+#define GPIO_GPA0PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPA0PUD_Offset)
+#define GPIO_GPA0DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPA0DRV_Offset)
+#define GPIO_GPA0CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPA0CONPDN_Offset)
+#define GPIO_GPA0PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPA0PUDPDN_Offset)
 
-#define GPIO_GPA1CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPA1CON_Offset
-#define GPIO_GPA1DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPA1DAT_Offset
-#define GPIO_GPA1PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPA1PUD_Offset
-#define GPIO_GPA1DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPA1DRV_Offset
-#define GPIO_GPA1CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPA1CONPDN_Offset
-#define GPIO_GPA1PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPA1PUDPDN_Offset
+#define GPIO_GPA1CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPA1CON_Offset)
+#define GPIO_GPA1DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPA1DAT_Offset)
+#define GPIO_GPA1PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPA1PUD_Offset)
+#define GPIO_GPA1DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPA1DRV_Offset)
+#define GPIO_GPA1CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPA1CONPDN_Offset)
+#define GPIO_GPA1PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPA1PUDPDN_Offset)
 
-#define GPIO_GPBCON_ADDR                        GPIO_BASE_ADDR_1 + GPIO_GPBCON_Offset
-#define GPIO_GPBDAT_ADDR                        GPIO_BASE_ADDR_1 + GPIO_GPBDAT_Offset
-#define GPIO_GPBPUD_ADDR                        GPIO_BASE_ADDR_1 + GPIO_GPBPUD_Offset
-#define GPIO_GPBDRV_ADDR                        GPIO_BASE_ADDR_1 + GPIO_GPBDRV_Offset
-#define GPIO_GPBCONPDN_ADDR                     GPIO_BASE_ADDR_1 + GPIO_GPBCONPDN_Offset
-#define GPIO_GPBPUDPDN_ADDR                     GPIO_BASE_ADDR_1 + GPIO_GPBPUDPDN_Offset
+#define GPIO_GPBCON_ADDR                        (GPIO_BASE_ADDR_1 + GPIO_GPBCON_Offset)
+#define GPIO_GPBDAT_ADDR                        (GPIO_BASE_ADDR_1 + GPIO_GPBDAT_Offset)
+#define GPIO_GPBPUD_ADDR                        (GPIO_BASE_ADDR_1 + GPIO_GPBPUD_Offset)
+#define GPIO_GPBDRV_ADDR                        (GPIO_BASE_ADDR_1 + GPIO_GPBDRV_Offset)
+#define GPIO_GPBCONPDN_ADDR                     (GPIO_BASE_ADDR_1 + GPIO_GPBCONPDN_Offset)
+#define GPIO_GPBPUDPDN_ADDR                     (GPIO_BASE_ADDR_1 + GPIO_GPBPUDPDN_Offset)
 
-#define GPIO_GPC0CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPC0CON_Offset   
-#define GPIO_GPC0DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPC0DAT_Offset   
-#define GPIO_GPC0PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPC0PUD_Offset   
-#define GPIO_GPC0DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPC0DRV_Offset   
-#define GPIO_GPC0CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPC0CONPDN_Offset
-#define GPIO_GPC0PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPC0PUDPDN_Offset
+#define GPIO_GPC0CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPC0CON_Offset)
+#define GPIO_GPC0DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPC0DAT_Offset)
+#define GPIO_GPC0PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPC0PUD_Offset)
+#define GPIO_GPC0DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPC0DRV_Offset)
+#define GPIO_GPC0CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPC0CONPDN_Offset)
+#define GPIO_GPC0PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPC0PUDPDN_Offset)
 
-#define GPIO_GPC1CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPC1CON_Offset                
-#define GPIO_GPC1DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPC1DAT_Offset                
-#define GPIO_GPC1PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPC1PUD_Offset                
-#define GPIO_GPC1DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPC1DRV_Offset                
-#define GPIO_GPC1CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPC1CONPDN_Offset             
-#define GPIO_GPC1PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPC1PUDPDN_Offset             
+#define GPIO_GPC1CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPC1CON_Offset)     
+#define GPIO_GPC1DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPC1DAT_Offset)     
+#define GPIO_GPC1PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPC1PUD_Offset)     
+#define GPIO_GPC1DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPC1DRV_Offset)     
+#define GPIO_GPC1CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPC1CONPDN_Offset)     
+#define GPIO_GPC1PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPC1PUDPDN_Offset)     
 
-#define GPIO_GPD0CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPD0CON_Offset                
-#define GPIO_GPD0DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPD0DAT_Offset                
-#define GPIO_GPD0PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPD0PUD_Offset                
-#define GPIO_GPD0DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPD0DRV_Offset                
-#define GPIO_GPD0CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPD0CONPDN_Offset             
-#define GPIO_GPD0PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPD0PUDPDN_Offset             
+#define GPIO_GPD0CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPD0CON_Offset)     
+#define GPIO_GPD0DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPD0DAT_Offset)     
+#define GPIO_GPD0PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPD0PUD_Offset)     
+#define GPIO_GPD0DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPD0DRV_Offset)     
+#define GPIO_GPD0CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPD0CONPDN_Offset)     
+#define GPIO_GPD0PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPD0PUDPDN_Offset)     
 
-#define GPIO_GPD1CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPD1CON_Offset                
-#define GPIO_GPD1DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPD1DAT_Offset                
-#define GPIO_GPD1PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPD1PUD_Offset                
-#define GPIO_GPD1DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPD1DRV_Offset                
-#define GPIO_GPD1CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPD1CONPDN_Offset             
-#define GPIO_GPD1PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPD1PUDPDN_Offset             
+#define GPIO_GPD1CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPD1CON_Offset)     
+#define GPIO_GPD1DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPD1DAT_Offset)     
+#define GPIO_GPD1PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPD1PUD_Offset)     
+#define GPIO_GPD1DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPD1DRV_Offset)     
+#define GPIO_GPD1CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPD1CONPDN_Offset)     
+#define GPIO_GPD1PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPD1PUDPDN_Offset)     
 
-#define GPIO_GPF0CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF0CON_Offset                
-#define GPIO_GPF0DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF0DAT_Offset                
-#define GPIO_GPF0PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF0PUD_Offset                
-#define GPIO_GPF0DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF0DRV_Offset                
-#define GPIO_GPF0CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPF0CONPDN_Offset             
-#define GPIO_GPF0PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPF0PUDPDN_Offset             
+#define GPIO_GPF0CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF0CON_Offset)     
+#define GPIO_GPF0DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF0DAT_Offset)     
+#define GPIO_GPF0PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF0PUD_Offset)     
+#define GPIO_GPF0DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF0DRV_Offset)     
+#define GPIO_GPF0CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPF0CONPDN_Offset)     
+#define GPIO_GPF0PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPF0PUDPDN_Offset)     
 
-#define GPIO_GPF1CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF1CON_Offset                
-#define GPIO_GPF1DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF1DAT_Offset                
-#define GPIO_GPF1PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF1PUD_Offset                
-#define GPIO_GPF1DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF1DRV_Offset                
-#define GPIO_GPF1CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPF1CONPDN_Offset             
-#define GPIO_GPF1PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPF1PUDPDN_Offset             
+#define GPIO_GPF1CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF1CON_Offset)     
+#define GPIO_GPF1DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF1DAT_Offset)     
+#define GPIO_GPF1PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF1PUD_Offset)     
+#define GPIO_GPF1DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF1DRV_Offset)     
+#define GPIO_GPF1CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPF1CONPDN_Offset)     
+#define GPIO_GPF1PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPF1PUDPDN_Offset)     
 
-#define GPIO_GPF2CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF2CON_Offset                
-#define GPIO_GPF2DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF2DAT_Offset                
-#define GPIO_GPF2PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF2PUD_Offset                
-#define GPIO_GPF2DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF2DRV_Offset                
-#define GPIO_GPF2CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPF2CONPDN_Offset             
-#define GPIO_GPF2PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPF2PUDPDN_Offset             
+#define GPIO_GPF2CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF2CON_Offset)     
+#define GPIO_GPF2DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF2DAT_Offset)     
+#define GPIO_GPF2PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF2PUD_Offset)     
+#define GPIO_GPF2DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF2DRV_Offset)     
+#define GPIO_GPF2CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPF2CONPDN_Offset)     
+#define GPIO_GPF2PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPF2PUDPDN_Offset)     
 
-#define GPIO_GPF3CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF3CON_Offset                
-#define GPIO_GPF3DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF3DAT_Offset                
-#define GPIO_GPF3PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF3PUD_Offset                
-#define GPIO_GPF3DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPF3DRV_Offset                
-#define GPIO_GPF3CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPF3CONPDN_Offset             
-#define GPIO_GPF3PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPF3PUDPDN_Offset             
+#define GPIO_GPF3CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF3CON_Offset)     
+#define GPIO_GPF3DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF3DAT_Offset)     
+#define GPIO_GPF3PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF3PUD_Offset)     
+#define GPIO_GPF3DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPF3DRV_Offset)     
+#define GPIO_GPF3CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPF3CONPDN_Offset)     
+#define GPIO_GPF3PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPF3PUDPDN_Offset)     
 
-#define GPIO_ETC1PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_ETC1PUD_Offset                
-#define GPIO_ETC1DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_ETC1DRV_Offset                
+#define GPIO_ETC1PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_ETC1PUD_Offset)     
+#define GPIO_ETC1DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_ETC1DRV_Offset)     
 
-#define GPIO_GPJ0CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPJ0CON_Offset                
-#define GPIO_GPJ0DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPJ0DAT_Offset                
-#define GPIO_GPJ0PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPJ0PUD_Offset                
-#define GPIO_GPJ0DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPJ0DRV_Offset                
-#define GPIO_GPJ0CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPJ0CONPDN_Offset             
-#define GPIO_GPJ0PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPJ0PUDPDN_Offset             
+#define GPIO_GPJ0CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPJ0CON_Offset)     
+#define GPIO_GPJ0DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPJ0DAT_Offset)     
+#define GPIO_GPJ0PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPJ0PUD_Offset)     
+#define GPIO_GPJ0DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPJ0DRV_Offset)     
+#define GPIO_GPJ0CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPJ0CONPDN_Offset)     
+#define GPIO_GPJ0PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPJ0PUDPDN_Offset)     
 
-#define GPIO_GPJ1CON_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPJ1CON_Offset                
-#define GPIO_GPJ1DAT_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPJ1DAT_Offset                
-#define GPIO_GPJ1PUD_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPJ1PUD_Offset                
-#define GPIO_GPJ1DRV_ADDR                       GPIO_BASE_ADDR_1 + GPIO_GPJ1DRV_Offset                
-#define GPIO_GPJ1CONPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPJ1CONPDN_Offset             
-#define GPIO_GPJ1PUDPDN_ADDR                    GPIO_BASE_ADDR_1 + GPIO_GPJ1PUDPDN_Offset             
+#define GPIO_GPJ1CON_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPJ1CON_Offset)     
+#define GPIO_GPJ1DAT_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPJ1DAT_Offset)     
+#define GPIO_GPJ1PUD_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPJ1PUD_Offset)     
+#define GPIO_GPJ1DRV_ADDR                       (GPIO_BASE_ADDR_1 + GPIO_GPJ1DRV_Offset)     
+#define GPIO_GPJ1CONPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPJ1CONPDN_Offset)     
+#define GPIO_GPJ1PUDPDN_ADDR                    (GPIO_BASE_ADDR_1 + GPIO_GPJ1PUDPDN_Offset)     
 
-#define GPIO_EXT_INT1_CON_ADDR                  GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_CON_Offset           
-#define GPIO_EXT_INT2_CON_ADDR                  GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_CON_Offset           
-#define GPIO_EXT_INT3_CON_ADDR                  GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_CON_Offset           
-#define GPIO_EXT_INT4_CON_ADDR                  GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_CON_Offset           
-#define GPIO_EXT_INT5_CON_ADDR                  GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_CON_Offset           
-#define GPIO_EXT_INT6_CON_ADDR                  GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_CON_Offset           
-#define GPIO_EXT_INT7_CON_ADDR                  GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_CON_Offset           
-#define GPIO_EXT_INT13_CON_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_CON_Offset          
-#define GPIO_EXT_INT14_CON_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_CON_Offset          
-#define GPIO_EXT_INT15_CON_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_CON_Offset          
-#define GPIO_EXT_INT16_CON_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_CON_Offset          
-#define GPIO_EXT_INT21_CON_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_CON_Offset          
-#define GPIO_EXT_INT22_CON_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_CON_Offset          
+#define GPIO_EXT_INT1_CON_ADDR                  (GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_CON_Offset)     
+#define GPIO_EXT_INT2_CON_ADDR                  (GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_CON_Offset)     
+#define GPIO_EXT_INT3_CON_ADDR                  (GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_CON_Offset)     
+#define GPIO_EXT_INT4_CON_ADDR                  (GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_CON_Offset)     
+#define GPIO_EXT_INT5_CON_ADDR                  (GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_CON_Offset)     
+#define GPIO_EXT_INT6_CON_ADDR                  (GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_CON_Offset)     
+#define GPIO_EXT_INT7_CON_ADDR                  (GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_CON_Offset)     
+#define GPIO_EXT_INT13_CON_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_CON_Offset)     
+#define GPIO_EXT_INT14_CON_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_CON_Offset)     
+#define GPIO_EXT_INT15_CON_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_CON_Offset)     
+#define GPIO_EXT_INT16_CON_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_CON_Offset)     
+#define GPIO_EXT_INT21_CON_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_CON_Offset)     
+#define GPIO_EXT_INT22_CON_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_CON_Offset)     
 
-#define GPIO_EXT_INT1_FLTCON0_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_FLTCON0_Offset       
-#define GPIO_EXT_INT1_FLTCON1_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_FLTCON1_Offset       
-#define GPIO_EXT_INT2_FLTCON0_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_FLTCON0_Offset       
-#define GPIO_EXT_INT2_FLTCON1_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_FLTCON1_Offset       
-#define GPIO_EXT_INT3_FLTCON0_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_FLTCON0_Offset       
-#define GPIO_EXT_INT3_FLTCON1_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_FLTCON1_Offset       
-#define GPIO_EXT_INT4_FLTCON0_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_FLTCON0_Offset       
-#define GPIO_EXT_INT4_FLTCON1_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_FLTCON1_Offset       
-#define GPIO_EXT_INT5_FLTCON0_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_FLTCON0_Offset       
-#define GPIO_EXT_INT5_FLTCON1_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_FLTCON1_Offset       
-#define GPIO_EXT_INT6_FLTCON0_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_FLTCON0_Offset       
-#define GPIO_EXT_INT6_FLTCON1_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_FLTCON1_Offset       
-#define GPIO_EXT_INT7_FLTCON0_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_FLTCON0_Offset       
-#define GPIO_EXT_INT7_FLTCON1_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_FLTCON1_Offset       
-#define GPIO_EXT_INT13_FLTCON0_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_FLTCON0_Offset      
-#define GPIO_EXT_INT13_FLTCON1_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_FLTCON1_Offset      
-#define GPIO_EXT_INT14_FLTCON0_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_FLTCON0_Offset      
-#define GPIO_EXT_INT14_FLTCON1_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_FLTCON1_Offset      
-#define GPIO_EXT_INT15_FLTCON0_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_FLTCON0_Offset      
-#define GPIO_EXT_INT15_FLTCON1_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_FLTCON1_Offset      
-#define GPIO_EXT_INT16_FLTCON0_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_FLTCON0_Offset      
-#define GPIO_EXT_INT16_FLTCON1_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_FLTCON1_Offset      
-#define GPIO_EXT_INT21_FLTCON0_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_FLTCON0_Offset      
-#define GPIO_EXT_INT21_FLTCON1_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_FLTCON1_Offset      
-#define GPIO_EXT_INT22_FLTCON0_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_FLTCON0_Offset      
-#define GPIO_EXT_INT22_FLTCON1_ADDR             GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_FLTCON1_Offset      
+#define GPIO_EXT_INT1_FLTCON0_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_FLTCON0_Offset)     
+#define GPIO_EXT_INT1_FLTCON1_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_FLTCON1_Offset)     
+#define GPIO_EXT_INT2_FLTCON0_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_FLTCON0_Offset)     
+#define GPIO_EXT_INT2_FLTCON1_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_FLTCON1_Offset)     
+#define GPIO_EXT_INT3_FLTCON0_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_FLTCON0_Offset)     
+#define GPIO_EXT_INT3_FLTCON1_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_FLTCON1_Offset)     
+#define GPIO_EXT_INT4_FLTCON0_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_FLTCON0_Offset)     
+#define GPIO_EXT_INT4_FLTCON1_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_FLTCON1_Offset)     
+#define GPIO_EXT_INT5_FLTCON0_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_FLTCON0_Offset)     
+#define GPIO_EXT_INT5_FLTCON1_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_FLTCON1_Offset)     
+#define GPIO_EXT_INT6_FLTCON0_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_FLTCON0_Offset)     
+#define GPIO_EXT_INT6_FLTCON1_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_FLTCON1_Offset)     
+#define GPIO_EXT_INT7_FLTCON0_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_FLTCON0_Offset)     
+#define GPIO_EXT_INT7_FLTCON1_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_FLTCON1_Offset)     
+#define GPIO_EXT_INT13_FLTCON0_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_FLTCON0_Offset)     
+#define GPIO_EXT_INT13_FLTCON1_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_FLTCON1_Offset)     
+#define GPIO_EXT_INT14_FLTCON0_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_FLTCON0_Offset)     
+#define GPIO_EXT_INT14_FLTCON1_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_FLTCON1_Offset)     
+#define GPIO_EXT_INT15_FLTCON0_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_FLTCON0_Offset)     
+#define GPIO_EXT_INT15_FLTCON1_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_FLTCON1_Offset)     
+#define GPIO_EXT_INT16_FLTCON0_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_FLTCON0_Offset)     
+#define GPIO_EXT_INT16_FLTCON1_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_FLTCON1_Offset)     
+#define GPIO_EXT_INT21_FLTCON0_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_FLTCON0_Offset)     
+#define GPIO_EXT_INT21_FLTCON1_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_FLTCON1_Offset)     
+#define GPIO_EXT_INT22_FLTCON0_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_FLTCON0_Offset)     
+#define GPIO_EXT_INT22_FLTCON1_ADDR             (GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_FLTCON1_Offset)     
 
-#define GPIO_EXT_INT1_MASK_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_MASK_Offset          
-#define GPIO_EXT_INT2_MASK_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_MASK_Offset          
-#define GPIO_EXT_INT3_MASK_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_MASK_Offset          
-#define GPIO_EXT_INT4_MASK_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_MASK_Offset          
-#define GPIO_EXT_INT5_MASK_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_MASK_Offset          
-#define GPIO_EXT_INT6_MASK_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_MASK_Offset          
-#define GPIO_EXT_INT7_MASK_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_MASK_Offset          
-#define GPIO_EXT_INT13_MASK_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_MASK_Offset         
-#define GPIO_EXT_INT14_MASK_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_MASK_Offset         
-#define GPIO_EXT_INT15_MASK_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_MASK_Offset         
-#define GPIO_EXT_INT16_MASK_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_MASK_Offset         
-#define GPIO_EXT_INT21_MASK_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_MASK_Offset         
-#define GPIO_EXT_INT22_MASK_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_MASK_Offset         
+#define GPIO_EXT_INT1_MASK_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_MASK_Offset)     
+#define GPIO_EXT_INT2_MASK_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_MASK_Offset)     
+#define GPIO_EXT_INT3_MASK_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_MASK_Offset)     
+#define GPIO_EXT_INT4_MASK_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_MASK_Offset)     
+#define GPIO_EXT_INT5_MASK_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_MASK_Offset)     
+#define GPIO_EXT_INT6_MASK_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_MASK_Offset)     
+#define GPIO_EXT_INT7_MASK_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_MASK_Offset)     
+#define GPIO_EXT_INT13_MASK_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_MASK_Offset)     
+#define GPIO_EXT_INT14_MASK_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_MASK_Offset)     
+#define GPIO_EXT_INT15_MASK_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_MASK_Offset)     
+#define GPIO_EXT_INT16_MASK_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_MASK_Offset)     
+#define GPIO_EXT_INT21_MASK_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_MASK_Offset)     
+#define GPIO_EXT_INT22_MASK_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_MASK_Offset)     
 
-#define GPIO_EXT_INT1_PEND_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_PEND_Offset          
-#define GPIO_EXT_INT2_PEND_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_PEND_Offset          
-#define GPIO_EXT_INT3_PEND_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_PEND_Offset          
-#define GPIO_EXT_INT4_PEND_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_PEND_Offset          
-#define GPIO_EXT_INT5_PEND_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_PEND_Offset          
-#define GPIO_EXT_INT6_PEND_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_PEND_Offset          
-#define GPIO_EXT_INT7_PEND_ADDR                 GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_PEND_Offset          
-#define GPIO_EXT_INT13_PEND_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_PEND_Offset         
-#define GPIO_EXT_INT14_PEND_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_PEND_Offset         
-#define GPIO_EXT_INT15_PEND_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_PEND_Offset         
-#define GPIO_EXT_INT16_PEND_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_PEND_Offset         
-#define GPIO_EXT_INT21_PEND_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_PEND_Offset         
-#define GPIO_EXT_INT22_PEND_ADDR                GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_PEND_Offset         
+#define GPIO_EXT_INT1_PEND_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_PEND_Offset)     
+#define GPIO_EXT_INT2_PEND_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_PEND_Offset)     
+#define GPIO_EXT_INT3_PEND_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_PEND_Offset)     
+#define GPIO_EXT_INT4_PEND_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_PEND_Offset)     
+#define GPIO_EXT_INT5_PEND_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_PEND_Offset)     
+#define GPIO_EXT_INT6_PEND_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_PEND_Offset)     
+#define GPIO_EXT_INT7_PEND_ADDR                 (GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_PEND_Offset)     
+#define GPIO_EXT_INT13_PEND_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_PEND_Offset)     
+#define GPIO_EXT_INT14_PEND_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_PEND_Offset)     
+#define GPIO_EXT_INT15_PEND_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_PEND_Offset)     
+#define GPIO_EXT_INT16_PEND_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_PEND_Offset)     
+#define GPIO_EXT_INT21_PEND_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_PEND_Offset)     
+#define GPIO_EXT_INT22_PEND_ADDR                (GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_PEND_Offset)     
 
-#define GPIO_EXT_INT_SERVICE_XB_ADDR            GPIO_BASE_ADDR_1 + GPIO_EXT_INT_SERVICE_XB_Offset     
-#define GPIO_EXT_INT_SERVICE_PEND_XB_ADDR       GPIO_BASE_ADDR_1 + GPIO_EXT_INT_SERVICE_PEND_XB_Offset
-#define GPIO_EXT_INT_GRPFIXPRI_XB_ADDR          GPIO_BASE_ADDR_1 + GPIO_EXT_INT_GRPFIXPRI_XB_Offset   
+#define GPIO_EXT_INT_SERVICE_XB_ADDR            (GPIO_BASE_ADDR_1 + GPIO_EXT_INT_SERVICE_XB_Offset)     
+#define GPIO_EXT_INT_SERVICE_PEND_XB_ADDR       (GPIO_BASE_ADDR_1 + GPIO_EXT_INT_SERVICE_PEND_XB_Offset)
+#define GPIO_EXT_INT_GRPFIXPRI_XB_ADDR          (GPIO_BASE_ADDR_1 + GPIO_EXT_INT_GRPFIXPRI_XB_Offset)
 
-#define GPIO_EXT_INT1_FIXPRI_ADDR               GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_FIXPRI_Offset        
-#define GPIO_EXT_INT2_FIXPRI_ADDR               GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_FIXPRI_Offset        
-#define GPIO_EXT_INT3_FIXPRI_ADDR               GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_FIXPRI_Offset        
-#define GPIO_EXT_INT4_FIXPRI_ADDR               GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_FIXPRI_Offset        
-#define GPIO_EXT_INT5_FIXPRI_ADDR               GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_FIXPRI_Offset        
-#define GPIO_EXT_INT6_FIXPRI_ADDR               GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_FIXPRI_Offset        
-#define GPIO_EXT_INT7_FIXPRI_ADDR               GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_FIXPRI_Offset        
-#define GPIO_EXT_INT13_FIXPRI_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_FIXPRI_Offset       
-#define GPIO_EXT_INT14_FIXPRI_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_FIXPRI_Offset       
-#define GPIO_EXT_INT15_FIXPRI_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_FIXPRI_Offset       
-#define GPIO_EXT_INT16_FIXPRI_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_FIXPRI_Offset       
-#define GPIO_EXT_INT21_FIXPRI_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_FIXPRI_Offset       
-#define GPIO_EXT_INT22_FIXPRI_ADDR              GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_FIXPRI_Offset       
+#define GPIO_EXT_INT1_FIXPRI_ADDR               (GPIO_BASE_ADDR_1 + GPIO_EXT_INT1_FIXPRI_Offset)     
+#define GPIO_EXT_INT2_FIXPRI_ADDR               (GPIO_BASE_ADDR_1 + GPIO_EXT_INT2_FIXPRI_Offset)     
+#define GPIO_EXT_INT3_FIXPRI_ADDR               (GPIO_BASE_ADDR_1 + GPIO_EXT_INT3_FIXPRI_Offset)     
+#define GPIO_EXT_INT4_FIXPRI_ADDR               (GPIO_BASE_ADDR_1 + GPIO_EXT_INT4_FIXPRI_Offset)     
+#define GPIO_EXT_INT5_FIXPRI_ADDR               (GPIO_BASE_ADDR_1 + GPIO_EXT_INT5_FIXPRI_Offset)     
+#define GPIO_EXT_INT6_FIXPRI_ADDR               (GPIO_BASE_ADDR_1 + GPIO_EXT_INT6_FIXPRI_Offset)     
+#define GPIO_EXT_INT7_FIXPRI_ADDR               (GPIO_BASE_ADDR_1 + GPIO_EXT_INT7_FIXPRI_Offset)     
+#define GPIO_EXT_INT13_FIXPRI_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT13_FIXPRI_Offset)     
+#define GPIO_EXT_INT14_FIXPRI_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT14_FIXPRI_Offset)     
+#define GPIO_EXT_INT15_FIXPRI_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT15_FIXPRI_Offset)     
+#define GPIO_EXT_INT16_FIXPRI_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT16_FIXPRI_Offset)     
+#define GPIO_EXT_INT21_FIXPRI_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT21_FIXPRI_Offset)     
+#define GPIO_EXT_INT22_FIXPRI_ADDR              (GPIO_BASE_ADDR_1 + GPIO_EXT_INT22_FIXPRI_Offset)     
 
-#define GPIO_BASE_ADDR_1_PDNEN_ADDR             GPIO_BASE_ADDR_1 + GPIO_BASE_ADDR_1_PDNEN_Offset      
+#define GPIO_BASE_ADDR_1_PDNEN_ADDR             (GPIO_BASE_ADDR_1 + GPIO_BASE_ADDR_1_PDNEN_Offset)     
 #pragma endregion       
 
 #pragma region GPIO BASE ADDR 2     
@@ -641,257 +641,257 @@
 //////////////////////////////////////////////////////
 //                  Address Part                    //
 //////////////////////////////////////////////////////
-#define GPIO_GPK0CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK0CON_Offset                 
-#define GPIO_GPK0DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK0DAT_Offset                 
-#define GPIO_GPK0PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK0PUD_Offset                 
-#define GPIO_GPK0DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK0DRV_Offset                 
-#define GPIO_GPK0CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPK0CONPDN_Offset              
-#define GPIO_GPK0PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPK0PUDPDN_Offset              
+#define GPIO_GPK0CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK0CON_Offset)
+#define GPIO_GPK0DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK0DAT_Offset)
+#define GPIO_GPK0PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK0PUD_Offset)
+#define GPIO_GPK0DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK0DRV_Offset)
+#define GPIO_GPK0CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPK0CONPDN_Offset)
+#define GPIO_GPK0PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPK0PUDPDN_Offset)
 
-#define GPIO_GPK1CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK1CON_Offset                 
-#define GPIO_GPK1DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK1DAT_Offset                 
-#define GPIO_GPK1PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK1PUD_Offset                 
-#define GPIO_GPK1DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK1DRV_Offset                 
-#define GPIO_GPK1CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPK1CONPDN_Offset              
-#define GPIO_GPK1PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPK1PUDPDN_Offset              
+#define GPIO_GPK1CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK1CON_Offset)
+#define GPIO_GPK1DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK1DAT_Offset)
+#define GPIO_GPK1PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK1PUD_Offset)
+#define GPIO_GPK1DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK1DRV_Offset)
+#define GPIO_GPK1CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPK1CONPDN_Offset)
+#define GPIO_GPK1PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPK1PUDPDN_Offset)
 
-#define GPIO_GPK2CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK2CON_Offset                 
-#define GPIO_GPK2DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK2DAT_Offset                 
-#define GPIO_GPK2PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK2PUD_Offset                 
-#define GPIO_GPK2DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK2DRV_Offset                 
-#define GPIO_GPK2CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPK2CONPDN_Offset              
-#define GPIO_GPK2PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPK2PUDPDN_Offset              
+#define GPIO_GPK2CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK2CON_Offset)
+#define GPIO_GPK2DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK2DAT_Offset)
+#define GPIO_GPK2PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK2PUD_Offset)
+#define GPIO_GPK2DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK2DRV_Offset)
+#define GPIO_GPK2CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPK2CONPDN_Offset)
+#define GPIO_GPK2PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPK2PUDPDN_Offset)
 
-#define GPIO_GPK3CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK3CON_Offset                 
-#define GPIO_GPK3DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK3DAT_Offset                 
-#define GPIO_GPK3PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK3PUD_Offset                 
-#define GPIO_GPK3DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPK3DRV_Offset                 
-#define GPIO_GPK3CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPK3CONPDN_Offset              
-#define GPIO_GPK3PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPK3PUDPDN_Offset              
+#define GPIO_GPK3CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK3CON_Offset)
+#define GPIO_GPK3DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK3DAT_Offset)
+#define GPIO_GPK3PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK3PUD_Offset)
+#define GPIO_GPK3DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPK3DRV_Offset)
+#define GPIO_GPK3CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPK3CONPDN_Offset)
+#define GPIO_GPK3PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPK3PUDPDN_Offset)
 
-#define GPIO_GPL0CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL0CON_Offset                 
-#define GPIO_GPL0DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL0DAT_Offset                 
-#define GPIO_GPL0PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL0PUD_Offset                 
-#define GPIO_GPL0DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL0DRV_Offset                 
-#define GPIO_GPL0CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPL0CONPDN_Offset              
-#define GPIO_GPL0PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPL0PUDPDN_Offset              
+#define GPIO_GPL0CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL0CON_Offset)
+#define GPIO_GPL0DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL0DAT_Offset)
+#define GPIO_GPL0PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL0PUD_Offset)
+#define GPIO_GPL0DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL0DRV_Offset)
+#define GPIO_GPL0CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPL0CONPDN_Offset)
+#define GPIO_GPL0PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPL0PUDPDN_Offset)
 
-#define GPIO_GPL1CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL1CON_Offset                 
-#define GPIO_GPL1DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL1DAT_Offset                 
-#define GPIO_GPL1PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL1PUD_Offset                 
-#define GPIO_GPL1DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL1DRV_Offset                 
-#define GPIO_GPL1CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPL1CONPDN_Offset              
-#define GPIO_GPL1PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPL1PUDPDN_Offset              
+#define GPIO_GPL1CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL1CON_Offset)
+#define GPIO_GPL1DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL1DAT_Offset)
+#define GPIO_GPL1PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL1PUD_Offset)
+#define GPIO_GPL1DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL1DRV_Offset)
+#define GPIO_GPL1CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPL1CONPDN_Offset)
+#define GPIO_GPL1PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPL1PUDPDN_Offset)
 
-#define GPIO_GPL2CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL2CON_Offset                 
-#define GPIO_GPL2DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL2DAT_Offset                 
-#define GPIO_GPL2PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL2PUD_Offset                 
-#define GPIO_GPL2DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPL2DRV_Offset                 
-#define GPIO_GPL2CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPL2CONPDN_Offset              
-#define GPIO_GPL2PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPL2PUDPDN_Offset              
+#define GPIO_GPL2CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL2CON_Offset)
+#define GPIO_GPL2DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL2DAT_Offset)
+#define GPIO_GPL2PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL2PUD_Offset)
+#define GPIO_GPL2DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPL2DRV_Offset)
+#define GPIO_GPL2CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPL2CONPDN_Offset)
+#define GPIO_GPL2PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPL2PUDPDN_Offset)
 
-#define GPIO_GPY0CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY0CON_Offset                 
-#define GPIO_GPY0DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY0DAT_Offset                 
-#define GPIO_GPY0PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY0PUD_Offset                 
-#define GPIO_GPY0DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY0DRV_Offset                 
-#define GPIO_GPY0CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY0CONPDN_Offset              
-#define GPIO_GPY0PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY0PUDPDN_Offset              
+#define GPIO_GPY0CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY0CON_Offset)
+#define GPIO_GPY0DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY0DAT_Offset)
+#define GPIO_GPY0PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY0PUD_Offset)
+#define GPIO_GPY0DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY0DRV_Offset)
+#define GPIO_GPY0CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY0CONPDN_Offset)
+#define GPIO_GPY0PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY0PUDPDN_Offset)
 
-#define GPIO_GPY1CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY1CON_Offset                 
-#define GPIO_GPY1DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY1DAT_Offset                 
-#define GPIO_GPY1PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY1PUD_Offset                 
-#define GPIO_GPY1DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY1DRV_Offset                 
-#define GPIO_GPY1CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY1CONPDN_Offset              
-#define GPIO_GPY1PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY1PUDPDN_Offset              
+#define GPIO_GPY1CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY1CON_Offset)
+#define GPIO_GPY1DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY1DAT_Offset)
+#define GPIO_GPY1PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY1PUD_Offset)
+#define GPIO_GPY1DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY1DRV_Offset)
+#define GPIO_GPY1CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY1CONPDN_Offset)
+#define GPIO_GPY1PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY1PUDPDN_Offset)
 
-#define GPIO_GPY2CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY2CON_Offset                 
-#define GPIO_GPY2DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY2DAT_Offset                 
-#define GPIO_GPY2PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY2PUD_Offset                 
-#define GPIO_GPY2DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY2DRV_Offset                 
-#define GPIO_GPY2CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY2CONPDN_Offset              
-#define GPIO_GPY2PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY2PUDPDN_Offset              
+#define GPIO_GPY2CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY2CON_Offset)
+#define GPIO_GPY2DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY2DAT_Offset)
+#define GPIO_GPY2PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY2PUD_Offset)
+#define GPIO_GPY2DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY2DRV_Offset)
+#define GPIO_GPY2CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY2CONPDN_Offset)
+#define GPIO_GPY2PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY2PUDPDN_Offset)
 
-#define GPIO_GPY3CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY3CON_Offset                 
-#define GPIO_GPY3DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY3DAT_Offset                 
-#define GPIO_GPY3PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY3PUD_Offset                 
-#define GPIO_GPY3DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY3DRV_Offset                 
-#define GPIO_GPY3CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY3CONPDN_Offset              
-#define GPIO_GPY3PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY3PUDPDN_Offset              
+#define GPIO_GPY3CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY3CON_Offset)
+#define GPIO_GPY3DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY3DAT_Offset)
+#define GPIO_GPY3PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY3PUD_Offset)
+#define GPIO_GPY3DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY3DRV_Offset)
+#define GPIO_GPY3CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY3CONPDN_Offset)
+#define GPIO_GPY3PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY3PUDPDN_Offset)
 
-#define GPIO_GPY4CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY4CON_Offset                 
-#define GPIO_GPY4DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY4DAT_Offset                 
-#define GPIO_GPY4PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY4PUD_Offset                 
-#define GPIO_GPY4DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY4DRV_Offset                 
-#define GPIO_GPY4CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY4CONPDN_Offset              
-#define GPIO_GPY4PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY4PUDPDN_Offset              
+#define GPIO_GPY4CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY4CON_Offset)
+#define GPIO_GPY4DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY4DAT_Offset)
+#define GPIO_GPY4PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY4PUD_Offset)
+#define GPIO_GPY4DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY4DRV_Offset)
+#define GPIO_GPY4CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY4CONPDN_Offset)
+#define GPIO_GPY4PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY4PUDPDN_Offset)
 
-#define GPIO_GPY5CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY5CON_Offset                 
-#define GPIO_GPY5DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY5DAT_Offset                 
-#define GPIO_GPY5PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY5PUD_Offset                 
-#define GPIO_GPY5DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY5DRV_Offset                 
-#define GPIO_GPY5CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY5CONPDN_Offset              
-#define GPIO_GPY5PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY5PUDPDN_Offset              
+#define GPIO_GPY5CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY5CON_Offset)
+#define GPIO_GPY5DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY5DAT_Offset)
+#define GPIO_GPY5PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY5PUD_Offset)
+#define GPIO_GPY5DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY5DRV_Offset)
+#define GPIO_GPY5CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY5CONPDN_Offset)
+#define GPIO_GPY5PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY5PUDPDN_Offset)
 
-#define GPIO_GPY6CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY6CON_Offset                 
-#define GPIO_GPY6DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY6DAT_Offset                 
-#define GPIO_GPY6PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY6PUD_Offset                 
-#define GPIO_GPY6DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPY6DRV_Offset                 
-#define GPIO_GPY6CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY6CONPDN_Offset              
-#define GPIO_GPY6PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPY6PUDPDN_Offset              
+#define GPIO_GPY6CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY6CON_Offset)
+#define GPIO_GPY6DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY6DAT_Offset)
+#define GPIO_GPY6PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY6PUD_Offset)
+#define GPIO_GPY6DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPY6DRV_Offset)
+#define GPIO_GPY6CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY6CONPDN_Offset)
+#define GPIO_GPY6PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPY6PUDPDN_Offset)
 
-#define GPIO_ETC0PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_ETC0PUD_Offset                 
-#define GPIO_ETC0DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_ETC0DRV_Offset                 
-#define GPIO_ETC6PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_ETC6PUD_Offset                 
-#define GPIO_ETC6DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_ETC6DRV_Offset                 
+#define GPIO_ETC0PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_ETC0PUD_Offset)
+#define GPIO_ETC0DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_ETC0DRV_Offset)
+#define GPIO_ETC6PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_ETC6PUD_Offset)
+#define GPIO_ETC6DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_ETC6DRV_Offset)
 
-#define GPIO_GPM0CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM0CON_Offset                 
-#define GPIO_GPM0DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM0DAT_Offset                 
-#define GPIO_GPM0PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM0PUD_Offset                 
-#define GPIO_GPM0DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM0DRV_Offset                 
-#define GPIO_GPM0CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPM0CONPDN_Offset              
-#define GPIO_GPM0PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPM0PUDPDN_Offset              
+#define GPIO_GPM0CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM0CON_Offset)
+#define GPIO_GPM0DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM0DAT_Offset)
+#define GPIO_GPM0PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM0PUD_Offset)
+#define GPIO_GPM0DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM0DRV_Offset)
+#define GPIO_GPM0CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPM0CONPDN_Offset)
+#define GPIO_GPM0PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPM0PUDPDN_Offset)
 
-#define GPIO_GPM1CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM1CON_Offset                 
-#define GPIO_GPM1DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM1DAT_Offset                 
-#define GPIO_GPM1PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM1PUD_Offset                 
-#define GPIO_GPM1DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM1DRV_Offset                 
-#define GPIO_GPM1CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPM1CONPDN_Offset              
-#define GPIO_GPM1PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPM1PUDPDN_Offset              
+#define GPIO_GPM1CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM1CON_Offset)
+#define GPIO_GPM1DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM1DAT_Offset)
+#define GPIO_GPM1PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM1PUD_Offset)
+#define GPIO_GPM1DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM1DRV_Offset)
+#define GPIO_GPM1CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPM1CONPDN_Offset)
+#define GPIO_GPM1PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPM1PUDPDN_Offset)
 
-#define GPIO_GPM2CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM2CON_Offset                 
-#define GPIO_GPM2DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM2DAT_Offset                 
-#define GPIO_GPM2PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM2PUD_Offset                 
-#define GPIO_GPM2DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM2DRV_Offset                 
-#define GPIO_GPM2CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPM2CONPDN_Offset              
-#define GPIO_GPM2PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPM2PUDPDN_Offset              
+#define GPIO_GPM2CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM2CON_Offset)
+#define GPIO_GPM2DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM2DAT_Offset)
+#define GPIO_GPM2PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM2PUD_Offset)
+#define GPIO_GPM2DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM2DRV_Offset)
+#define GPIO_GPM2CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPM2CONPDN_Offset)
+#define GPIO_GPM2PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPM2PUDPDN_Offset)
 
-#define GPIO_GPM3CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM3CON_Offset                 
-#define GPIO_GPM3DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM3DAT_Offset                 
-#define GPIO_GPM3PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM3PUD_Offset                 
-#define GPIO_GPM3DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM3DRV_Offset                 
-#define GPIO_GPM3CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPM3CONPDN_Offset              
-#define GPIO_GPM3PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPM3PUDPDN_Offset              
+#define GPIO_GPM3CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM3CON_Offset)
+#define GPIO_GPM3DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM3DAT_Offset)
+#define GPIO_GPM3PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM3PUD_Offset)
+#define GPIO_GPM3DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM3DRV_Offset)
+#define GPIO_GPM3CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPM3CONPDN_Offset)
+#define GPIO_GPM3PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPM3PUDPDN_Offset)
 
-#define GPIO_GPM4CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM4CON_Offset                 
-#define GPIO_GPM4DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM4DAT_Offset                 
-#define GPIO_GPM4PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM4PUD_Offset                 
-#define GPIO_GPM4DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPM4DRV_Offset                 
-#define GPIO_GPM4CONPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPM4CONPDN_Offset              
-#define GPIO_GPM4PUDPDN_Offset                  GPIO_BASE_ADDR_2 + GPIO_GPM4PUDPDN_Offset              
+#define GPIO_GPM4CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM4CON_Offset)
+#define GPIO_GPM4DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM4DAT_Offset)
+#define GPIO_GPM4PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM4PUD_Offset)
+#define GPIO_GPM4DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPM4DRV_Offset)
+#define GPIO_GPM4CONPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPM4CONPDN_Offset)
+#define GPIO_GPM4PUDPDN_Offset                  (GPIO_BASE_ADDR_2 + GPIO_GPM4PUDPDN_Offset)
 
-#define GPIO_EXT_INT23_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT23_CON_Offset           
-#define GPIO_EXT_INT24_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT24_CON_Offset           
-#define GPIO_EXT_INT25_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT25_CON_Offset           
-#define GPIO_EXT_INT26_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT26_CON_Offset           
-#define GPIO_EXT_INT27_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT27_CON_Offset           
-#define GPIO_EXT_INT28_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT28_CON_Offset           
-#define GPIO_EXT_INT29_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT29_CON_Offset           
-#define GPIO_EXT_INT8_CON_Offset                GPIO_BASE_ADDR_2 + GPIO_EXT_INT8_CON_Offset            
-#define GPIO_EXT_INT9_CON_Offset                GPIO_BASE_ADDR_2 + GPIO_EXT_INT9_CON_Offset            
-#define GPIO_EXT_INT10_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT10_CON_Offset           
-#define GPIO_EXT_INT11_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT11_CON_Offset           
-#define GPIO_EXT_INT12_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT12_CON_Offset           
+#define GPIO_EXT_INT23_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT23_CON_Offset)
+#define GPIO_EXT_INT24_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT24_CON_Offset)
+#define GPIO_EXT_INT25_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT25_CON_Offset)
+#define GPIO_EXT_INT26_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT26_CON_Offset)
+#define GPIO_EXT_INT27_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT27_CON_Offset)
+#define GPIO_EXT_INT28_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT28_CON_Offset)
+#define GPIO_EXT_INT29_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT29_CON_Offset)
+#define GPIO_EXT_INT8_CON_Offset                (GPIO_BASE_ADDR_2 + GPIO_EXT_INT8_CON_Offset)
+#define GPIO_EXT_INT9_CON_Offset                (GPIO_BASE_ADDR_2 + GPIO_EXT_INT9_CON_Offset)
+#define GPIO_EXT_INT10_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT10_CON_Offset)
+#define GPIO_EXT_INT11_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT11_CON_Offset)
+#define GPIO_EXT_INT12_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT12_CON_Offset)
 
-#define GPIO_EXT_INT23_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT23_FLTCON0_Offset       
-#define GPIO_EXT_INT23_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT23_FLTCON1_Offset       
-#define GPIO_EXT_INT24_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT24_FLTCON0_Offset       
-#define GPIO_EXT_INT24_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT24_FLTCON1_Offset       
-#define GPIO_EXT_INT25_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT25_FLTCON0_Offset       
-#define GPIO_EXT_INT25_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT25_FLTCON1_Offset       
-#define GPIO_EXT_INT26_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT26_FLTCON0_Offset       
-#define GPIO_EXT_INT26_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT26_FLTCON1_Offset       
-#define GPIO_EXT_INT27_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT27_FLTCON0_Offset       
-#define GPIO_EXT_INT27_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT27_FLTCON1_Offset       
-#define GPIO_EXT_INT28_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT28_FLTCON0_Offset       
-#define GPIO_EXT_INT28_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT28_FLTCON1_Offset       
-#define GPIO_EXT_INT29_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT29_FLTCON0_Offset       
-#define GPIO_EXT_INT29_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT29_FLTCON1_Offset       
-#define GPIO_EXT_INT8_FLTCON0_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT8_FLTCON0_Offset        
-#define GPIO_EXT_INT8_FLTCON1_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT8_FLTCON1_Offset        
-#define GPIO_EXT_INT9_FLTCON0_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT9_FLTCON0_Offset        
-#define GPIO_EXT_INT9_FLTCON1_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT9_FLTCON1_Offset        
-#define GPIO_EXT_INT10_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT10_FLTCON0_Offset       
-#define GPIO_EXT_INT10_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT10_FLTCON1_Offset       
-#define GPIO_EXT_INT11_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT11_FLTCON0_Offset       
-#define GPIO_EXT_INT11_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT11_FLTCON1_Offset       
-#define GPIO_EXT_INT12_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT12_FLTCON0_Offset       
-#define GPIO_EXT_INT12_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT12_FLTCON1_Offset       
+#define GPIO_EXT_INT23_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT23_FLTCON0_Offset)
+#define GPIO_EXT_INT23_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT23_FLTCON1_Offset)
+#define GPIO_EXT_INT24_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT24_FLTCON0_Offset)
+#define GPIO_EXT_INT24_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT24_FLTCON1_Offset)
+#define GPIO_EXT_INT25_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT25_FLTCON0_Offset)
+#define GPIO_EXT_INT25_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT25_FLTCON1_Offset)
+#define GPIO_EXT_INT26_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT26_FLTCON0_Offset)
+#define GPIO_EXT_INT26_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT26_FLTCON1_Offset)
+#define GPIO_EXT_INT27_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT27_FLTCON0_Offset)
+#define GPIO_EXT_INT27_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT27_FLTCON1_Offset)
+#define GPIO_EXT_INT28_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT28_FLTCON0_Offset)
+#define GPIO_EXT_INT28_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT28_FLTCON1_Offset)
+#define GPIO_EXT_INT29_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT29_FLTCON0_Offset)
+#define GPIO_EXT_INT29_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT29_FLTCON1_Offset)
+#define GPIO_EXT_INT8_FLTCON0_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT8_FLTCON0_Offset)
+#define GPIO_EXT_INT8_FLTCON1_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT8_FLTCON1_Offset)
+#define GPIO_EXT_INT9_FLTCON0_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT9_FLTCON0_Offset)
+#define GPIO_EXT_INT9_FLTCON1_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT9_FLTCON1_Offset)
+#define GPIO_EXT_INT10_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT10_FLTCON0_Offset)
+#define GPIO_EXT_INT10_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT10_FLTCON1_Offset)
+#define GPIO_EXT_INT11_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT11_FLTCON0_Offset)
+#define GPIO_EXT_INT11_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT11_FLTCON1_Offset)
+#define GPIO_EXT_INT12_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT12_FLTCON0_Offset)
+#define GPIO_EXT_INT12_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT12_FLTCON1_Offset)
 
-#define GPIO_EXT_INT23_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT23_MASK_Offset          
-#define GPIO_EXT_INT24_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT24_MASK_Offset          
-#define GPIO_EXT_INT25_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT25_MASK_Offset          
-#define GPIO_EXT_INT26_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT26_MASK_Offset          
-#define GPIO_EXT_INT27_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT27_MASK_Offset          
-#define GPIO_EXT_INT28_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT28_MASK_Offset          
-#define GPIO_EXT_INT29_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT29_MASK_Offset          
-#define GPIO_EXT_INT8_MASK_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT8_MASK_Offset           
-#define GPIO_EXT_INT9_MASK_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT9_MASK_Offset           
-#define GPIO_EXT_INT10_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT10_MASK_Offset          
-#define GPIO_EXT_INT11_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT11_MASK_Offset          
-#define GPIO_EXT_INT12_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT12_MASK_Offset          
+#define GPIO_EXT_INT23_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT23_MASK_Offset)
+#define GPIO_EXT_INT24_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT24_MASK_Offset)
+#define GPIO_EXT_INT25_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT25_MASK_Offset)
+#define GPIO_EXT_INT26_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT26_MASK_Offset)
+#define GPIO_EXT_INT27_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT27_MASK_Offset)
+#define GPIO_EXT_INT28_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT28_MASK_Offset)
+#define GPIO_EXT_INT29_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT29_MASK_Offset)
+#define GPIO_EXT_INT8_MASK_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT8_MASK_Offset)
+#define GPIO_EXT_INT9_MASK_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT9_MASK_Offset)
+#define GPIO_EXT_INT10_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT10_MASK_Offset)
+#define GPIO_EXT_INT11_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT11_MASK_Offset)
+#define GPIO_EXT_INT12_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT12_MASK_Offset)
 
-#define GPIO_EXT_INT_SERVICE_XA_Offset          GPIO_BASE_ADDR_2 + GPIO_EXT_INT_SERVICE_XA_Offset      
-#define GPIO_EXT_INT_SERVICE_PEND_XA_Offset     GPIO_BASE_ADDR_2 + GPIO_EXT_INT_SERVICE_PEND_XA_Offset 
-#define GPIO_EXT_INT_GRPFIXPRI_XA_Offset        GPIO_BASE_ADDR_2 + GPIO_EXT_INT_GRPFIXPRI_XA_Offset    
+#define GPIO_EXT_INT_SERVICE_XA_Offset          (GPIO_BASE_ADDR_2 + GPIO_EXT_INT_SERVICE_XA_Offset)
+#define GPIO_EXT_INT_SERVICE_PEND_XA_Offset     (GPIO_BASE_ADDR_2 + GPIO_EXT_INT_SERVICE_PEND_XA_Offset)
+#define GPIO_EXT_INT_GRPFIXPRI_XA_Offset        (GPIO_BASE_ADDR_2 + GPIO_EXT_INT_GRPFIXPRI_XA_Offset)
 
-#define GPIO_EXT_INT23_FIXPRI_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT23_FIXPRI_Offset        
-#define GPIO_EXT_INT24_FIXPRI_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT24_FIXPRI_Offset        
-#define GPIO_EXT_INT25_FIXPRI_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT25_FIXPRI_Offset        
-#define GPIO_EXT_INT26_FIXPRI_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT26_FIXPRI_Offset        
-#define GPIO_EXT_INT27_FIXPRI_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT27_FIXPRI_Offset        
-#define GPIO_EXT_INT28_FIXPRI_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT28_FIXPRI_Offset        
-#define GPIO_EXT_INT29_FIXPRI_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT29_FIXPRI_Offset        
-#define GPIO_EXT_INT8_FIXPRI_Offset             GPIO_BASE_ADDR_2 + GPIO_EXT_INT8_FIXPRI_Offset         
-#define GPIO_EXT_INT9_FIXPRI_Offset             GPIO_BASE_ADDR_2 + GPIO_EXT_INT9_FIXPRI_Offset         
-#define GPIO_EXT_INT10_FIXPRI_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT10_FIXPRI_Offset        
-#define GPIO_EXT_INT11_FIXPRI_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT11_FIXPRI_Offset        
-#define GPIO_EXT_INT12_FIXPRI_Offset            GPIO_BASE_ADDR_2 + GPIO_EXT_INT12_FIXPRI_Offset        
+#define GPIO_EXT_INT23_FIXPRI_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT23_FIXPRI_Offset)
+#define GPIO_EXT_INT24_FIXPRI_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT24_FIXPRI_Offset)
+#define GPIO_EXT_INT25_FIXPRI_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT25_FIXPRI_Offset)
+#define GPIO_EXT_INT26_FIXPRI_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT26_FIXPRI_Offset)
+#define GPIO_EXT_INT27_FIXPRI_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT27_FIXPRI_Offset)
+#define GPIO_EXT_INT28_FIXPRI_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT28_FIXPRI_Offset)
+#define GPIO_EXT_INT29_FIXPRI_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT29_FIXPRI_Offset)
+#define GPIO_EXT_INT8_FIXPRI_Offset             (GPIO_BASE_ADDR_2 + GPIO_EXT_INT8_FIXPRI_Offset)
+#define GPIO_EXT_INT9_FIXPRI_Offset             (GPIO_BASE_ADDR_2 + GPIO_EXT_INT9_FIXPRI_Offset)
+#define GPIO_EXT_INT10_FIXPRI_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT10_FIXPRI_Offset)
+#define GPIO_EXT_INT11_FIXPRI_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT11_FIXPRI_Offset)
+#define GPIO_EXT_INT12_FIXPRI_Offset            (GPIO_BASE_ADDR_2 + GPIO_EXT_INT12_FIXPRI_Offset)
 
-#define GPIO_GPX0CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX0CON_Offset                 
-#define GPIO_GPX0DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX0DAT_Offset                 
-#define GPIO_GPX0PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX0PUD_Offset                 
-#define GPIO_GPX0DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX0DRV_Offset                 
+#define GPIO_GPX0CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX0CON_Offset)
+#define GPIO_GPX0DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX0DAT_Offset)
+#define GPIO_GPX0PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX0PUD_Offset)
+#define GPIO_GPX0DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX0DRV_Offset)
 
-#define GPIO_GPX1CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX1CON_Offset                 
-#define GPIO_GPX1DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX1DAT_Offset                 
-#define GPIO_GPX1PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX1PUD_Offset                 
-#define GPIO_GPX1DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX1DRV_Offset                 
+#define GPIO_GPX1CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX1CON_Offset)
+#define GPIO_GPX1DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX1DAT_Offset)
+#define GPIO_GPX1PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX1PUD_Offset)
+#define GPIO_GPX1DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX1DRV_Offset)
 
-#define GPIO_GPX2CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX2CON_Offset                 
-#define GPIO_GPX2DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX2DAT_Offset                 
-#define GPIO_GPX2PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX2PUD_Offset                 
-#define GPIO_GPX2DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX2DRV_Offset                 
+#define GPIO_GPX2CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX2CON_Offset)
+#define GPIO_GPX2DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX2DAT_Offset)
+#define GPIO_GPX2PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX2PUD_Offset)
+#define GPIO_GPX2DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX2DRV_Offset)
 
-#define GPIO_GPX3CON_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX3CON_Offset                 
-#define GPIO_GPX3DAT_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX3DAT_Offset                 
-#define GPIO_GPX3PUD_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX3PUD_Offset                 
-#define GPIO_GPX3DRV_Offset                     GPIO_BASE_ADDR_2 + GPIO_GPX3DRV_Offset                 
+#define GPIO_GPX3CON_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX3CON_Offset)
+#define GPIO_GPX3DAT_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX3DAT_Offset)
+#define GPIO_GPX3PUD_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX3PUD_Offset)
+#define GPIO_GPX3DRV_Offset                     (GPIO_BASE_ADDR_2 + GPIO_GPX3DRV_Offset)
 
-#define GPIO_EXT_INT40_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT40_CON_Offset           
-#define GPIO_EXT_INT41_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT41_CON_Offset           
-#define GPIO_EXT_INT42_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT42_CON_Offset           
-#define GPIO_EXT_INT43_CON_Offset               GPIO_BASE_ADDR_2 + GPIO_EXT_INT43_CON_Offset           
+#define GPIO_EXT_INT40_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT40_CON_Offset)
+#define GPIO_EXT_INT41_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT41_CON_Offset)
+#define GPIO_EXT_INT42_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT42_CON_Offset)
+#define GPIO_EXT_INT43_CON_Offset               (GPIO_BASE_ADDR_2 + GPIO_EXT_INT43_CON_Offset)
 
-#define GPIO_EXT_INT40_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT40_FLTCON0_Offset       
-#define GPIO_EXT_INT40_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT40_FLTCON1_Offset       
-#define GPIO_EXT_INT41_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT41_FLTCON0_Offset       
-#define GPIO_EXT_INT41_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT41_FLTCON1_Offset       
-#define GPIO_EXT_INT42_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT42_FLTCON0_Offset       
-#define GPIO_EXT_INT42_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT42_FLTCON1_Offset       
-#define GPIO_EXT_INT43_FLTCON0_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT43_FLTCON0_Offset       
-#define GPIO_EXT_INT43_FLTCON1_Offset           GPIO_BASE_ADDR_2 + GPIO_EXT_INT43_FLTCON1_Offset       
+#define GPIO_EXT_INT40_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT40_FLTCON0_Offset)
+#define GPIO_EXT_INT40_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT40_FLTCON1_Offset)
+#define GPIO_EXT_INT41_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT41_FLTCON0_Offset)
+#define GPIO_EXT_INT41_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT41_FLTCON1_Offset)
+#define GPIO_EXT_INT42_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT42_FLTCON0_Offset)
+#define GPIO_EXT_INT42_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT42_FLTCON1_Offset)
+#define GPIO_EXT_INT43_FLTCON0_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT43_FLTCON0_Offset)
+#define GPIO_EXT_INT43_FLTCON1_Offset           (GPIO_BASE_ADDR_2 + GPIO_EXT_INT43_FLTCON1_Offset)
 
-#define GPIO_EXT_INT40_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT40_MASK_Offset          
-#define GPIO_EXT_INT41_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT41_MASK_Offset          
-#define GPIO_EXT_INT42_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT42_MASK_Offset          
-#define GPIO_EXT_INT43_MASK_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT43_MASK_Offset          
+#define GPIO_EXT_INT40_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT40_MASK_Offset)
+#define GPIO_EXT_INT41_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT41_MASK_Offset)
+#define GPIO_EXT_INT42_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT42_MASK_Offset)
+#define GPIO_EXT_INT43_MASK_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT43_MASK_Offset)
 
-#define GPIO_EXT_INT40_PEND_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT40_PEND_Offset          
-#define GPIO_EXT_INT41_PEND_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT41_PEND_Offset          
-#define GPIO_EXT_INT42_PEND_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT42_PEND_Offset          
-#define GPIO_EXT_INT43_PEND_Offset              GPIO_BASE_ADDR_2 + GPIO_EXT_INT43_PEND_Offset          
+#define GPIO_EXT_INT40_PEND_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT40_PEND_Offset)
+#define GPIO_EXT_INT41_PEND_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT41_PEND_Offset)
+#define GPIO_EXT_INT42_PEND_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT42_PEND_Offset)
+#define GPIO_EXT_INT43_PEND_Offset              (GPIO_BASE_ADDR_2 + GPIO_EXT_INT43_PEND_Offset)
 
-#define GPIO_BASE_ADDR_PDNEN_2_Offset           GPIO_BASE_ADDR_2 + GPIO_BASE_ADDR_PDNEN_2_Offset       
+#define GPIO_BASE_ADDR_PDNEN_2_Offset           (GPIO_BASE_ADDR_2 + GPIO_BASE_ADDR_PDNEN_2_Offset)
 
 #pragma endregion       
 
@@ -927,29 +927,29 @@
 //////////////////////////////////////////////////////
 //                  Address Part                    //
 //////////////////////////////////////////////////////
-#define GPIO_GPZ0CON_ADDR                       GPIO_BASE_ADDR_3 + GPIO_GPZ0CON_Offset                
-#define GPIO_GPZ0DAT_ADDR                       GPIO_BASE_ADDR_3 + GPIO_GPZ0DAT_Offset                
-#define GPIO_GPZ0PUD_ADDR                       GPIO_BASE_ADDR_3 + GPIO_GPZ0PUD_Offset                
-#define GPIO_GPZ0DRV_ADDR                       GPIO_BASE_ADDR_3 + GPIO_GPZ0DRV_Offset                
-#define GPIO_GPZ0CONPDN_ADDR                    GPIO_BASE_ADDR_3 + GPIO_GPZ0CONPDN_Offset             
-#define GPIO_GPZ0PUDPDN_ADDR                    GPIO_BASE_ADDR_3 + GPIO_GPZ0PUDPDN_Offset             
+#define GPIO_GPZ0CON_ADDR                       (GPIO_BASE_ADDR_3 + GPIO_GPZ0CON_Offset)
+#define GPIO_GPZ0DAT_ADDR                       (GPIO_BASE_ADDR_3 + GPIO_GPZ0DAT_Offset)
+#define GPIO_GPZ0PUD_ADDR                       (GPIO_BASE_ADDR_3 + GPIO_GPZ0PUD_Offset)
+#define GPIO_GPZ0DRV_ADDR                       (GPIO_BASE_ADDR_3 + GPIO_GPZ0DRV_Offset)
+#define GPIO_GPZ0CONPDN_ADDR                    (GPIO_BASE_ADDR_3 + GPIO_GPZ0CONPDN_Offset)
+#define GPIO_GPZ0PUDPDN_ADDR                    (GPIO_BASE_ADDR_3 + GPIO_GPZ0PUDPDN_Offset)
 
-#define GPIO_EXT_INT50_CON_ADDR                 GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_CON_Offset          
+#define GPIO_EXT_INT50_CON_ADDR                 (GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_CON_Offset)
 
-#define GPIO_EXT_INT50_FLTCON0_ADDR             GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_FLTCON0_Offset      
-#define GPIO_EXT_INT50_FLTCON1_ADDR             GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_FLTCON1_Offset      
+#define GPIO_EXT_INT50_FLTCON0_ADDR             (GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_FLTCON0_Offset)
+#define GPIO_EXT_INT50_FLTCON1_ADDR             (GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_FLTCON1_Offset)
 
-#define GPIO_EXT_INT50_MASK_ADDR                GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_MASK_Offset         
+#define GPIO_EXT_INT50_MASK_ADDR                (GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_MASK_Offset)
 
-#define GPIO_EXT_INT50_PEND_ADDR                GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_PEND_Offset         
+#define GPIO_EXT_INT50_PEND_ADDR                (GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_PEND_Offset)
 
-#define GPIO_EXT_INT_SERVICE_XD_ADDR            GPIO_BASE_ADDR_3 + GPIO_EXT_INT_SERVICE_XD_Offset     
-#define GPIO_EXT_INT_SERVICE_PEND_XD_ADDR       GPIO_BASE_ADDR_3 + GPIO_EXT_INT_SERVICE_PEND_XD_Offset
-#define GPIO_EXT_INT_GRPFIXPRI_XD_ADDR          GPIO_BASE_ADDR_3 + GPIO_EXT_INT_GRPFIXPRI_XD_Offset   
+#define GPIO_EXT_INT_SERVICE_XD_ADDR            (GPIO_BASE_ADDR_3 + GPIO_EXT_INT_SERVICE_XD_Offset)
+#define GPIO_EXT_INT_SERVICE_PEND_XD_ADDR       (GPIO_BASE_ADDR_3 + GPIO_EXT_INT_SERVICE_PEND_XD_Offset)
+#define GPIO_EXT_INT_GRPFIXPRI_XD_ADDR          (GPIO_BASE_ADDR_3 + GPIO_EXT_INT_GRPFIXPRI_XD_Offset)
 
-#define GPIO_EXT_INT50_FIXPRI_ADDR              GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_FIXPRI_Offset       
+#define GPIO_EXT_INT50_FIXPRI_ADDR              (GPIO_BASE_ADDR_3 + GPIO_EXT_INT50_FIXPRI_Offset)
 
-#define GPIO_BASE_ADDR_PDNEN_3_ADDR             GPIO_BASE_ADDR_3 + GPIO_BASE_ADDR_PDNEN_3_Offset      
+#define GPIO_BASE_ADDR_PDNEN_3_ADDR             (GPIO_BASE_ADDR_3 + GPIO_BASE_ADDR_PDNEN_3_Offset)
 
 #pragma endregion
 
@@ -1043,87 +1043,87 @@
 //////////////////////////////////////////////////////
 //                  Address Part                    //
 //////////////////////////////////////////////////////
-#define GPIO_GPV0CON_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV0CON_Offset                
-#define GPIO_GPV0DAT_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV0DAT_Offset                
-#define GPIO_GPV0PUD_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV0PUD_Offset                
-#define GPIO_GPV0DRV_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV0DRV_Offset                
-#define GPIO_GPV0CONPDN_ADDR                    GPIO_BASE_ADDR_4 + GPIO_GPV0CONPDN_Offset             
-#define GPIO_GPV0PUDPDN_ADDR                    GPIO_BASE_ADDR_4 + GPIO_GPV0PUDPDN_Offset             
+#define GPIO_GPV0CON_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV0CON_Offset)
+#define GPIO_GPV0DAT_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV0DAT_Offset)
+#define GPIO_GPV0PUD_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV0PUD_Offset)
+#define GPIO_GPV0DRV_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV0DRV_Offset)
+#define GPIO_GPV0CONPDN_ADDR                    (GPIO_BASE_ADDR_4 + GPIO_GPV0CONPDN_Offset)
+#define GPIO_GPV0PUDPDN_ADDR                    (GPIO_BASE_ADDR_4 + GPIO_GPV0PUDPDN_Offset)
 
-#define GPIO_GPV1CON_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV1CON_Offset                
-#define GPIO_GPV1DAT_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV1DAT_Offset                
-#define GPIO_GPV1PUD_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV1PUD_Offset                
-#define GPIO_GPV1DRV_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV1DRV_Offset                
-#define GPIO_GPV1CONPDN_ADDR                    GPIO_BASE_ADDR_4 + GPIO_GPV1CONPDN_Offset             
-#define GPIO_GPV1PUDPDN_ADDR                    GPIO_BASE_ADDR_4 + GPIO_GPV1PUDPDN_Offset             
+#define GPIO_GPV1CON_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV1CON_Offset)
+#define GPIO_GPV1DAT_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV1DAT_Offset)
+#define GPIO_GPV1PUD_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV1PUD_Offset)
+#define GPIO_GPV1DRV_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV1DRV_Offset)
+#define GPIO_GPV1CONPDN_ADDR                    (GPIO_BASE_ADDR_4 + GPIO_GPV1CONPDN_Offset)
+#define GPIO_GPV1PUDPDN_ADDR                    (GPIO_BASE_ADDR_4 + GPIO_GPV1PUDPDN_Offset)
 
-#define GPIO_ETC7PUD_ADDR                       GPIO_BASE_ADDR_4 + GPIO_ETC7PUD_Offset                
-#define GPIO_ETC7DRV_ADDR                       GPIO_BASE_ADDR_4 + GPIO_ETC7DRV_Offset                
+#define GPIO_ETC7PUD_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_ETC7PUD_Offset)
+#define GPIO_ETC7DRV_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_ETC7DRV_Offset)
 
-#define GPIO_GPV2CON_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV2CON_Offset                
-#define GPIO_GPV2DAT_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV2DAT_Offset                
-#define GPIO_GPV2PUD_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV2PUD_Offset                
-#define GPIO_GPV2DRV_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV2DRV_Offset                
-#define GPIO_GPV2CONPDN_ADDR                    GPIO_BASE_ADDR_4 + GPIO_GPV2CONPDN_Offset             
-#define GPIO_GPV2PUDPDN_ADDR                    GPIO_BASE_ADDR_4 + GPIO_GPV2PUDPDN_Offset             
+#define GPIO_GPV2CON_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV2CON_Offset)
+#define GPIO_GPV2DAT_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV2DAT_Offset)
+#define GPIO_GPV2PUD_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV2PUD_Offset)
+#define GPIO_GPV2DRV_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV2DRV_Offset)
+#define GPIO_GPV2CONPDN_ADDR                    (GPIO_BASE_ADDR_4 + GPIO_GPV2CONPDN_Offset)
+#define GPIO_GPV2PUDPDN_ADDR                    (GPIO_BASE_ADDR_4 + GPIO_GPV2PUDPDN_Offset)
 
-#define GPIO_GPV3CON_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV3CON_Offset                
-#define GPIO_GPV3DAT_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV3DAT_Offset                
-#define GPIO_GPV3PUD_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV3PUD_Offset                
-#define GPIO_GPV3DRV_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV3DRV_Offset                
-#define GPIO_GPV3CONPDN_ADDR                    GPIO_BASE_ADDR_4 + GPIO_GPV3CONPDN_Offset             
-#define GPIO_GPV3PUDPDN_ADDR                    GPIO_BASE_ADDR_4 + GPIO_GPV3PUDPDN_Offset             
+#define GPIO_GPV3CON_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV3CON_Offset)
+#define GPIO_GPV3DAT_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV3DAT_Offset)
+#define GPIO_GPV3PUD_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV3PUD_Offset)
+#define GPIO_GPV3DRV_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV3DRV_Offset)
+#define GPIO_GPV3CONPDN_ADDR                    (GPIO_BASE_ADDR_4 + GPIO_GPV3CONPDN_Offset)
+#define GPIO_GPV3PUDPDN_ADDR                    (GPIO_BASE_ADDR_4 + GPIO_GPV3PUDPDN_Offset)
 
-#define GPIO_ETC8PUD_ADDR                       GPIO_BASE_ADDR_4 + GPIO_ETC8PUD_Offset                
-#define GPIO_ETC8DRV_ADDR                       GPIO_BASE_ADDR_4 + GPIO_ETC8DRV_Offset                
+#define GPIO_ETC8PUD_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_ETC8PUD_Offset)
+#define GPIO_ETC8DRV_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_ETC8DRV_Offset)
  
-#define GPIO_GPV4CON_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV4CON_Offset                
-#define GPIO_GPV4DAT_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV4DAT_Offset                
-#define GPIO_GPV4PUD_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV4PUD_Offset                
-#define GPIO_GPV4DRV_ADDR                       GPIO_BASE_ADDR_4 + GPIO_GPV4DRV_Offset                
-#define GPIO_GPV4CONPDN_ADDR                    GPIO_BASE_ADDR_4 + GPIO_GPV4CONPDN_Offset             
-#define GPIO_GPV4PUDPDN_ADDR                    GPIO_BASE_ADDR_4 + GPIO_GPV4PUDPDN_Offset             
+#define GPIO_GPV4CON_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV4CON_Offset)
+#define GPIO_GPV4DAT_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV4DAT_Offset)
+#define GPIO_GPV4PUD_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV4PUD_Offset)
+#define GPIO_GPV4DRV_ADDR                       (GPIO_BASE_ADDR_4 + GPIO_GPV4DRV_Offset)
+#define GPIO_GPV4CONPDN_ADDR                    (GPIO_BASE_ADDR_4 + GPIO_GPV4CONPDN_Offset)
+#define GPIO_GPV4PUDPDN_ADDR                    (GPIO_BASE_ADDR_4 + GPIO_GPV4PUDPDN_Offset)
 
-#define GPIO_EXT_INT30_CON_ADDR                 GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_CON_Offset          
-#define GPIO_EXT_INT31_CON_ADDR                 GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_CON_Offset          
-#define GPIO_EXT_INT32_CON_ADDR                 GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_CON_Offset          
-#define GPIO_EXT_INT33_CON_ADDR                 GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_CON_Offset          
-#define GPIO_EXT_INT34_CON_ADDR                 GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_CON_Offset          
+#define GPIO_EXT_INT30_CON_ADDR                 (GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_CON_Off)
+#define GPIO_EXT_INT31_CON_ADDR                 (GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_CON_Off)
+#define GPIO_EXT_INT32_CON_ADDR                 (GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_CON_Off)
+#define GPIO_EXT_INT33_CON_ADDR                 (GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_CON_Off)
+#define GPIO_EXT_INT34_CON_ADDR                 (GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_CON_Off)
 
-#define GPIO_EXT_INT30_FLTCON0_ADDR             GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_FLTCON0_Offset      
-#define GPIO_EXT_INT30_FLTCON1_ADDR             GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_FLTCON1_Offset      
-#define GPIO_EXT_INT31_FLTCON0_ADDR             GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_FLTCON0_Offset      
-#define GPIO_EXT_INT31_FLTCON1_ADDR             GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_FLTCON1_Offset      
-#define GPIO_EXT_INT32_FLTCON0_ADDR             GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_FLTCON0_Offset      
-#define GPIO_EXT_INT32_FLTCON1_ADDR             GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_FLTCON1_Offset      
-#define GPIO_EXT_INT33_FLTCON0_ADDR             GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_FLTCON0_Offset      
-#define GPIO_EXT_INT33_FLTCON1_ADDR             GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_FLTCON1_Offset      
-#define GPIO_EXT_INT34_FLTCON0_ADDR             GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_FLTCON0_Offset      
-#define GPIO_EXT_INT34_FLTCON1_ADDR             GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_FLTCON1_Offset      
+#define GPIO_EXT_INT30_FLTCON0_ADDR             (GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_FLTCON0_Offset)
+#define GPIO_EXT_INT30_FLTCON1_ADDR             (GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_FLTCON1_Offset)
+#define GPIO_EXT_INT31_FLTCON0_ADDR             (GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_FLTCON0_Offset)
+#define GPIO_EXT_INT31_FLTCON1_ADDR             (GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_FLTCON1_Offset)
+#define GPIO_EXT_INT32_FLTCON0_ADDR             (GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_FLTCON0_Offset)
+#define GPIO_EXT_INT32_FLTCON1_ADDR             (GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_FLTCON1_Offset)
+#define GPIO_EXT_INT33_FLTCON0_ADDR             (GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_FLTCON0_Offset)
+#define GPIO_EXT_INT33_FLTCON1_ADDR             (GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_FLTCON1_Offset)
+#define GPIO_EXT_INT34_FLTCON0_ADDR             (GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_FLTCON0_Offset)
+#define GPIO_EXT_INT34_FLTCON1_ADDR             (GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_FLTCON1_Offset)
 
-#define GPIO_EXT_INT30_MASK_ADDR                GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_MASK_Offset         
-#define GPIO_EXT_INT31_MASK_ADDR                GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_MASK_Offset         
-#define GPIO_EXT_INT32_MASK_ADDR                GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_MASK_Offset         
-#define GPIO_EXT_INT33_MASK_ADDR                GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_MASK_Offset         
-#define GPIO_EXT_INT34_MASK_ADDR                GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_MASK_Offset         
+#define GPIO_EXT_INT30_MASK_ADDR                (GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_MASK_Offset)
+#define GPIO_EXT_INT31_MASK_ADDR                (GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_MASK_Offset)
+#define GPIO_EXT_INT32_MASK_ADDR                (GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_MASK_Offset)
+#define GPIO_EXT_INT33_MASK_ADDR                (GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_MASK_Offset)
+#define GPIO_EXT_INT34_MASK_ADDR                (GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_MASK_Offset)
 
-#define GPIO_EXT_INT30_PEND_ADDR                GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_PEND_Offset         
-#define GPIO_EXT_INT31_PEND_ADDR                GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_PEND_Offset         
-#define GPIO_EXT_INT32_PEND_ADDR                GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_PEND_Offset         
-#define GPIO_EXT_INT33_PEND_ADDR                GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_PEND_Offset         
-#define GPIO_EXT_INT34_PEND_ADDR                GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_PEND_Offset         
+#define GPIO_EXT_INT30_PEND_ADDR                (GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_PEND_Offset)
+#define GPIO_EXT_INT31_PEND_ADDR                (GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_PEND_Offset)
+#define GPIO_EXT_INT32_PEND_ADDR                (GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_PEND_Offset)
+#define GPIO_EXT_INT33_PEND_ADDR                (GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_PEND_Offset)
+#define GPIO_EXT_INT34_PEND_ADDR                (GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_PEND_Offset)
 
-#define GPIO_EXT_INT_SERVICE_XC_ADDR            GPIO_BASE_ADDR_4 + GPIO_EXT_INT_SERVICE_XC_Offset     
-#define GPIO_EXT_INT_SERVICE_PEND_XC_ADDR       GPIO_BASE_ADDR_4 + GPIO_EXT_INT_SERVICE_PEND_XC_Offset
-#define GPIO_EXT_INT_GRPFIXPRI_XC_ADDR          GPIO_BASE_ADDR_4 + GPIO_EXT_INT_GRPFIXPRI_XC_Offset   
+#define GPIO_EXT_INT_SERVICE_XC_ADDR            (GPIO_BASE_ADDR_4 + GPIO_EXT_INT_SERVICE_XC_Offset)
+#define GPIO_EXT_INT_SERVICE_PEND_XC_ADDR       (GPIO_BASE_ADDR_4 + GPIO_EXT_INT_SERVICE_PEND_XC_Offset)
+#define GPIO_EXT_INT_GRPFIXPRI_XC_ADDR          (GPIO_BASE_ADDR_4 + GPIO_EXT_INT_GRPFIXPRI_XC_Offset)
 
-#define GPIO_EXT_INT30_FIXPRI_ADDR              GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_FIXPRI_Offset       
-#define GPIO_EXT_INT31_FIXPRI_ADDR              GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_FIXPRI_Offset       
-#define GPIO_EXT_INT32_FIXPRI_ADDR              GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_FIXPRI_Offset       
-#define GPIO_EXT_INT33_FIXPRI_ADDR              GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_FIXPRI_Offset       
-#define GPIO_EXT_INT34_FIXPRI_ADDR              GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_FIXPRI_Offset       
+#define GPIO_EXT_INT30_FIXPRI_ADDR              (GPIO_BASE_ADDR_4 + GPIO_EXT_INT30_FIXPRI_Offset)
+#define GPIO_EXT_INT31_FIXPRI_ADDR              (GPIO_BASE_ADDR_4 + GPIO_EXT_INT31_FIXPRI_Offset)
+#define GPIO_EXT_INT32_FIXPRI_ADDR              (GPIO_BASE_ADDR_4 + GPIO_EXT_INT32_FIXPRI_Offset)
+#define GPIO_EXT_INT33_FIXPRI_ADDR              (GPIO_BASE_ADDR_4 + GPIO_EXT_INT33_FIXPRI_Offset)
+#define GPIO_EXT_INT34_FIXPRI_ADDR              (GPIO_BASE_ADDR_4 + GPIO_EXT_INT34_FIXPRI_Offset)
 
-#define GPIO_BASE_ADDR_PDNEN_4_ADDR             GPIO_BASE_ADDR_4 + GPIO_BASE_ADDR_PDNEN_4_Offset      
+#define GPIO_BASE_ADDR_PDNEN_4_ADDR             (GPIO_BASE_ADDR_4 + GPIO_BASE_ADDR_PDNEN_4_Offset)
 
 #pragma endregion
 

@@ -3,7 +3,143 @@
 
 #include "ustdint.h"
 
-/////////////////////////////////////////////////
+/*
+ * GPA0CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0000
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description      |   Reset Value    | 
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ * GPA0CON[0]   |  [3:0]  |  RW  | 0x2     : UART_0_RXD  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT1[0] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ * GPA0CON[1]   |  [7:4]  |  RW  | 0x2     : UART_0_TXD  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT1[1] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ * GPA0CON[2]   |  [11:8] |  RW  | 0x2     : UART_0_CTSn |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT1[2] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ * GPA0CON[3]   | [15:12] |  RW  | 0x2     : UART_0_RTSn |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT1[3] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ * GPA0CON[4]   | [19:16] |  RW  | 0x2     : UART_1_RXD  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT1[4] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ * GPA0CON[5]   | [23:20] |  RW  | 0x2     : UART_1_TXD  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT1[5] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ *              |         |      | 0x2     : UART_1_CTSn |                  |
+ * GPA0CON[6]   | [27:24] |  RW  | 0x3     : I2C_2_SDA   |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT1[6] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ *              |         |      | 0x2     : Output      |                  |
+ * GPA0CON[7]   | [31:28] |  RW  | 0x3     : I2C_2_SCL   |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT1[7] |                  |
+ * -------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPA0DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x0004
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPA0DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPA0PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x0008
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPA0PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPA0DRV
+ * 
+ * Address = GPIO Base Address 1 + 0x000C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPA0DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPA0CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0010
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPA0[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPA0PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0014
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPA0[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPA0CON_u
 {
@@ -95,7 +231,139 @@ typedef union GPA0PUDPDN_u
     } bits;   
 } GPA0PUDPDN;
 
-///////////////////////////////////////////
+/*
+ * GPA1CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0020
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |        Description       |   Reset Value    | 
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : UART_2_RXD     |                  |
+ * GPA1CON[0]   |  [3:0]  |  RW  | 0x3     : Reserved       |       0x00       |
+ *              |         |      | 0x4     : UART_AUDIO_RXD |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT2[0]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : UART_2_TXD     |                  |
+ * GPA1CON[1]   |  [7:4]  |  RW  | 0x3     : Reserved       |       0x00       |
+ *              |         |      | 0x4     : UART_AUDIO_TXD |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT2[1]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : UART_2_CTSn    |                  |
+ * GPA1CON[2]   | [11:8]  |  RW  | 0x3     : I2C_3_SDA      |       0x00       |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT2[2]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : UART_2_RTSn    |                  |
+ * GPA1CON[3]   | [15:12] |  RW  | 0x3     : I2C_3_SCL      |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT2[3]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : UART_3_RXD     |                  |
+ * GPA1CON[4]   | [19:16] |  RW  | 0x3     : Reserved       |       0x00       |
+ *              |         |      | 0x4     : UART_AUDIO_RXD |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT2[4]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : UART_3_TXD     |                  |
+ * GPA1CON[5]   | [23:20] |  RW  | 0x3     : Reserved       |       0x00       |
+ *              |         |      | 0x4     : UART_AUDIO_TXD |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT2[5]    |                  |
+ * ----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPA1DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x0024
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPA1DAT[5:0] |  [5:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPA1PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x0028
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPA1PUD[n]   | n = 0 ~ 5 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPA1DRV
+ * 
+ * Address = GPIO Base Address 1 + 0x002C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPA1DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 5 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPA1CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0030
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPA1[n]      | n = 0 ~ 5 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPA1PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0034
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPA1[n]      | n = 0 ~ 5 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPA1CON_u
 {
@@ -178,7 +446,149 @@ typedef union GPA1PUDPDN_u
     } bits;   
 } GPA1PUDPDN;
 
-///////////////////////////////////////////////
+/*
+ * GPBCON
+ *  
+ * Address = GPIO Base Address 1 + 0x0040
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description      |   Reset Value    | 
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ *              |         |      | 0x2     : SPI_0_CLK   |                  |
+ * GPBCON[0]    |  [3:0]  |  RW  | 0x3     : I2C_4_SDA   |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT3[0] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ *              |         |      | 0x2     : SPI_0_nSS   |                  |
+ * GPBCON[1]    |  [7:4]  |  RW  | 0x3     : I2C_4_SCL   |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT3[1] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ *              |         |      | 0x2     : SPI_0_MISO  |                  |
+ * GPBCON[2]    |  [11:8] |  RW  | 0x3     : I2C_5_SDA   |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT3[2] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ *              |         |      | 0x2     : SPI_0_MOSI  |                  |
+ * GPBCON[3]    | [15:12] |  RW  | 0x3     : I2C_5_SCL   |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT3[3] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ *              |         |      | 0x2     : SPI_1_CLK   |                  |
+ * GPBCON[4]    | [19:16] |  RW  | 0x3     : Reserved    |       0x00       |
+ *              |         |      | 0x4     : IEM_SCLK    |                  |
+ *              |         |      | 0x5~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT3[4] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ *              |         |      | 0x2     : SPI_1_nSS   |                  |
+ * GPBCON[5]    | [23:20] |  RW  | 0x3     : Reserved    |       0x00       |
+ *              |         |      | 0x4     : IEM_SPWI    |                  |
+ *              |         |      | 0x5~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT3[5] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ * GPBCON[6]    | [27:24] |  RW  | 0x3     : SPI_1_MISO  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT3[6] |                  |
+ * -------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input       |                  |
+ *              |         |      | 0x1     : Output      |                  |
+ * GPBCON[7]    | [31:28] |  RW  | 0x3     : SPI_1_MOSI  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved    |                  |
+ *              |         |      | 0xF     : EXT_INT3[7] |                  |
+ * -------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPBDAT
+ * 
+ * Address = GPIO Base Address 1 + 0x0044
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPBDAT[7:0]  |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPBPUD
+ * 
+ * Address = GPIO Base Address 1 + 0x0048
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPBPUD[n]    | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPBDRV
+ * 
+ * Address = GPIO Base Address 1 + 0x004C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPBDRV[n]    | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4                       |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPBCONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0050
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPB[n]       | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPBPUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0054
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPB[n]       | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPBCON_u
 {
@@ -270,7 +680,133 @@ typedef union GPBPUDPDN_u
     } bits;   
 } GPBPUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPC0CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0060
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |        Description       |   Reset Value    | 
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2S_1_SCLK     |                  |
+ * GPC0CON[0]   |  [3:0]  |  RW  | 0x3     : PCM_1_SCLK     |       0x00       |
+ *              |         |      | 0x4     : AC97BITCLK     |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT4[0]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2S_1_CDCLK    |                  |
+ * GPC0CON[1]   |  [7:4]  |  RW  | 0x2     : PCM_1_EXTCLK   |       0x00       |
+ *              |         |      | 0x4     : AC97RESETn     |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT4[1]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : IS2_1_LRCK     |                  |
+ * GPC0CON[2]   | [11:8]  |  RW  | 0x3     : PCM_1_FSYNC    |       0x00       |
+ *              |         |      | 0x4     : AC97SYNC       |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT4[2]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2S_1_SDI      |                  |
+ * GPC0CON[3]   | [15:12] |  RW  | 0x3     : PCM_1_SIN      |       0x00       |
+ *              |         |      | 0x4     : AC97SDI        |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT4[3]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2S_1_SDO      |                  |
+ * GPC0CON[4]   | [19:16] |  RW  | 0x3     : PCM_1_SOUT     |       0x00       |
+ *              |         |      | 0x4     : AC97SDO        |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT4[4]    |                  |
+ * ----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPC0DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x0064
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPC0DAT[4:0] |  [4:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPC0PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x0068
+ * Reset Value = 0x0155
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPC0PUD[n]   | n = 0 ~ 4 |  RW  | 0x2 : Reserved                     |      0x0155      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPC0DRV
+ * 
+ * Address = GPIO Base Address 1 + 0x006C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPC0DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 4 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPC0CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0070
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPC0[n]      | n = 0 ~ 4 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPC0PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0074
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPC0[n]      | n = 0 ~ 4 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPC0CON_u
 {
@@ -348,7 +884,137 @@ typedef union GPC0PUDPDN_u
     } bits;   
 } GPC0PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPC1CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0080
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |        Description       |   Reset Value    | 
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2S_2_SCLK     |                  |
+ * GPC1CON[0]   |  [3:0]  |  RW  | 0x3     : PCM_2_SCLK     |       0x00       |
+ *              |         |      | 0x4     : SPDIF_0_OUT    |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT5[0]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2S_2_CDCLK    |                  |
+ *              |         |      | 0x3     : PCM_2_EXTCLK   |                  |
+ * GPC1CON[1]   |  [7:4]  |  RW  | 0x4     : SPDIF_EXTCLK   |       0x00       |
+ *              |         |      | 0x5     : SPI_2_CLK      |                  |
+ *              |         |      | 0x6~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT5[1]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : IS2_2_LRCK     |                  |
+ *              |         |      | 0x3     : PCM_2_FSYNC    |                  |
+ * GPC1CON[2]   | [11:8]  |  RW  | 0x4     : Reserved       |       0x00       |
+ *              |         |      | 0x5     : SPI_2_nSS      |                  |
+ *              |         |      | 0x6~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT5[2]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2S_2_SDI      |                  |
+ *              |         |      | 0x3     : PCM_2_SIN      |                  |
+ * GPC1CON[3]   | [15:12] |  RW  | 0x4     : I2C_6_SDA      |       0x00       |
+ *              |         |      | 0x5     : SPI_2_MISO     |                  |
+ *              |         |      | 0x6~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT5[3]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2S_2_SDO      |                  |
+ *              |         |      | 0x2     : PCM_2_SOUT     |                  |
+ * GPC1CON[4]   | [19:16] |  RW  | 0x3     : I2C_6_SCL      |       0x00       |
+ *              |         |      | 0x4     : SPI_2_MOSI     |                  |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT5[4]    |                  |
+ * ----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPC1DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x0084
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPC1DAT[4:0] |  [4:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPC1PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x0088
+ * Reset Value = 0x0155
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPC1PUD[n]   | n = 0 ~ 4 |  RW  | 0x2 : Reserved                     |      0x0155      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPC1DRV
+ * 
+ * Address = GPIO Base Address 1 + 0x008C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPC1DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 4 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPC1CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0090
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPC1[n]      | n = 0 ~ 4 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPC1PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0094
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPC1[n]      | n = 0 ~ 4 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPC1CON_u
 {
@@ -426,7 +1092,121 @@ typedef union GPC1PUDPDN_u
     } bits;   
 } GPC1PUDPDN;
 
-/////////////////////////////////////////////
+/*
+ * GPD0CON
+ * 
+ * Address = GPIO Base Address 1 + 0x00A0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |        Description       |   Reset Value    | 
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : TOUT_0         |                  |
+ * GPD0CON[0]   |  [3:0]  |  RW  | 0x3     : LCD_FRM        |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT6[0]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : TOUT_1         |                  |
+ * GPD0CON[1]   |  [7:4]  |  RW  | 0x3     : LCD_PWM        |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT6[1]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : TOUT_2         |                  |
+ * GPD0CON[2]   | [11:8]  |  RW  | 0x3     : I2C_7_SDA      |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT6[2]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : TOUT_3         |                  |
+ * GPD0CON[3]   | [15:12] |  RW  | 0x3     : I2C_7_SCL      |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT6[3]    |                  |
+ * ----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPD0DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x00A4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPD0DAT[3:0] |  [3:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPD0PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x00A8
+ * Reset Value = 0x0055
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPD0PUD[n]   | n = 0 ~ 3 |  RW  | 0x2 : Reserved                     |      0x0055      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPD0DRV
+ * 
+ * Address = GPIO Base Address 1 + 0x00AC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPD0DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 3 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPD0CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x00B0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPD0[n]      | n = 0 ~ 3 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPD0PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x00B4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPD0[n]      | n = 0 ~ 3 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPD0CON_u
 {
@@ -499,7 +1279,121 @@ typedef union GPD0PUDPDN_u
     } bits;   
 } GPD0PUDPDN;
 
-/////////////////////////////////////////
+/*
+ * GPD1CON
+ * 
+ * Address = GPIO Base Address 1 + 0x00C0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |        Description       |   Reset Value    | 
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2C_0_SDA      |                  |
+ * GPD1CON[0]   |  [3:0]  |  RW  | 0x3     : MIPI0_BYTE_CLK |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT7[0]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2C_0_SCL      |                  |
+ * GPD1CON[1]   |  [7:4]  |  RW  | 0x3     : MIPI0_ESC_CLK  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT7[1]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2C_1_SDA      |                  |
+ * GPD1CON[2]   | [11:8]  |  RW  | 0x3     : MIPI1_BYTE_CLK |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT7[2]    |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ *              |         |      | 0x2     : I2C_1_SCL      |                  |
+ * GPD1CON[3]   | [15:12] |  RW  | 0x3     : MIPI1_ESC_CLK  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT7[3]    |                  |
+ * ----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPD1DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x00C4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPD1DAT[3:0] |  [3:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPD1PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x00C8
+ * Reset Value = 0x0055
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPD1PUD[n]   | n = 0 ~ 3 |  RW  | 0x2 : Reserved                     |      0x0055      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPD1DRV
+ * 
+ * Address = GPIO Base Address 1 + 0x00CC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPD1DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 3 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPD1CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x00D0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPD1[n]      | n = 0 ~ 3 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPD1PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x00D4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPD1[n]      | n = 0 ~ 3 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPD1CON_u
 {
@@ -572,7 +1466,141 @@ typedef union GPD1PUDPDN_u
     } bits;   
 } GPD1PUDPDN;
 
-///////////////////////////////////////////
+/*
+ * GPF0CON
+ *  
+ * Address = GPIO Base Address 1 + 0x0180
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description      |   Reset Value    | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF0CON[0]   |  [3:0]  |  RW  | 0x2     : LCD_HSYNC    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT13[0] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF0CON[1]   |  [7:4]  |  RW  | 0x2     : LCD_VSYNC    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT13[1] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF0CON[2]   |  [11:8] |  RW  | 0x2     : LCD_VDEN     |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT13[2] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF0CON[3]   | [15:12] |  RW  | 0x2     : LCD_VCLK     |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT13[3] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF0CON[4]   | [19:16] |  RW  | 0x2     : LCD_VD[0]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT13[4] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF0CON[5]   | [23:20] |  RW  | 0x2     : LCD_VD[1]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT13[5] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF0CON[6]   | [27:24] |  RW  | 0x2     : LCD_VD[2]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT13[6] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF0CON[7]   | [31:28] |  RW  | 0x2     : LCD_VD[3]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT13[7] |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF0DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x0184
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPF0DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF0PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x0188
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPF0PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPF0DRV
+ * 
+ * Address = GPIO Base Address 1 + 0x018C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPF0DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF0CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0190
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPF0[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF0PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0194
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPF0[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPF0CON_u
 {
@@ -664,7 +1692,141 @@ typedef union GPF0PUDPDN_u
     } bits;   
 } GPF0PUDPDN;
 
-///////////////////////////////////////////
+/*
+ * GPF1CON
+ *  
+ * Address = GPIO Base Address 1 + 0x01A0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description      |   Reset Value    | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF1CON[0]   |  [3:0]  |  RW  | 0x2     : LCD_VD[4]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT14[0] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF1CON[1]   |  [7:4]  |  RW  | 0x2     : LCD_VD[5]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT14[1] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF1CON[2]   |  [11:8] |  RW  | 0x2     : LCD_VD[6]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT14[2] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF1CON[3]   | [15:12] |  RW  | 0x2     : LCD_VD[7]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT14[3] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF1CON[4]   | [19:16] |  RW  | 0x2     : LCD_VD[8]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT14[4] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF1CON[5]   | [23:20] |  RW  | 0x2     : LCD_VD[9]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT14[5] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF1CON[6]   | [27:24] |  RW  | 0x2     : LCD_VD[10]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT14[6] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF1CON[7]   | [31:28] |  RW  | 0x2     : LCD_VD[11]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT14[7] |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF1DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x01A4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPF1DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF1PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x01A8
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPF1PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPF1DRV
+ * 
+ * Address = GPIO Base Address 1 + 0x01AC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPF1DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF1CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x01B0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPF1[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF1PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x01B4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPF1[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPF1CON_u
 {
@@ -756,7 +1918,141 @@ typedef union GPF1PUDPDN_u
     } bits;   
 } GPF1PUDPDN;
 
-///////////////////////////////////////////
+/*
+ * GPF2CON
+ *  
+ * Address = GPIO Base Address 1 + 0x01C0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description      |   Reset Value    | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF2CON[0]   |  [3:0]  |  RW  | 0x2     : LCD_VD[12]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT14[0] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF2CON[1]   |  [7:4]  |  RW  | 0x2     : LCD_VD[13]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT15[1] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF2CON[2]   |  [11:8] |  RW  | 0x2     : LCD_VD[14]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT15[2] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF2CON[3]   | [15:12] |  RW  | 0x2     : LCD_VD[15]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT15[3] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF2CON[4]   | [19:16] |  RW  | 0x2     : LCD_VD[16]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT15[4] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF2CON[5]   | [23:20] |  RW  | 0x2     : LCD_VD[17]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT15[5] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF2CON[6]   | [27:24] |  RW  | 0x2     : LCD_VD[18]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT15[6] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF2CON[7]   | [31:28] |  RW  | 0x2     : LCD_VD[19]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT15[7] |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF2DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x01C4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPF2DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF2PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x01C8
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPF2PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPF2DRV
+ *
+ * Address = GPIO Base Address 1 + 0x01CC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPF2DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4                       |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF2CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x01D0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPF2[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF2PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x01D4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPF2[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPF2CON_u
 {
@@ -848,7 +2144,129 @@ typedef union GPF2PUDPDN_u
     } bits;   
 } GPF2PUDPDN;
 
-///////////////////////////////////////////
+/*
+ * GPF3CON
+ *  
+ * Address = GPIO Base Address 1 + 0x01E0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description      |   Reset Value    | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF3CON[0]   |  [3:0]  |  RW  | 0x2     : LCD_VD[20]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT16[0] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF3CON[1]   |  [7:4]  |  RW  | 0x2     : LCD_VD[21]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT16[1] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF3CON[2]   |  [11:8] |  RW  | 0x2     : LCD_VD[22]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT16[2] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF3CON[3]   | [15:12] |  RW  | 0x2     : LCD_VD[23]   |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT16[3] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF3CON[4]   | [19:16] |  RW  | 0x2     : VSYNC_LDI    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT16[4] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPF3CON[5]   | [23:20] |  RW  | 0x2     : SYS_OE       |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT16[5] |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF3DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x01E4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPF3DAT[5:0] |  [5:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF3PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x01E8
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPF3PUD[n]   | n = 0 ~ 5 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPF3DRV
+ *
+ * Address = GPIO Base Address 1 + 0x01EC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPF3DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 5 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF3CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x01F0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPF3[n]      | n = 0 ~ 5 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPF3PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x01F4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPF3[n]      | n = 0 ~ 5 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPF3CON_u
 {
@@ -931,7 +2349,38 @@ typedef union GPF3PUDPDN_u
     } bits;   
 } GPF3PUDPDN;
 
-/////////////////////////////////////////
+/*
+ * ETC1PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x0228
+ * Reset Value = 0x0005
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * ETC1PUD[n]   | n = 0 ~ 5 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ * ETC1PUD[1:0] controls XsbusData.
+ * ETC1PUD[3:2] controls XsbusCLK.
+ * 
+ * ETC1DRV
+ *
+ * Address = GPIO Base Address 1 + 0x022C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * ETC1DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 5 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ */
 
 typedef union ETC1PUD_u
 {
@@ -963,7 +2412,141 @@ typedef union ETC1DRV_u
     } bits;   
 } ETC1DRV;
 
-/////////////////////////////////////////////////
+/*
+ * GPJ0CON
+ *  
+ * Address = GPIO Base Address 1 + 0x0240
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |        Description       |   Reset Value    | 
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ0CON[0]   |  [3:0]  |  RW  | 0x2     : CAM_A_PCLK     |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT21[0]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ0CON[1]   |  [7:4]  |  RW  | 0x2     : CAM_A_VSYNC    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT21[1]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ0CON[2]   |  [11:8] |  RW  | 0x2     : CAM_A_HREF     |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT21[2]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ0CON[3]   | [15:12] |  RW  | 0x2     : CAM_A_DATA[0]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT21[3]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ0CON[4]   | [19:16] |  RW  | 0x2     : CAM_A_DATA[1]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT21[4]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ0CON[5]   | [23:20] |  RW  | 0x2     : CAM_A_DATA[2]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT21[5]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ0CON[6]   | [27:24] |  RW  | 0x2     : CAM_A_DATA[3]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT21[6]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ0CON[7]   | [31:28] |  RW  | 0x2     : CAM_A_DATA[4]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT21[7]   |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPJ0DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x0244
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPJ0DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPJ0PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x0248
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPJ0PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPJ0DRV
+ *
+ * Address = GPIO Base Address 1 + 0x024C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPJ0DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4                       |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPJ0CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0250
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPJ0[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPJ0PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0254
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPJ0[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPJ0CON_u
 {
@@ -1055,7 +2638,123 @@ typedef union GPJ0PUDPDN_u
     } bits;   
 } GPJ0PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPJ1CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0260
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |        Description       |   Reset Value    | 
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ1CON[0]   |  [3:0]  |  RW  | 0x3     : CAM_A_DATA[5]  |       0x00       |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT22[0]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ1CON[1]   |  [7:4]  |  RW  | 0x3     : CAM_A_DATA[6]  |       0x00       |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT22[1]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ1CON[2]   |  [11:8] |  RW  | 0x3     : CAM_A_DATA[7]  |       0x00       |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT22[2]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ1CON[3]   | [15:12] |  RW  | 0x3     : CAM_A_CLKOUT   |       0x00       |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT22[3]   |                  |
+ * ----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input          |                  |
+ *              |         |      | 0x1     : Output         |                  |
+ * GPJ1CON[4]   | [19:16] |  RW  | 0x3     : CAM_A_FIELD    |       0x00       |
+ *              |         |      | 0x5~0xE : Reserved       |                  |
+ *              |         |      | 0xF     : EXT_INT22[4]   |                  |
+ * ----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPJ1DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x0264
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPJ1DAT[4:0] |  [4:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPJ1PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x0268
+ * Reset Value = 0x0155
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPJ1PUD[n]   | n = 0 ~ 4 |  RW  | 0x2 : Reserved                     |      0x0155      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPJ1DRV
+ * 
+ * Address = GPIO Base Address 1 + 0x026C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPJ1DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 4 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPJ1CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0270
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPJ1[n]      | n = 0 ~ 4 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPJ1PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0274
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPJ1[n]      | n = 0 ~ 4 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPJ1CON_u
 {
@@ -1133,7 +2832,95 @@ typedef union GPJ1PUDPDN_u
     } bits;   
 } GPJ1PUDPDN;
 
-////////////////////////////////////////////
+/*
+ * EXT_INT1CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0700
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description             |   Reset Value   | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT1[0] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT1_CON[0]  |  [2:0]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT1[1] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT1_CON[1]  |  [6:4]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT1[2] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT1_CON[2]  | [10:8]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT1[3] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT1_CON[3]  | [14:12] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT1[4] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT1_CON[4]  | [18:16] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT1[5] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT1_CON[5]  | [22:20] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT1[6] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT1_CON[6]  | [26:24] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT1[7] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT1_CON[7]  | [30:28] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT1CON_u
 {
@@ -1159,6 +2946,88 @@ typedef union EXTINT1CON_u
     } bits;   
 } EXTINT1CON;
 
+/*
+ * EXT_INT2CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0704
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description             |   Reset Value   | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT2[0] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT2_CON[0]  |  [2:0]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |  [3]    |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT2[1] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT2_CON[1]  |  [6:4]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |  [7]    |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT2[2] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT2_CON[2]  | [10:8]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |  [11]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT2[3] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT2_CON[3]  | [14:12] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |  [15]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT2[4] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT2_CON[4]  | [18:16] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |  [19]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT2[5] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT2_CON[5]  | [22:20] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |  [23]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT2[6] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT2_CON[6]  | [26:24] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |  [27]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:24] |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT2CON_u
 {
     uint32_t all_val;
@@ -1179,6 +3048,96 @@ typedef union EXTINT2CON_u
         uint32_t Reserved6:8;   //31:24
     } bits;   
 } EXTINT2CON;
+
+/*
+ * EXT_INT3CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0708
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description             |   Reset Value   | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT3[0] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT3_CON[0]  |  [2:0]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT3[1] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT3_CON[1]  |  [6:4]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT3[2] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT3_CON[2]  | [10:8]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT3[3] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT3_CON[3]  | [14:12] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT3[4] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT3_CON[4]  | [18:16] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT3[5] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT3_CON[5]  | [22:20] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT3[6] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT3_CON[6]  | [26:24] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT3[7] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT3_CON[7]  | [30:28] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT3CON_u
 {
@@ -1204,6 +3163,68 @@ typedef union EXTINT3CON_u
     } bits;   
 } EXTINT3CON;
 
+/*
+ * EXT_INT4CON
+ * 
+ * Address = GPIO Base Address 1 + 0x070C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description             |   Reset Value   | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT4[0] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT4_CON[0]  |  [2:0]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT4[1] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT4_CON[1]  |  [6:4]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT4[2] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT4_CON[2]  | [10:8]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT4[3] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT4_CON[3]  | [14:12] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT4[4] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT4_CON[4]  | [18:16] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:20] |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT4CON_u
 {
     uint32_t all_val;
@@ -1222,6 +3243,68 @@ typedef union EXTINT4CON_u
         uint32_t Reserved5:12;  //31:20
     } bits;   
 } EXTINT4CON;
+
+/*
+ * EXT_INT5CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0710
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description             |   Reset Value   | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT5[0] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT5_CON[0]  |  [2:0]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT5[1] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT5_CON[1]  |  [6:4]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT5[2] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT5_CON[2]  | [10:8]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT5[3] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT5_CON[3]  | [14:12] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT5[4] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT5_CON[4]  | [18:16] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:20] |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT5CON_u
 {
@@ -1242,6 +3325,58 @@ typedef union EXTINT5CON_u
     } bits;   
 } EXTINT5CON;
 
+/*
+ * EXT_INT6CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0714
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description             |   Reset Value   | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT6[0] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT6_CON[0]  |  [2:0]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT6[1] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT6_CON[1]  |  [6:4]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT6[2] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT6_CON[2]  | [10:8]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT6[3] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT6_CON[3]  | [14:12] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:16] |  -   | Reserved                             |      0x0000     |
+ * -------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT6CON_u
 {
     uint32_t all_val;
@@ -1259,6 +3394,58 @@ typedef union EXTINT6CON_u
     } bits;   
 } EXTINT6CON;
 
+/*
+ * EXT_INT7CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0718
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description             |   Reset Value   | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT7[0] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT7_CON[0]  |  [2:0]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT7[1] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT7_CON[1]  |  [6:4]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT7[2] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT7_CON[2]  | [10:8]  |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT7[3] |                 |
+ *                  |         |      | 0x0     : Low Level                  |                 |
+ *                  |         |      | 0x1     : High Level                 |                 |
+ * EXT_INT7_CON[3]  | [14:12] |  RW  | 0x2     : Triggers falling edge      |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge       |                 |
+ *                  |         |      | 0x4     : Triggers both edge         |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                   |                 |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                             |       0x0       |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:16] |  -   | Reserved                             |      0x0000     |
+ * -------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT7CON_u
 {
     uint32_t all_val;
@@ -1275,6 +3462,96 @@ typedef union EXTINT7CON_u
         uint32_t Reserved4:16;  //31:16
     } bits;   
 } EXTINT7CON;
+
+/*
+ * EXT_INT13CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0700
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT13[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT13_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT13[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT13_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT13[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT13_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT13[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT13_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT13[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT13_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT13[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT13_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT13[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT13_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT13[7] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT13_CON[7] | [30:28] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT13CON_u
 {
@@ -1300,6 +3577,96 @@ typedef union EXTINT13CON_u
     } bits;   
 } EXTINT13CON;
 
+/*
+ * EXT_INT14CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0700
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT14[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT14_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT14[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT14_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT14[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT14_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT14[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT14_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT14[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT14_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT14[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT14_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT14[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT14_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT14[7] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT14_CON[7] | [30:28] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT14CON_u
 {
     uint32_t all_val;
@@ -1323,6 +3690,96 @@ typedef union EXTINT14CON_u
         uint32_t Reserved7:1;   //31
     } bits;   
 } EXTINT14CON;
+
+/*
+ * EXT_INT15CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0738
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT15[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT15_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT15[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT15_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT15[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT15_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT15[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT15_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT15[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT15_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT15[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT15_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT15[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT15_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT15[7] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT15_CON[7] | [30:28] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT15CON_u
 {
@@ -1348,6 +3805,88 @@ typedef union EXTINT15CON_u
     } bits;   
 } EXTINT15CON;
 
+/*
+ * EXT_INT16CON
+ * 
+ * Address = GPIO Base Address 1 + 0x073C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT16[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT16_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |  [3]    |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT16[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT16_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |  [7]    |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT16[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT16_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |  [11]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT16[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT16_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |  [15]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT16[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT16_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |  [19]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT16[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT16_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |  [23]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT16[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT16_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |  [27]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             | [31:24] |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT16CON_u
 {
     uint32_t all_val;
@@ -1368,6 +3907,96 @@ typedef union EXTINT16CON_u
         uint32_t Reserved6:8;   //31:24
     } bits;   
 } EXTINT16CON;
+
+/*
+ * EXT_INT21CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0740
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT21[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT21_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT21[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT21_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT21[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT21_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT21[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT21_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT21[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT21_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT21[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT21_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT21[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT21_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT21[7] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT21_CON[7] | [30:28] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT21CON_u
 {
@@ -1393,6 +4022,96 @@ typedef union EXTINT21CON_u
     } bits;   
 } EXTINT21CON;
 
+/*
+ * EXT_INT22CON
+ * 
+ * Address = GPIO Base Address 1 + 0x0744
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT22[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT22_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT22[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT22_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT22[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT22_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT22[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT22_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT22[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT22_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT22[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT22_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT22[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT22_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT22[7] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT22_CON[7] | [30:28] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT22CON_u
 {
     uint32_t all_val;
@@ -1412,7 +4131,71 @@ typedef union EXTINT22CON_u
     } bits;   
 } EXTINT22CON;
 
-////////////////////////////////////////////////////////
+/*
+ * EXT_INT1_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0800
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH1[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT1[0]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT1[0]   |             |
+ * FLTEN1[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH1[1]     |  [14:8] |  RW  | Filtering width of EXT_INT1[1]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT1[1]   |             |
+ * FLTEN1[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH1[2]     | [22:16] |  RW  | Filtering width of EXT_INT1[2]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT1[2]   |             |
+ * FLTEN1[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH1[3]     | [30:24] |  RW  | Filtering width of EXT_INT1[3]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT1[3]   |             |
+ * FLTEN1[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT1_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x0804
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH1[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT1[4]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT1[4]   |             |
+ * FLTEN1[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH1[5]     |  [14:8] |  RW  | Filtering width of EXT_INT1[5]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT1[5]   |             |
+ * FLTEN1[5]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH1[6]     | [22:16] |  RW  | Filtering width of EXT_INT1[6]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT1[6]   |             |
+ * FLTEN1[6]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH1[7]     | [30:24] |  RW  | Filtering width of EXT_INT1[7]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT1[7]   |             |
+ * FLTEN1[7]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT1FLTCON0_u
 {
@@ -1446,6 +4229,62 @@ typedef union EXTINT1FLTCON1_u
     } bits;    
 } EXTINT1FLTCON1;
 
+/*
+ * EXT_INT2_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0808
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH2[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT2[0]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT2[0]   |             |
+ * FLTEN2[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH2[1]     |  [14:8] |  RW  | Filtering width of EXT_INT2[1]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT2[1]   |             |
+ * FLTEN2[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH2[2]     | [22:16] |  RW  | Filtering width of EXT_INT2[2]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT2[2]   |             |
+ * FLTEN2[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH2[3]     | [30:24] |  RW  | Filtering width of EXT_INT2[3]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT2[3]   |             |
+ * FLTEN2[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT2_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x080C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH2[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT2[4]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT2[4]   |             |
+ * FLTEN2[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH2[5]     |  [14:8] |  RW  | Filtering width of EXT_INT2[5]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT2[5]   |             |
+ * FLTEN2[5]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:16] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT2FLTCON0_u
 {
     uint32_t all_val;
@@ -1474,6 +4313,72 @@ typedef union EXTINT2FLTCON1_u
         uint32_t Reserved:16;   //31:16
     } bits;    
 } EXTINT2FLTCON1;
+
+/*
+ * EXT_INT3_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0810
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT3[0]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT3[0]   |             |
+ * FLTEN3[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[1]     |  [14:8] |  RW  | Filtering width of EXT_INT3[1]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT3[1]   |             |
+ * FLTEN3[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[2]     | [22:16] |  RW  | Filtering width of EXT_INT3[2]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT3[2]   |             |
+ * FLTEN3[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[3]     | [30:24] |  RW  | Filtering width of EXT_INT3[3]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT3[3]   |             |
+ * FLTEN3[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT3_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x0814
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT3[4]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT3[4]   |             |
+ * FLTEN3[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[5]     |  [14:8] |  RW  | Filtering width of EXT_INT3[5]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT3[5]   |             |
+ * FLTEN3[5]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[6]     | [22:16] |  RW  | Filtering width of EXT_INT3[6]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT3[6]   |             |
+ * FLTEN3[6]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[7]     | [30:24] |  RW  | Filtering width of EXT_INT3[7]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT3[7]   |             |
+ * FLTEN3[7]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT3FLTCON0_u
 {
@@ -1507,6 +4412,56 @@ typedef union EXTINT3FLTCON1_u
     } bits;    
 } EXTINT3FLTCON1;
 
+/*
+ * EXT_INT4_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0818
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT4[0]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT4[0]   |             |
+ * FLTEN4[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[1]     |  [14:8] |  RW  | Filtering width of EXT_INT4[1]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT4[1]   |             |
+ * FLTEN4[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[2]     | [22:16] |  RW  | Filtering width of EXT_INT4[2]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT4[2]   |             |
+ * FLTEN4[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[3]     | [30:24] |  RW  | Filtering width of EXT_INT4[3]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT4[3]   |             |
+ * FLTEN4[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT4_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x081C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT4[4]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT4[4]   |             |
+ * FLTEN4[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:8] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT4FLTCON0_u
 {
     uint32_t all_val;
@@ -1533,6 +4488,56 @@ typedef union EXTINT4FLTCON1_u
         uint32_t Reserved:24;   //31:8
     } bits;    
 } EXTINT4FLTCON1;
+
+/*
+ * EXT_INT5_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0820
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT5[0]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT5[0]   |             |
+ * FLTEN5[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[1]     |  [14:8] |  RW  | Filtering width of EXT_INT5[1]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT5[1]   |             |
+ * FLTEN5[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[2]     | [22:16] |  RW  | Filtering width of EXT_INT5[2]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT5[2]   |             |
+ * FLTEN5[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[3]     | [30:24] |  RW  | Filtering width of EXT_INT5[3]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT5[3]   |             |
+ * FLTEN5[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT5_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x0824
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT5[4]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT5[4]   |             |
+ * FLTEN5[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:8] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT5FLTCON0_u
 {
@@ -1561,6 +4566,50 @@ typedef union EXTINT5FLTCON1_u
     } bits;    
 } EXTINT5FLTCON1;
 
+/*
+ * EXT_INT6_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0828
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT6[0]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT6[0]   |             |
+ * FLTEN6[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[1]     |  [14:8] |  RW  | Filtering width of EXT_INT6[1]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT6[1]   |             |
+ * FLTEN6[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[2]     | [22:16] |  RW  | Filtering width of EXT_INT6[2]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT6[2]   |             |
+ * FLTEN6[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[3]     | [30:24] |  RW  | Filtering width of EXT_INT6[3]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT6[3]   |             |
+ * FLTEN6[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT6_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x082C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:0] |  -   | Reserved                        |  0x00000000 |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT6FLTCON0_u
 {
     uint32_t all_val;
@@ -1586,6 +4635,51 @@ typedef union EXTINT6FLTCON1_u
     } bits;    
 } EXTINT6FLTCON1;
 
+/*
+ * EXT_INT7_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0830
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT7[0]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT7[0]   |             |
+ * FLTEN7[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[1]     |  [14:8] |  RW  | Filtering width of EXT_INT7[1]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT7[1]   |             |
+ * FLTEN7[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[2]     | [22:16] |  RW  | Filtering width of EXT_INT7[2]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT7[2]   |             |
+ * FLTEN7[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[3]     | [30:24] |  RW  | Filtering width of EXT_INT7[3]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT7[3]   |             |
+ * FLTEN7[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT7_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x0834
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:0] |  -   | Reserved                        |  0x00000000 |
+ * ----------------------------------------------------------------------------------|
+ */
+
+
 typedef union EXTINT7FLTCON0_u
 {
     uint32_t all_val;
@@ -1610,6 +4704,72 @@ typedef union EXTINT7FLTCON1_u
         uint32_t Reserved;   //31:0
     } bits;    
 } EXTINT7FLTCON1;
+
+/*
+ * EXT_INT13_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0860
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT13[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT13[0]  |             |
+ * FLTEN13[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[1]    |  [14:8] |  RW  | Filtering width of EXT_INT13[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT13[1]  |             |
+ * FLTEN13[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[2]    | [22:16] |  RW  | Filtering width of EXT_INT13[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT13[2]  |             |
+ * FLTEN13[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[3]    | [30:24] |  RW  | Filtering width of EXT_INT13[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT13[3]  |             |
+ * FLTEN13[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT13_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x0864
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT13[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT13[4]  |             |
+ * FLTEN13[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[5]    |  [14:8] |  RW  | Filtering width of EXT_INT13[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT13[5]  |             |
+ * FLTEN13[5]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[6]    | [22:16] |  RW  | Filtering width of EXT_INT13[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT13[6]  |             |
+ * FLTEN13[6]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[7]    | [30:24] |  RW  | Filtering width of EXT_INT13[7] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT13[7]  |             |
+ * FLTEN13[7]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT13FLTCON0_u
 {
@@ -1643,6 +4803,72 @@ typedef union EXTINT13FLTCON1_u
     } bits;    
 } EXTINT13FLTCON1;
 
+/*
+ * EXT_INT14_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0868
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT14[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT14[0]  |             |
+ * FLTEN14[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[1]    |  [14:8] |  RW  | Filtering width of EXT_INT14[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT14[1]  |             |
+ * FLTEN14[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[2]    | [22:16] |  RW  | Filtering width of EXT_INT14[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT14[2]  |             |
+ * FLTEN14[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[3]    | [30:24] |  RW  | Filtering width of EXT_INT14[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT14[3]  |             |
+ * FLTEN14[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT14_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x086C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT14[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT14[4]  |             |
+ * FLTEN14[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[5]    |  [14:8] |  RW  | Filtering width of EXT_INT14[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT14[5]  |             |
+ * FLTEN14[5]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[6]    | [22:16] |  RW  | Filtering width of EXT_INT14[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT14[6]  |             |
+ * FLTEN14[6]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[7]    | [30:24] |  RW  | Filtering width of EXT_INT14[7] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT14[7]  |             |
+ * FLTEN14[7]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT14FLTCON0_u
 {
     uint32_t all_val;
@@ -1674,6 +4900,72 @@ typedef union EXTINT14FLTCON1_u
         uint32_t FLTEN147:1;     //31
     } bits;    
 } EXTINT14FLTCON1;
+
+/*
+ * EXT_INT15_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0870
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH15[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT15[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT15[0]  |             |
+ * FLTEN15[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH15[1]    |  [14:8] |  RW  | Filtering width of EXT_INT15[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT15[1]  |             |
+ * FLTEN15[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH15[2]    | [22:16] |  RW  | Filtering width of EXT_INT15[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT15[2]  |             |
+ * FLTEN15[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH15[3]    | [30:24] |  RW  | Filtering width of EXT_INT15[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT15[3]  |             |
+ * FLTEN15[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT15_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x0874
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH15[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT15[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT15[4]  |             |
+ * FLTEN15[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH15[5]    |  [14:8] |  RW  | Filtering width of EXT_INT15[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT15[5]  |             |
+ * FLTEN15[5]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH15[6]    | [22:16] |  RW  | Filtering width of EXT_INT15[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT15[6]  |             |
+ * FLTEN15[6]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH15[7]    | [30:24] |  RW  | Filtering width of EXT_INT15[7] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT15[7]  |             |
+ * FLTEN15[7]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT15FLTCON0_u
 {
@@ -1707,6 +4999,62 @@ typedef union EXTINT15FLTCON1_u
     } bits;    
 } EXTINT15FLTCON1;
 
+/*
+ * EXT_INT16_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0878
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH16[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT16[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT16[0]  |             |
+ * FLTEN16[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH16[1]    |  [14:8] |  RW  | Filtering width of EXT_INT16[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT16[1]  |             |
+ * FLTEN16[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH16[2]    | [22:16] |  RW  | Filtering width of EXT_INT16[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT16[2]  |             |
+ * FLTEN16[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH16[3]    | [30:24] |  RW  | Filtering width of EXT_INT16[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT16[3]  |             |
+ * FLTEN16[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT16_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x087C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH16[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT16[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT16[4]  |             |
+ * FLTEN16[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH16[5]    |  [14:8] |  RW  | Filtering width of EXT_INT16[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT16[5]  |             |
+ * FLTEN16[5]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:16] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT16FLTCON0_u
 {
     uint32_t all_val;
@@ -1735,6 +5083,72 @@ typedef union EXTINT16FLTCON1_u
         uint32_t Reserved:16;   //31:16
     } bits;    
 } EXTINT16FLTCON1;
+
+/*
+ * EXT_INT21_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0880
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH21[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT21[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT21[0]  |             |
+ * FLTEN21[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH21[1]    |  [14:8] |  RW  | Filtering width of EXT_INT21[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT21[1]  |             |
+ * FLTEN21[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH21[2]    | [22:16] |  RW  | Filtering width of EXT_INT21[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT21[2]  |             |
+ * FLTEN21[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH21[3]    | [30:24] |  RW  | Filtering width of EXT_INT21[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT21[3]  |             |
+ * FLTEN21[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT21_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x0884
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH21[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT21[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT21[4]  |             |
+ * FLTEN21[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH21[5]    |  [14:8] |  RW  | Filtering width of EXT_INT21[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT21[5]  |             |
+ * FLTEN21[5]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH21[6]    | [22:16] |  RW  | Filtering width of EXT_INT21[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT21[6]  |             |
+ * FLTEN21[6]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH21[7]    | [30:24] |  RW  | Filtering width of EXT_INT21[7] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT21[7]  |             |
+ * FLTEN21[7]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT21FLTCON0_u
 {
@@ -1768,6 +5182,56 @@ typedef union EXTINT21FLTCON1_u
     } bits;    
 } EXTINT21FLTCON1;
 
+/*
+ * EXT_INT22_FLTCON0
+ * 
+ * Address = GPIO Base Address 1 + 0x0888
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH22[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT22[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT22[0]  |             |
+ * FLTEN22[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH22[1]    |  [14:8] |  RW  | Filtering width of EXT_INT22[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT22[1]  |             |
+ * FLTEN22[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH22[2]    | [22:16] |  RW  | Filtering width of EXT_INT22[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT22[2]  |             |
+ * FLTEN22[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH22[3]    | [30:24] |  RW  | Filtering width of EXT_INT22[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT22[3]  |             |
+ * FLTEN22[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT22_FLTCON1
+ * 
+ * Address = GPIO Base Address 1 + 0x088C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH22[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT22[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT22[4]  |             |
+ * FLTEN21[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:8] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT22FLTCON0_u
 {
     uint32_t all_val;
@@ -1795,7 +5259,41 @@ typedef union EXTINT22FLTCON1_u
     } bits;    
 } EXTINT22FLTCON1;
 
-///////////////////////////////////////////////////
+/*
+ * EXT_INT1_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0900
+ * Reset Value = 0x0000_00FF
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT1_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT1_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT1_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT1_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT1_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT1_MASK[5] |   [5]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT1_MASK[6] |   [6]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT1_MASK[7] |   [7]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:8] |  -   | Reserved                        |   0x000000  |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT1MASK_u
 {
@@ -1814,6 +5312,36 @@ typedef union EXTINT1MASK_u
     } bits;
 } EXTINT1MASK;
 
+/*
+ * EXT_INT2_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0904
+ * Reset Value = 0x0000_003F
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT2_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT2_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT2_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT2_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT2_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT2_MASK[5] |   [5]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:6] |  -   | Reserved                        |  0x0000000  |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT2MASK_u
 {
     uint32_t all_val;
@@ -1828,6 +5356,42 @@ typedef union EXTINT2MASK_u
         uint32_t Reserved:26;    //31:6
     } bits;
 } EXTINT2MASK;
+
+/*
+ * EXT_INT3_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0908
+ * Reset Value = 0x0000_00FF
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT3_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT3_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT3_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT3_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT3_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT3_MASK[5] |   [5]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT3_MASK[6] |   [6]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT3_MASK[7] |   [7]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:8] |  -   | Reserved                        |   0x000000  |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT3MASK_u
 {
@@ -1846,6 +5410,33 @@ typedef union EXTINT3MASK_u
     } bits;
 } EXTINT3MASK;
 
+/*
+ * EXT_INT4_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x090C
+ * Reset Value = 0x0000_001F
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT4_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT4_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT4_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT4_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT4_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:5] |  -   | Reserved                        |  0x0000000  |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT4MASK_u
 {
     uint32_t all_val;
@@ -1859,6 +5450,33 @@ typedef union EXTINT4MASK_u
         uint32_t Reserved:27;    //31:5
     } bits;
 } EXTINT4MASK;
+
+/*
+ * EXT_INT5_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0910
+ * Reset Value = 0x0000_001F
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT5_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT5_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT5_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT5_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT5_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:5] |  -   | Reserved                        |  0x0000000  |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT5MASK_u
 {
@@ -1874,6 +5492,30 @@ typedef union EXTINT5MASK_u
     } bits;
 } EXTINT5MASK;
 
+/*
+ * EXT_INT6_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0914
+ * Reset Value = 0x0000_000F
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT6_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT6_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT6_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT6_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:4] |  -   | Reserved                        |  0x0000000  |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT6MASK_u
 {
     uint32_t all_val;
@@ -1887,6 +5529,30 @@ typedef union EXTINT6MASK_u
     } bits;
 } EXTINT6MASK;
 
+/*
+ * EXT_INT7_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0918
+ * Reset Value = 0x0000_000F
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT7_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT7_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT7_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * EXT_INT7_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                  |         |      | 0x1 : Masked                    |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             |  [31:4] |  -   | Reserved                        |  0x0000000  |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT7MASK_u
 {
     uint32_t all_val;
@@ -1899,6 +5565,42 @@ typedef union EXTINT7MASK_u
         uint32_t Reserved:28;    //31:4
     } bits;
 } EXTINT7MASK;
+
+/*
+ * EXT_INT13_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0930
+ * Reset Value = 0x0000_00FF
+ * 
+ *     Name          |   Bit   | Type |            Description          | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT13_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT13_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT13_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT13_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT13_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT13_MASK[5] |   [5]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT13_MASK[6] |   [6]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT13_MASK[7] |   [7]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * RSVD              |  [31:8] |  -   | Reserved                        |   0x000000  |
+ * -----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT13MASK_u
 {
@@ -1917,6 +5619,42 @@ typedef union EXTINT13MASK_u
     } bits;
 } EXTINT13MASK;
 
+/*
+ * EXT_INT14_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0934
+ * Reset Value = 0x0000_00FF
+ * 
+ *     Name          |   Bit   | Type |            Description          | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT14_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT14_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT14_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT14_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT14_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT14_MASK[5] |   [5]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT14_MASK[6] |   [6]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT14_MASK[7] |   [7]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * RSVD              |  [31:8] |  -   | Reserved                        |   0x000000  |
+ * -----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT14MASK_u
 {
     uint32_t all_val;
@@ -1933,6 +5671,42 @@ typedef union EXTINT14MASK_u
         uint32_t Reserved:24;    //31:8
     } bits;
 } EXTINT14MASK;
+
+/*
+ * EXT_INT15_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0938
+ * Reset Value = 0x0000_00FF
+ * 
+ *     Name          |   Bit   | Type |            Description          | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT15_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT15_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT15_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT15_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT15_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT15_MASK[5] |   [5]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT15_MASK[6] |   [6]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT15_MASK[7] |   [7]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * RSVD              |  [31:8] |  -   | Reserved                        |   0x000000  |
+ * -----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT15MASK_u
 {
@@ -1951,6 +5725,36 @@ typedef union EXTINT15MASK_u
     } bits;
 } EXTINT15MASK;
 
+/*
+ * EXT_INT16_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x093C
+ * Reset Value = 0x0000_003F
+ * 
+ *     Name          |   Bit   | Type |            Description          | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT16_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT16_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT16_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT16_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT16_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT16_MASK[5] |   [5]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * RSVD              |  [31:6] |  -   | Reserved                        |  0x0000000  |
+ * -----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT16MASK_u
 {
     uint32_t all_val;
@@ -1965,6 +5769,42 @@ typedef union EXTINT16MASK_u
         uint32_t Reserved:26;    //31:6
     } bits;
 } EXTINT16MASK;
+
+/*
+ * EXT_INT21_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0940
+ * Reset Value = 0x0000_00FF
+ * 
+ *     Name          |   Bit   | Type |            Description          | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT21_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT21_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT21_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT21_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT21_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT21_MASK[5] |   [5]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT21_MASK[6] |   [6]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT21_MASK[7] |   [7]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * RSVD              |  [31:8] |  -   | Reserved                        |   0x000000  |
+ * -----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT21MASK_u
 {
@@ -1983,6 +5823,33 @@ typedef union EXTINT21MASK_u
     } bits;
 } EXTINT21MASK;
 
+/*
+ * EXT_INT22_MASK
+ * 
+ * Address = GPIO Base Address 1 + 0x0944
+ * Reset Value = 0x0000_001F
+ * 
+ *     Name          |   Bit   | Type |            Description          | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT22_MASK[0] |   [0]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT22_MASK[1] |   [1]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT22_MASK[2] |   [2]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT22_MASK[3] |   [3]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * EXT_INT22_MASK[4] |   [4]   |  RW  | 0x0 : Enables interrupt         |     0x1     |
+ *                   |         |      | 0x1 : Masked                    |             |
+ * -----------------------------------------------------------------------------------|
+ * RSVD              |  [31:5] |  -   | Reserved                        |  0x0000000  |
+ * -----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT22MASK_u
 {
     uint32_t all_val;
@@ -1997,7 +5864,41 @@ typedef union EXTINT22MASK_u
     } bits;
 } EXTINT22MASK;
 
-///////////////////////////////////////////////////////////
+/*
+ * EXT_INT1_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A00
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT1_PEND[0]  |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT1_PEND[1]  |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT1_PEND[2]  |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT1_PEND[3]  |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT1_PEND[4]  |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT1_PEND[5]  |   [5]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT1_PEND[6]  |   [6]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT1_PEND[7]  |   [7]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:8] |  -   | Reserved                 |   0x000000  |
+ * ----------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT1PEND_u
 {
@@ -2016,6 +5917,36 @@ typedef union EXTINT1PEND_u
     } bits;
 } EXTINT1PEND;
 
+/*
+ * EXT_INT2_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A04
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT2_PEND[0]  |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT2_PEND[1]  |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT2_PEND[2]  |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT2_PEND[3]  |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT2_PEND[4]  |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT2_PEND[5]  |   [5]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:6] |  -   | Reserved                 |  0x0000000  |
+ * ----------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT2PEND_u
 {
     uint32_t all_val;
@@ -2030,6 +5961,42 @@ typedef union EXTINT2PEND_u
         uint32_t Reserved:26;    //31:6
     } bits;
 } EXTINT2PEND;
+
+/*
+ * EXT_INT3_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A08
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT3_PEND[0]  |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT3_PEND[1]  |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT3_PEND[2]  |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT3_PEND[3]  |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT3_PEND[4]  |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT3_PEND[5]  |   [5]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT3_PEND[6]  |   [6]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT3_PEND[7]  |   [7]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:8] |  -   | Reserved                 |   0x000000  |
+ * ----------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT3PEND_u
 {
@@ -2048,6 +6015,33 @@ typedef union EXTINT3PEND_u
     } bits;
 } EXTINT3PEND;
 
+/*
+ * EXT_INT4_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A0C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT4_PEND[0]  |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT4_PEND[1]  |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT4_PEND[2]  |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT4_PEND[3]  |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT4_PEND[4]  |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:5] |  -   | Reserved                 |  0x0000000  |
+ * ----------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT4PEND_u
 {
     uint32_t all_val;
@@ -2061,6 +6055,33 @@ typedef union EXTINT4PEND_u
         uint32_t Reserved:27;    //31:5
     } bits;
 } EXTINT4PEND;
+
+/*
+ * EXT_INT5_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A10
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT5_PEND[0]  |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT5_PEND[1]  |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT5_PEND[2]  |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT5_PEND[3]  |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT5_PEND[4]  |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:5] |  -   | Reserved                 |  0x0000000  |
+ * ----------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT5PEND_u
 {
@@ -2076,6 +6097,30 @@ typedef union EXTINT5PEND_u
     } bits;
 } EXTINT5PEND;
 
+/*
+ * EXT_INT6_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A14
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT6_PEND[0]  |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT6_PEND[1]  |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT6_PEND[2]  |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT6_PEND[3]  |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:4] |  -   | Reserved                 |  0x0000000  |
+ * ----------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT6PEND_u
 {
     uint32_t all_val;
@@ -2089,6 +6134,30 @@ typedef union EXTINT6PEND_u
     } bits;
 } EXTINT6PEND;
 
+/*
+ * EXT_INT7_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A18
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT7_PEND[0]  |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT7_PEND[1]  |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT7_PEND[2]  |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT7_PEND[3]  |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:4] |  -   | Reserved                 |  0x0000000  |
+ * ----------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT7PEND_u
 {
     uint32_t all_val;
@@ -2101,6 +6170,42 @@ typedef union EXTINT7PEND_u
         uint32_t Reserved:28;    //31:5
     } bits;
 } EXTINT7PEND;
+
+/*
+ * EXT_INT13_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A30
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT13_PEND[0] |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT13_PEND[1] |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT13_PEND[2] |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT13_PEND[3] |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT13_PEND[4] |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT13_PEND[5] |   [5]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT13_PEND[6] |   [6]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT13_PEND[7] |   [7]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:8] |  -   | Reserved                 |   0x000000  |
+ * ----------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT13PEND_u
 {
@@ -2119,6 +6224,42 @@ typedef union EXTINT13PEND_u
     } bits;
 } EXTINT13PEND;
 
+/*
+ * EXT_INT14_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A34
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT14_PEND[0] |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT14_PEND[1] |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT14_PEND[2] |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT14_PEND[3] |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT14_PEND[4] |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT14_PEND[5] |   [5]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT14_PEND[6] |   [6]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT14_PEND[7] |   [7]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:8] |  -   | Reserved                 |   0x000000  |
+ * ----------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT14PEND_u
 {
     uint32_t all_val;
@@ -2135,6 +6276,42 @@ typedef union EXTINT14PEND_u
         uint32_t Reserved:24;    //31:8
     } bits;
 } EXTINT14PEND;
+
+/*
+ * EXT_INT15_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A38
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT15_PEND[0] |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT15_PEND[1] |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT15_PEND[2] |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT15_PEND[3] |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT15_PEND[4] |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT15_PEND[5] |   [5]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT15_PEND[6] |   [6]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT15_PEND[7] |   [7]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:8] |  -   | Reserved                 |   0x000000  |
+ * ----------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT15PEND_u
 {
@@ -2153,6 +6330,36 @@ typedef union EXTINT15PEND_u
     } bits;
 } EXTINT15PEND;
 
+/*
+ * EXT_INT16_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A3C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT16_PEND[0] |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT16_PEND[1] |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT16_PEND[2] |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT16_PEND[3] |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT16_PEND[4] |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT16_PEND[5] |   [5]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:6] |  -   | Reserved                 |   0x000000  |
+ * ----------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT16PEND_u
 {
     uint32_t all_val;
@@ -2167,6 +6374,42 @@ typedef union EXTINT16PEND_u
         uint32_t Reserved:26;    //31:6
     } bits;
 } EXTINT16PEND;
+
+/*
+ * EXT_INT21_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A40
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT21_PEND[0] |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT21_PEND[1] |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT21_PEND[2] |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT21_PEND[3] |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT21_PEND[4] |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT21_PEND[5] |   [5]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT21_PEND[6] |   [6]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT21_PEND[7] |   [7]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:8] |  -   | Reserved                 |   0x000000  |
+ * ----------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT21PEND_u
 {
@@ -2185,6 +6428,33 @@ typedef union EXTINT21PEND_u
     } bits;
 } EXTINT21PEND;
 
+/*
+ * EXT_INT22_PEND
+ * 
+ * Address = GPIO Base Address 1 + 0x0A44
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name          |   Bit   | Type |        Description       | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ * EXT_INT22_PEND[0] |   [0]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT22_PEND[1] |   [1]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT22_PEND[2] |   [2]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT22_PEND[3] |   [3]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * EXT_INT22_PEND[4] |   [4]   |  RWX | 0x0 : Not occur          |     0x0     |
+ *                   |         |      | 0x1 : Interrupt occurs   |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD              |  [31:5] |  -   | Reserved                 |   0x000000  |
+ * ----------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT22PEND_u
 {
     uint32_t all_val;
@@ -2199,7 +6469,34 @@ typedef union EXTINT22PEND_u
     } bits;
 } EXTINT22PEND;
 
-////////////////////////////////////////////
+/*
+ * EXT_INT_SERVICE_XB
+ * 
+ * Address = GPIO Base Address 1 + 0x0B08
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name      |   Bit   | Type |           Description           | Reset Value | 
+ * -------------------------------------------------------------------------------|
+ * SVC_Num       |  [2:0]  |  RW  | Interrupt number to be serviced |  0x0000000  |
+ * -------------------------------------------------------------------------------|
+ *               |         |      | EXT_INT Service group number    |             |
+ *               |         |      | 0x1 : EXT_INT1                  |             |
+ *               |         |      | 0x2 : EXT_INT2                  |             |
+ *               |         |      | 0x3 : EXT_INT3                  |             |
+ *               |         |      | 0x4 : EXT_INT4                  |             |
+ *               |         |      | 0x5 : EXT_INT5                  |             |
+ *               |         |      | 0x6 : EXT_INT6                  |             |
+ * SVC_Group_Num |  [7:3]  |  RW  | 0x7 : EXT_INT7                  |     0x00    |
+ *               |         |      | 0x8 : EXT_INT13                 |             |
+ *               |         |      | 0x9 : EXT_INT14                 |             |
+ *               |         |      | 0xA : EXT_INT15                 |             |
+ *               |         |      | 0xB : EXT_INT16                 |             |
+ *               |         |      | 0xC : EXT_INT21                 |             |
+ *               |         |      | 0xD : EXT_INT22                 |             |
+ * -------------------------------------------------------------------------------|
+ * RSVD          |  [31:8] |  RW  | Reserved                        |     0x0     |
+ * -------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINTSERVICEXB_u
 {
@@ -2212,6 +6509,21 @@ typedef union EXTINTSERVICEXB_u
     } bits;
 } EXTINTSERVICEXB;
 
+/*
+ * EXT_INT_SERVICE_PEND_XB
+ * 
+ * Address = GPIO Base Address 1 + 0x0B0C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name      |   Bit   | Type |       Description       | Reset Value | 
+ * -----------------------------------------------------------------------|
+ * SVC_PEND      |  [7:0]  |  RW  | 0x0 : Not occur         |     0x00    |
+ *               |         |      | 0x1 : Interrupt occurs  |             |
+ * -----------------------------------------------------------------------|
+ * RSVD          |  [31:8] |  RW  | Reserved                |  0x0000000  |
+ * -----------------------------------------------------------------------|
+ */
+
 typedef union EXTINTSERVICEPENDXB_u
 {
     uint32_t all_val;
@@ -2221,6 +6533,34 @@ typedef union EXTINTSERVICEPENDXB_u
         uint32_t Reserved:24;                   //31:8
     } bits;
 } EXTINTSERVICEPENDXB;
+
+/*
+ * EXT_INT_GRPFIXPRI_XB
+ * 
+ * Address = GPIO Base Address 1 + 0x0B10
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                   Description                   | Reset Value | 
+ * -------------------------------------------------------------------------------------------------|
+ *                 |         |      | When fixed group priority mode = 0 to 12, then  |             |
+ *                 |         |      | group number should be of the highest priority. |             |
+ *                 |         |      | 0x0 : EXT_INT1                                  |             |
+ *                 |         |      | 0x1 : EXT_INT2                                  |             |
+ *                 |         |      | 0x2 : EXT_INT3                                  |             |
+ *                 |         |      | 0x3 : EXT_INT4                                  |             |
+ *                 |         |      | 0x4 : EXT_INT5                                  |             |
+ *                 |         |      | 0x5 : EXT_INT6                                  |             |
+ * Highest_GRP_NUM |  [3:0]  |  RW  | 0x6 : EXT_INT7                                  |     0x00    |
+ *                 |         |      | 0x7 : EXT_INT13                                 |             |
+ *                 |         |      | 0x8 : EXT_INT14                                 |             |
+ *                 |         |      | 0x9 : EXT_INT15                                 |             |
+ *                 |         |      | 0xA : EXT_INT16                                 |             |
+ *                 |         |      | 0xB : EXT_INT21                                 |             |
+ *                 |         |      | 0xC : EXT_INT22                                 |             |
+ * -------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:4] |  RW  | Reserved                                        |     0x0     |
+ * -------------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINTGRPFIXPRIXB_u
 {
@@ -2232,7 +6572,21 @@ typedef union EXTINTGRPFIXPRIXB_u
     } bits;
 } EXTINTGRPFIXPRIXB;
 
-///////////////////////////////////////////////////
+/*
+ * EXT_INT1_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B14
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 0 (EXT_INT1) when fixed priority     |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT1FIXPRI_u
 {
@@ -2244,6 +6598,22 @@ typedef union EXTINT1FIXPRI_u
     } bits;
 } EXTINT1FIXPRI;
 
+/*
+ * EXT_INT2_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B18
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 1 (EXT_INT2) when fixed priority     |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT2FIXPRI_u
 {
     uint32_t all_val;
@@ -2253,6 +6623,22 @@ typedef union EXTINT2FIXPRI_u
         uint32_t Reserved:29;   //31:3
     } bits;
 } EXTINT2FIXPRI;
+
+/*
+ * EXT_INT3_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B1C
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 2 (EXT_INT3) when fixed priority     |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT3FIXPRI_u
 {
@@ -2264,6 +6650,22 @@ typedef union EXTINT3FIXPRI_u
     } bits;
 } EXTINT3FIXPRI;
 
+/*
+ * EXT_INT4_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B20
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 3 (EXT_INT4) when fixed priority     |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT4FIXPRI_u
 {
     uint32_t all_val;
@@ -2273,6 +6675,22 @@ typedef union EXTINT4FIXPRI_u
         uint32_t Reserved:29;   //31:3
     } bits;
 } EXTINT4FIXPRI;
+
+/*
+ * EXT_INT5_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B24
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 4 (EXT_INT5) when fixed priority     |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT5FIXPRI_u
 {
@@ -2284,6 +6702,22 @@ typedef union EXTINT5FIXPRI_u
     } bits;
 } EXTINT5FIXPRI;
 
+/*
+ * EXT_INT6_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B28
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 5 (EXT_INT6) when fixed priority     |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT6FIXPRI_u
 {
     uint32_t all_val;
@@ -2293,6 +6727,22 @@ typedef union EXTINT6FIXPRI_u
         uint32_t Reserved:29;   //31:3
     } bits;
 } EXTINT6FIXPRI;
+
+/*
+ * EXT_INT7_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B2C
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 6 (EXT_INT7) when fixed priority     |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT7FIXPRI_u
 {
@@ -2304,6 +6754,22 @@ typedef union EXTINT7FIXPRI_u
     } bits;
 } EXTINT7FIXPRI;
 
+/*
+ * EXT_INT13_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B44
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 7 (EXT_INT13) when fixed priority    |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT13FIXPRI_u
 {
     uint32_t all_val;
@@ -2313,6 +6779,22 @@ typedef union EXTINT13FIXPRI_u
         uint32_t Reserved:29;   //31:3
     } bits;
 } EXTINT13FIXPRI;
+
+/*
+ * EXT_INT14_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B48
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 8 (EXT_INT14) when fixed priority    |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT14FIXPRI_u
 {
@@ -2324,6 +6806,22 @@ typedef union EXTINT14FIXPRI_u
     } bits;
 } EXTINT14FIXPRI;
 
+/*
+ * EXT_INT15_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B4C
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 9 (EXT_INT15) when fixed priority    |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT15FIXPRI_u
 {
     uint32_t all_val;
@@ -2333,6 +6831,22 @@ typedef union EXTINT15FIXPRI_u
         uint32_t Reserved:29;   //31:3
     } bits;
 } EXTINT15FIXPRI;
+
+/*
+ * EXT_INT16_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B50
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 10 (EXT_INT16) when fixed priority   |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT16FIXPRI_u
 {
@@ -2344,6 +6858,22 @@ typedef union EXTINT16FIXPRI_u
     } bits;
 } EXTINT16FIXPRI;
 
+/*
+ * EXT_INT21_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B54
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 11 (EXT_INT21) when fixed priority   |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT21FIXPRI_u
 {
     uint32_t all_val;
@@ -2353,6 +6883,22 @@ typedef union EXTINT21FIXPRI_u
         uint32_t Reserved:29;   //31:3
     } bits;
 } EXTINT21FIXPRI;
+
+/*
+ * EXT_INT22_FIXPRI
+ * 
+ * Address = GPIO Base Address 1 + 0x0B58
+ * Reset Value = 0x0000_0000
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Interrupt number of the highest priority in External |             |
+ * Highest_GRP_NUM |  [2:0]  |  RW  | Interrupt Group 12 (EXT_INT22) when fixed priority   |     0x0     |
+ *                 |         |      | mode : 0 to 7                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [31:3] |  RW  | Reserved                                             |  0x0000000  |
+ * ------------------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT22FIXPRI_u
 {
@@ -2364,7 +6910,30 @@ typedef union EXTINT22FIXPRI_u
     } bits;
 } EXTINT22FIXPRI;
 
-////////////////////////////////////////////////
+/*
+ * PDNEN
+ * 
+ * Address = GPIO Base Address 1 + 0x0F80
+ * Reset Value = 0x00
+ * 
+ *      Name       |   Bit   | Type |                     Description                      | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                 |         |      | Power down mode pad state enable register.           |             |
+ *                 |         |      | 0 : PADs Controlled by normal mode                   |             |
+ *                 |         |      | 1 : PADs Controlled by Power Down mode               |             |
+ *                 |         |      | control registers                                    |             |
+ * PDNEN           |   [0]   |  RW  | This bit is set to "1" automaticially when system    |     0x0     |
+ *                 |         |      | enters into Power down mode and can be cleared       |             |
+ *                 |         |      | by writing "0" to this bit or cold reset. After wake |             |
+ *                 |         |      | up from Power down mode, this bit maintains          |             |
+ *                 |         |      | value "1" until writing "0"                          |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * PDNEN_CFG       |   [1]   |  RW  | 0 : Automatically by power down mode                 |     0x0     |
+ *                 |         |      | 1 : by PDNEN bit                                     |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD            |  [7:2]  |  RW  | Reserved                                             |     0x00    |
+ * ------------------------------------------------------------------------------------------------------|
+ */
 
 typedef union BASEADDR1PDNEN_u
 {
@@ -2377,7 +6946,143 @@ typedef union BASEADDR1PDNEN_u
     } bits;
 } BASEADDR1PDNEN;
 
-/////////////////////////////////////////////////
+/*
+ * GPK0CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0040
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description       |    Reset Value   | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPK0CON[0]   |  [3:0]  |  RW  | 0x2     : SD_0_CLK     |       0x00       |
+ *              |         |      | 0x3     : SD_4_CLK     |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT23[0] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPK0CON[1]   |  [7:4]  |  RW  | 0x2     : SD_0_CMD     |       0x00       |
+ *              |         |      | 0x3     : SD_4_CMD     |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT23[1] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : SD_0_CDn     |                  |
+ * GPK0CON[2]   |  [11:8] |  RW  | 0x3     : SD_4_CDn     |       0x00       |
+ *              |         |      | 0x4     : GNSS_GPIO[8] |                  |
+ *              |         |      | 0x5~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT23[2] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPK0CON[3]   | [15:12] |  RW  | 0x2     : SD_0_DATA[0] |       0x00       |
+ *              |         |      | 0x3     : SD_4_DATA[0] |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT23[3] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPK0CON[4]   | [19:16] |  RW  | 0x2     : SD_0_DATA[1] |       0x00       |
+ *              |         |      | 0x3     : SD_4_DATA[1] |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT23[4] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPK0CON[5]   | [23:20] |  RW  | 0x2     : SD_0_DATA[2] |       0x00       |
+ *              |         |      | 0x3     : SD_4_DATA[2] |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT23[5] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : SD_0_DATA[3] |                  |
+ * GPK0CON[6]   | [27:24] |  RW  | 0x3     : SD_4_DATA[3] |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT23[6] |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK0DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x0044
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPK0DAT[6:0] |  [6:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK0PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0048
+ * Reset Value = 0x1555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPK0PUD[n]   | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |      0x1555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPK0DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x004C
+ * Reset Value = 0x00_2AAA
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPK0DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 6 |  RW  | 0x2 : 3x                      |      0x2AAA      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK0CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0050
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPK0[n]      | n = 0 ~ 6 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK0PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0054
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPK0[n]      | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPK0CON_u
 {
@@ -2465,7 +7170,145 @@ typedef union GPK0PUDPDN_u
     } bits;   
 } GPK0PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPK1CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0060
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK1CON[0]   |  [3:0]  |  RW  | 0x2     : SD_1_CLK        |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT24[0]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK1CON[1]   |  [7:4]  |  RW  | 0x2     : SD_1_CMD        |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT24[1]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : SD_1_CDn        |                  |
+ * GPK1CON[2]   |  [11:8] |  RW  | 0x3     : GNSS_GPIO[9]    |       0x00       |
+ *              |         |      | 0x4     : SD_4_nRESET_OUT |                  |
+ *              |         |      | 0x5~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT24[2]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : SD_1_DATA[0]    |                  |
+ * GPK1CON[3]   | [15:12] |  RW  | 0x3     : SD_0_DATA[4]    |       0x00       |
+ *              |         |      | 0x4     : SD_4_DATA[4]    |                  |
+ *              |         |      | 0x5~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT24[3]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : SD_1_DATA[1]    |                  |
+ * GPK1CON[4]   | [19:16] |  RW  | 0x3     : SD_0_DATA[5]    |       0x00       |
+ *              |         |      | 0x4     : SD_4_DATA[5]    |                  |
+ *              |         |      | 0x5~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT24[4]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : SD_1_DATA[2]    |                  |
+ * GPK1CON[5]   | [23:20] |  RW  | 0x3     : SD_0_DATA[6]    |       0x00       |
+ *              |         |      | 0x4     : SD_4_DATA[6]    |                  |
+ *              |         |      | 0x5~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT24[5]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : SD_1_DATA[3]    |                  |
+ * GPK1CON[6]   | [27:24] |  RW  | 0x3     : SD_0_DATA[7]    |       0x00       |
+ *              |         |      | 0x4     : SD_4_DATA[7]    |                  |
+ *              |         |      | 0x5~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT24[6]    |                  |
+ * -----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK1DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x0064
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPK1DAT[6:0] |  [6:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK1PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0068
+ * Reset Value = 0x1555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPK1PUD[n]   | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |      0x1555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPK1DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x006C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPK1DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 6 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK1CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0070
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPK1[n]      | n = 0 ~ 6 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK1PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0074
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPK1[n]      | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPK1CON_u
 {
@@ -2553,7 +7396,136 @@ typedef union GPK1PUDPDN_u
     } bits;   
 } GPK1PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPK2CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0080
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK2CON[0]   |  [3:0]  |  RW  | 0x2     : SD_2_CLK        |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT25[0]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK2CON[1]   |  [7:4]  |  RW  | 0x2     : SD_2_CMD        |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT25[1]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK2CON[2]   |  [11:8] |  RW  | 0x2     : SD_2_CDn        |       0x00       |
+ *              |         |      | 0x3     : GNSS_GPIO[10]   |                  |
+ *              |         |      | 0x4~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT25[2]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK2CON[3]   | [15:12] |  RW  | 0x2     : SD_2_DATA[0]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT25[3]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK2CON[4]   | [19:16] |  RW  | 0x2     : SD_2_DATA[1]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT25[4]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK2CON[5]   | [23:20] |  RW  | 0x2     : SD_2_DATA[2]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT25[5]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK2CON[6]   | [27:24] |  RW  | 0x2     : SD_2_DATA[3]    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT25[6]    |                  |
+ * -----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK2DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x0084
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPK2DAT[6:0] |  [6:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK2PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0088
+ * Reset Value = 0x1555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPK2PUD[n]   | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |      0x1555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPK2DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x008C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPK2DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 6 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK2CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0090
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPK2[n]      | n = 0 ~ 6 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK2PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0094
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPK2[n]      | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPK2CON_u
 {
@@ -2641,7 +7613,140 @@ typedef union GPK2PUDPDN_u
     } bits;   
 } GPK2PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPK3CON
+ * 
+ * Address = GPIO Base Address 2 + 0x00A0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK3CON[0]   |  [3:0]  |  RW  | 0x2     : SD_3_CLK        |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT26[0]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK3CON[1]   |  [7:4]  |  RW  | 0x2     : SD_3_CMD        |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT26[1]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK3CON[2]   |  [11:8] |  RW  | 0x2     : SD_3_CDn        |       0x00       |
+ *              |         |      | 0x3     : GNSS_GPIO[11]   |                  |
+ *              |         |      | 0x4~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT26[2]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK3CON[3]   | [15:12] |  RW  | 0x2     : SD_3_DATA[0]    |       0x00       |
+ *              |         |      | 0x3     : SD_2_DATA[4]    |                  |
+ *              |         |      | 0x4~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT26[3]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK3CON[4]   | [19:16] |  RW  | 0x2     : SD_3_DATA[1]    |       0x00       |
+ *              |         |      | 0x3     : SD_2_DATA[5]    |                  |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT26[4]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK3CON[5]   | [23:20] |  RW  | 0x2     : SD_3_DATA[2]    |       0x00       |
+ *              |         |      | 0x3     : SD_2_DATA[6]    |                  |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT26[5]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPK3CON[6]   | [27:24] |  RW  | 0x2     : SD_3_DATA[3]    |       0x00       |
+ *              |         |      | 0x3     : SD_2_DATA[7]    |                  |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT26[6]    |                  |
+ * -----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK3DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x00A4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPK3DAT[6:0] |  [6:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK3PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x00A8
+ * Reset Value = 0x1555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPK3PUD[n]   | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |      0x1555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPK3DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x00AC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPK3DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 6 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK3CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x00B0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPK3[n]      | n = 0 ~ 6 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPK3PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x00B4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPK3[n]      | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPK3CON_u
 {
@@ -2729,7 +7834,134 @@ typedef union GPK3PUDPDN_u
     } bits;   
 } GPK3PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPL0CON
+ * 
+ * Address = GPIO Base Address 2 + 0x00C0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPL0CON[0]   |  [3:0]  |  RW  | 0x2     : GNSS_SYNC       |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT27[0]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPL0CON[1]   |  [7:4]  |  RW  | 0x2     : GNSS_ISIGN      |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT27[1]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPL0CON[2]   |  [11:8] |  RW  | 0x2     : GNSS_IMAG       |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT27[2]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPL0CON[3]   | [15:12] |  RW  | 0x2     : GNSS_QSIGN      |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT27[3]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPL0CON[4]   | [19:16] |  RW  | 0x2     : GNSS_QMAG       |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT27[4]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ * GPL0CON[5]   | [23:20] |  RW  | 0x1     : Output          |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT27[5]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPL0CON[6]   | [27:24] |  RW  | 0x2     : GNSS_RF_RSTN    |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT27[6]    |                  |
+ * -----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL0DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x00C4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPL0DAT[6:0] |  [6:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL0PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x00C8
+ * Reset Value = 0x1555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPL0PUD[n]   | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |      0x1555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPL0DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x00CC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPL0DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 6 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL0CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x00D0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPL0[n]      | n = 0 ~ 6 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL0PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x00D4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPL0[n]      | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPL0CON_u
 {
@@ -2817,7 +8049,105 @@ typedef union GPL0PUDPDN_u
     } bits;   
 } GPL0PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPL1CON
+ * 
+ * Address = GPIO Base Address 2 + 0x00E0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPL1CON[0]   |  [3:0]  |  RW  | 0x2     : GNSS_SCL        |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT28[0]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPL1CON[1]   |  [7:4]  |  RW  | 0x2     : GNSS_SDA        |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT28[1]    |                  |
+ * -----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL1DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x00E4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPL1DAT[1:0] |  [1:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL1PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x00E8
+ * Reset Value = 0x0005
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPL1PUD[n]   | n = 0 ~ 1 |  RW  | 0x2 : Reserved                     |      0x0005      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPL1DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x00EC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPL1DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 1 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL1CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x00F0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPL1[n]      | n = 0 ~ 1 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL1PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x00F4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPL1[n]      | n = 0 ~ 1 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPL1CON_u
 {
@@ -2880,7 +8210,149 @@ typedef union GPL1PUDPDN_u
     } bits;   
 } GPL1PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPL2CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0100
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description      |   Reset Value    | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPL2CON[0]   |  [3:0]  |  RW  | 0x2     : GNSS_GPIO[0] |       0x00       |
+ *              |         |      | 0x3     : KP_COL[0]    |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT29[0] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPL2CON[1]   |  [7:4]  |  RW  | 0x2     : GNSS_GPIO[1] |       0x00       |
+ *              |         |      | 0x3     : KP_COL[1]    |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT29[1] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPL2CON[2]   |  [11:8] |  RW  | 0x2     : GNSS_GPIO[2] |       0x00       |
+ *              |         |      | 0x3     : KP_COL[2]    |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT29[2] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPL2CON[3]   | [15:12] |  RW  | 0x2     : GNSS_GPIO[3] |       0x00       |
+ *              |         |      | 0x3     : KP_COL[3]    |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT29[3] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPL2CON[4]   | [19:16] |  RW  | 0x2     : GNSS_GPIO[4] |       0x00       |
+ *              |         |      | 0x3     : KP_COL[4]    |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT29[4] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPL2CON[5]   | [23:20] |  RW  | 0x2     : GNSS_GPIO[5] |       0x00       |
+ *              |         |      | 0x3     : KP_COL[5]    |                  |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT29[5] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : GNSS_GPIO[6] |                  |
+ * GPL2CON[6]   | [27:24] |  RW  | 0x3     : KP_COL[6]    |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT29[6] |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : GNSS_GPIO[7] |                  |
+ * GPL2CON[7]   | [31:28] |  RW  | 0x3     : KP_COL[7]    |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : EXT_INT29[7] |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL2DAT
+ * 
+ * Address = GPIO Base Address 1 + 0x0104
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPL2DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL2PUD
+ * 
+ * Address = GPIO Base Address 1 + 0x0108
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPL2PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPL2DRV
+ * 
+ * Address = GPIO Base Address 1 + 0x010C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPL2DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL2CONPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0110
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPL2[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPL2PUDPDN
+ * 
+ * Address = GPIO Base Address 1 + 0x0114
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPL2[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPL2CON_u
 {
@@ -2972,7 +8444,131 @@ typedef union GPL2PUDPDN_u
     } bits;   
 } GPL2PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPY0CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0120
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPY0CON[0]   |  [3:0]  |  RW  | 0x2     : SROM_CSn[0]     |       0x00       |
+ *              |         |      | 0x3     : NF_CSn[2]       |                  |
+ *              |         |      | 0x4~0xF : Reserved        |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPY0CON[1]   |  [7:4]  |  RW  | 0x2     : SROM_CSn[1]     |       0x00       |
+ *              |         |      | 0x3     : NF_CSn[3]       |                  |
+ *              |         |      | 0x4~0xF : Reserved        |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : SROM_CSn[2]     |                  |
+ * GPY0CON[2]   |  [11:8] |  RW  | 0x3     : NF_CSn[0]       |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : OND_CSn[0]      |                  |
+ *              |         |      | 0x4~0xF : Reserved        |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : SROM_CSn[3]     |                  |
+ * GPY0CON[3]   | [15:12] |  RW  | 0x3     : NF_CSn[1]       |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : OND_CSn[1]      |                  |
+ *              |         |      | 0x4~0xF : Reserved        |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ * GPY0CON[4]   | [19:16] |  RW  | 0x1     : Output          |       0x00       |
+ *              |         |      | 0x2     : EBI_OEn         |                  |
+ *              |         |      | 0x3~0xF : Reserved        |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ * GPY0CON[5]   | [23:20] |  RW  | 0x1     : Output          |       0x00       |
+ *              |         |      | 0x2     : EBI_WEn         |                  |
+ *              |         |      | 0x3~0xF : Reserved        |                  |
+ * -----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY0DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x0124
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPY0DAT[5:0] |  [5:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY0PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0128
+ * Reset Value = 0x0FFF
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPY0PUD[n]   | n = 0 ~ 5 |  RW  | 0x2 : Reserved                     |      0x0FFF      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPY0DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x012C
+ * Reset Value = 0x00_0AAA
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPY0DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 5 |  RW  | 0x2 : 3x                      |      0x0AAA      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY0CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0130
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPY0[n]      | n = 0 ~ 6 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY0PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0134
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPY0[n]      | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPY0CON_u
 {
@@ -3055,7 +8651,113 @@ typedef union GPY0PUDPDN_u
     } bits;   
 } GPY0PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPY1CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0140
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description       |    Reset Value   | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ * GPY1CON[0]   |  [3:0]  |  RW  | 0x1     : Output       |       0x00       |
+ *              |         |      | 0x2     : EBI_BEn[0]   |                  |
+ *              |         |      | 0x3~0xF : Reserved     |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ * GPY1CON[1]   |  [7:4]  |  RW  | 0x1     : Output       |       0x00       |
+ *              |         |      | 0x2     : EBI_BEn[1]   |                  |
+ *              |         |      | 0x3~0xF : Reserved     |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ * GPY1CON[2]   |  [11:8] |  RW  | 0x1     : Output       |       0x00       |
+ *              |         |      | 0x2     : SROM_WAITn   |                  |
+ *              |         |      | 0x3~0xF : Reserved     |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ * GPY1CON[3]   | [15:12] |  RW  | 0x1     : Output       |       0x00       |
+ *              |         |      | 0x2     : EBI_DATA_RDn |                  |
+ *              |         |      | 0x3~0xF : Reserved     |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY1DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x0144
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPY1DAT[3:0] |  [3:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY1PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0148
+ * Reset Value = 0x00FF
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPY1PUD[n]   | n = 0 ~ 3 |  RW  | 0x2 : Reserved                     |      0x0FFF      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPY1DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x014C
+ * Reset Value = 0x00_00AA
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPY1DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 3 |  RW  | 0x2 : 3x                      |      0x00AA      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY1CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0150
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPY1[n]      | n = 0 ~ 3 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY1PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0154
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPY1[n]      | n = 0 ~ 3 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPY1CON_u
 {
@@ -3128,7 +8830,145 @@ typedef union GPY1PUDPDN_u
     } bits;   
 } GPY1PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPY2CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0160
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : NF_CLE          |                  |
+ * GPY2CON[0]   |  [3:0]  |  RW  | 0x3     : Reserved        |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : OND_ADDRVALID   |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : -               |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : NF_ALE          |                  |
+ * GPY2CON[1]   |  [7:4]  |  RW  | 0x3     : Reserved        |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : OND_SMCLK       |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : -               |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : NF_RnB[0]       |                  |
+ * GPY2CON[2]   |  [11:8] |  RW  | 0x3     : Reserved        |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : OND_INT[0]      |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : -               |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : NF_RnB[1]       |                  |
+ * GPY2CON[3]   | [15:12] |  RW  | 0x3     : Reserved        |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : OND_INT[1]      |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : -               |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : NF_RnB[2]       |                  |
+ * GPY2CON[4]   | [19:16] |  RW  | 0x3     : Reserved        |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : OND_INT[2]      |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : -               |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPY2CON[5]   | [23:20] |  RW  | 0x2     : NF_RnB[3]       |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : -               |                  |
+ * -----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY2DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x0164
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPY2DAT[5:0] |  [5:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY2PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0168
+ * Reset Value = 0x0FFF
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPY2PUD[n]   | n = 0 ~ 5 |  RW  | 0x2 : Reserved                     |      0x0FFF      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPY2DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x016C
+ * Reset Value = 0x00_0AAA
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPY2DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 5 |  RW  | 0x2 : 3x                      |      0x0AAA      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY2CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0170
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPY2[n]      | n = 0 ~ 6 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY2PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0174
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPY2[n]      | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
+
 
 typedef union GPY2CON_u
 {
@@ -3211,7 +9051,141 @@ typedef union GPY2PUDPDN_u
     } bits;   
 } GPY2PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPY3CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0180
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description      |   Reset Value    | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY3CON[0]   |  [3:0]  |  RW  | 0x2     : EBI_ADDR[0]  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY3CON[1]   |  [7:4]  |  RW  | 0x2     : EBI_ADDR[1]  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY3CON[2]   |  [11:8] |  RW  | 0x2     : EBI_ADDR[2]  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY3CON[3]   | [15:12] |  RW  | 0x2     : EBI_ADDR[3]  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY3CON[4]   | [19:16] |  RW  | 0x2     : EBI_ADDR[4]  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY3CON[5]   | [23:20] |  RW  | 0x2     : EBI_ADDR[5]  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY3CON[6]   | [27:24] |  RW  | 0x2     : EBI_ADDR[6]  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY3CON[7]   | [31:28] |  RW  | 0x2     : EBI_ADDR[7]  |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY3DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x0184
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPY3DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY3PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0188
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPY3PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPY3DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x018C
+ * Reset Value = 0x00_AAAA
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPY3DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0xAAAA      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY3CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0190
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPY3[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY3PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0194
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPY3[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPY3CON_u
 {
@@ -3303,7 +9277,157 @@ typedef union GPY3PUDPDN_u
     } bits;   
 } GPY3PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPY4CON
+ * 
+ * Address = GPIO Base Address 2 + 0x01A0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description      |   Reset Value    | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : EBI_ADDR[8]  |                  |
+ * GPY4CON[0]   |  [3:0]  |  RW  | 0x3     : Reserved     |       0x00       |
+ *              |         |      | 0x4     : XhsiCAWAKE   |                  |
+ *              |         |      | 0x5~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : EBI_ADDR[9]  |                  |
+ * GPY4CON[1]   |  [7:4]  |  RW  | 0x3     : Reserved     |       0x00       |
+ *              |         |      | 0x4     : XhsiCADATA   |                  |
+ *              |         |      | 0x5~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : EBI_ADDR[10] |                  |
+ * GPY4CON[2]   |  [11:8] |  RW  | 0x3     : Reserved     |       0x00       |
+ *              |         |      | 0x4     : XhsiCAFLAG   |                  |
+ *              |         |      | 0x5~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : EBI_ADDR[11] |                  |
+ * GPY4CON[3]   | [15:12] |  RW  | 0x3     : Reserved     |       0x00       |
+ *              |         |      | 0x4     : XhsiACREADY  |                  |
+ *              |         |      | 0x5~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : EBI_ADDR[12] |                  |
+ * GPY4CON[4]   | [19:16] |  RW  | 0x3     : Reserved     |       0x00       |
+ *              |         |      | 0x4     : XhsiACWAKE   |                  |
+ *              |         |      | 0x5~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : EBI_ADDR[13] |                  |
+ * GPY4CON[5]   | [23:20] |  RW  | 0x3     : Reserved     |       0x00       |
+ *              |         |      | 0x4     : XhsiACDATA   |                  |
+ *              |         |      | 0x5~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : EBI_ADDR[14] |                  |
+ * GPY4CON[6]   | [27:24] |  RW  | 0x3     : Reserved     |       0x00       |
+ *              |         |      | 0x4     : XhsiACFLAG   |                  |
+ *              |         |      | 0x5~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ *              |         |      | 0x2     : EBI_ADDR[15] |                  |
+ * GPY4CON[7]   | [31:28] |  RW  | 0x3     : Reserved     |       0x00       |
+ *              |         |      | 0x4     : XhsiACREADY  |                  |
+ *              |         |      | 0x5~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY4DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x01A4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPY4DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY4PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x01A8
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPY4PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPY4DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x01AC
+ * Reset Value = 0x00_AAAA
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPY4DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0xAAAA      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY4CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x01B0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPY4[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY4PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x01B4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPY4[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPY4CON_u
 {
@@ -3395,7 +9519,141 @@ typedef union GPY4PUDPDN_u
     } bits;   
 } GPY4PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPY5CON
+ * 
+ * Address = GPIO Base Address 2 + 0x01C0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description      |   Reset Value    | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY5CON[0]   |  [3:0]  |  RW  | 0x2     : EBI_DATA[0]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY5CON[1]   |  [7:4]  |  RW  | 0x2     : EBI_DATA[1]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY5CON[2]   |  [11:8] |  RW  | 0x2     : EBI_DATA[2]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY5CON[3]   | [15:12] |  RW  | 0x2     : EBI_DATA[3]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY5CON[4]   | [19:16] |  RW  | 0x2     : EBI_DATA[4]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY5CON[5]   | [23:20] |  RW  | 0x2     : EBI_DATA[5]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY5CON[6]   | [27:24] |  RW  | 0x2     : EBI_DATA[6]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY5CON[7]   | [31:28] |  RW  | 0x2     : EBI_DATA[7]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY5DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x01C4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPY5DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY5PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x01C8
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPY5PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPY5DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x01CC
+ * Reset Value = 0x00_AAAA
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPY5DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0xAAAA      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY5CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x01D0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPY5[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY5PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x01D4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPY5[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPY5CON_u
 {
@@ -3487,7 +9745,141 @@ typedef union GPY5PUDPDN_u
     } bits;   
 } GPY5PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPY6CON
+ * 
+ * Address = GPIO Base Address 2 + 0x01E0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description      |   Reset Value    | 
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY6CON[0]   |  [3:0]  |  RW  | 0x2     : EBI_DATA[8]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY6CON[1]   |  [7:4]  |  RW  | 0x2     : EBI_DATA[9]  |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY6CON[2]   |  [11:8] |  RW  | 0x2     : EBI_DATA[10] |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY6CON[3]   | [15:12] |  RW  | 0x2     : EBI_DATA[11] |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY6CON[4]   | [19:16] |  RW  | 0x2     : EBI_DATA[12] |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY6CON[5]   | [23:20] |  RW  | 0x2     : EBI_DATA[13] |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY6CON[6]   | [27:24] |  RW  | 0x2     : EBI_DATA[14] |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input        |                  |
+ *              |         |      | 0x1     : Output       |                  |
+ * GPY6CON[7]   | [31:28] |  RW  | 0x2     : EBI_DATA[15] |       0x00       |
+ *              |         |      | 0x3~0xE : Reserved     |                  |
+ *              |         |      | 0xF     : -            |                  |
+ * --------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY6DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x01E4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPY6DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY6PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x01E8
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPY6PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPY6DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x01EC
+ * Reset Value = 0x00_AAAA
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPY6DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0xAAAA      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY6CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x01F0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPY6[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPY6PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x01F4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPY6[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPY6CON_u
 {
@@ -3579,7 +9971,42 @@ typedef union GPY6PUDPDN_u
     } bits;   
 } GPY6PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * ETC0PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0208
+ * Reset Value = 0x0400
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * ETC0PUD[n]   | n = 0 ~ 5 |  RW  | 0x2 : Reserved                     |      0x0400      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ *
+ * ETC0DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x020C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * ETC0DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 5 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ * ETC0PUD[1:0] & ETC0PUD[1:0] controls XjTRSTn.
+ * ETC0PUD[3:2] & ETC0PUD[3:2] controls XjTMS.
+ * ETC0PUD[5:4] & ETC0PUD[5:4] controls XjTCK.
+ * ETC0PUD[7:6] & ETC0PUD[7:6] controls XjTDI.
+ * ETC0PUD[9:8] & ETC0PUD[9:8] controls XjTDO.
+ * ETC0PUD[11:10] & ETC0PUD[11:10] controls XjDBGSEL.
+ */
 
 typedef union ETC0PUD_u
 {
@@ -3610,6 +10037,45 @@ typedef union ETC0DRV_u
         uint32_t Reserved:8; //23:16
     } bits;
 } ETC0DRV;
+
+/*
+ * ETC6PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0228
+ * Reset Value = 0x0400
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * ETC6PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0xC000      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ *
+ * ETC6DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x022C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * ETC6DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ * ETC0PUD[1:0] & ETC0PUD[1:0] controls XnRESET.
+ * ETC0PUD[3:2] & ETC0PUD[3:2] controls XCLKOUT.
+ * ETC0PUD[5:4] & ETC0PUD[5:4] controls XnRSTOUT.
+ * ETC0PUD[7:6] & ETC0PUD[7:6] controls XnWRESET.
+ * ETC0PUD[9:8] & ETC0PUD[9:8] controls XRTCCLKO.
+ * ETC0PUD[11:10] & ETC0PUD[11:10] controls XuotgDRVVBUS.
+ * ETC0PUD[13:12] & ETC0PUD[13:12] controls XuhostPWREN.
+ * ETC0PUD[15:14] & ETC0PUD[15:14] controls XuhostOVERCUR.
+ */
 
 typedef union ETC6PUD_u
 {
@@ -3644,7 +10110,165 @@ typedef union ETC6DRV_u
     } bits;
 } ETC6DRV;
 
-/////////////////////////////////////////////////
+/*
+ * GPM0CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0260
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description       |   Reset Value    | 
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : Reserved      |                  |
+ * GPM0CON[0]   |  [3:0]  |  RW  | 0x3     : CAM_B_PCLK    |       0x00       |
+ *              |         |      | 0x4     : TS_CLK        |                  |
+ *              |         |      | 0x5     : TraceClk      |                  |
+ *              |         |      | 0x6~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT8[0]   |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : Reserved      |                  |
+ * GPM0CON[1]   |  [7:4]  |  RW  | 0x3     : CAM_B_DATA[0] |       0x00       |
+ *              |         |      | 0x4     : TS_SYNC       |                  |
+ *              |         |      | 0x5     : TraceData[0]  |                  |
+ *              |         |      | 0x6~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT8[1]   |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : Reserved      |                  |
+ * GPM0CON[2]   |  [11:8] |  RW  | 0x3     : CAM_B_DATA[1] |       0x00       |
+ *              |         |      | 0x4     : TS_VAL        |                  |
+ *              |         |      | 0x5     : TraceData[1]  |                  |
+ *              |         |      | 0x6~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT8[2]   |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : Reserved      |                  |
+ * GPM0CON[3]   | [15:12] |  RW  | 0x3     : CAM_B_DATA[2] |       0x00       |
+ *              |         |      | 0x4     : TS_DATA       |                  |
+ *              |         |      | 0x5     : TraceData[2]  |                  |
+ *              |         |      | 0x6~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT8[3]   |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : Reserved      |                  |
+ * GPM0CON[4]   | [19:16] |  RW  | 0x3     : CAM_B_DATA[3] |       0x00       |
+ *              |         |      | 0x4     : TS_ERROR      |                  |
+ *              |         |      | 0x5     : TraceData[3]  |                  |
+ *              |         |      | 0x6~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT8[4]   |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : Reserved      |                  |
+ * GPM0CON[5]   | [23:20] |  RW  | 0x3     : CAM_B_DATA[4] |       0x00       |
+ *              |         |      | 0x4     : XhsiCAWAKE    |                  |
+ *              |         |      | 0x5     : TraceData[4]  |                  |
+ *              |         |      | 0x6~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT8[5]   |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : Reserved      |                  |
+ * GPM0CON[6]   | [27:24] |  RW  | 0x3     : CAM_B_DATA[5] |       0x00       |
+ *              |         |      | 0x4     : XhsiCADATA    |                  |
+ *              |         |      | 0x5     : TraceData[5]  |                  |
+ *              |         |      | 0x6~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT8[6]   |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : Reserved      |                  |
+ * GPM0CON[7]   | [31:28] |  RW  | 0x3     : CAM_B_DATA[6] |       0x00       |
+ *              |         |      | 0x4     : XhsiCAFLAG    |                  |
+ *              |         |      | 0x5     : TraceData[6]  |                  |
+ *              |         |      | 0x6~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT8[7]   |                  |
+ * ---------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM0DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x0264
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPM0DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM0PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0268
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPM0PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPM0DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x026C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPM0DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000     |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM0CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0270
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPM0[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM0PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0274
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPM0[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPM0CON_u
 {
@@ -3736,7 +10360,156 @@ typedef union GPM0PUDPDN_u
     } bits;   
 } GPM0PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPM1CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0280
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : Reserved        |                  |
+ * GPM1CON[0]   |  [3:0]  |  RW  | 0x3     : CAM_B_DATA[7]   |       0x00       |
+ *              |         |      | 0x4     : XhsiACREADY     |                  |
+ *              |         |      | 0x5     : TraceData[7]    |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT9[0]     |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : CAM_BAY_RGB[8]  |                  |
+ * GPM1CON[1]   |  [7:4]  |  RW  | 0x3     : CAM_B_FIELD     |       0x00       |
+ *              |         |      | 0x4     : XhsiACWAKE      |                  |
+ *              |         |      | 0x5     : TraceCtl        |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT9[1]     |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : CAM_BAY_RGB[9]  |                  |
+ * GPM1CON[2]   |  [11:8] |  RW  | 0x3     : Reserved        |       0x00       |
+ *              |         |      | 0x4     : XhsiACDATA      |                  |
+ *              |         |      | 0x5     : TraceData[8]    |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT9[2]     |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : CAM_BAY_RGB[10] |                  |
+ * GPM1CON[3]   | [15:12] |  RW  | 0x3     : Reserved        |       0x00       |
+ *              |         |      | 0x4     : XhsiACFLAG      |                  |
+ *              |         |      | 0x5     : TraceData[9]    |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT9[3]     |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : CAM_BAY_RGB[11] |                  |
+ * GPM1CON[4]   | [19:16] |  RW  | 0x3     : Reserved        |       0x00       |
+ *              |         |      | 0x4     : XhsiCAREADY     |                  |
+ *              |         |      | 0x5     : TraceData[10]   |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT9[4]     |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : CAM_BAY_RGB[12] |                  |
+ * GPM1CON[5]   | [23:20] |  RW  | 0x3     : Reserved        |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : TraceData[11]   |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT9[5]     |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : CAM_BAY_RGB[13] |                  |
+ * GPM1CON[6]   | [27:24] |  RW  | 0x3     : Reserved        |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : TraceData[12]   |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT9[6]     |                  |
+ * -----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM1DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x0284
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPM1DAT[6:0] |  [6:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM1PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x0288
+ * Reset Value = 0x1555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPM1PUD[n]   | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |      0x1555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPM1DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x028C
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPM1DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 6 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM1CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0290
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPM1[n]      | n = 0 ~ 6 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM1PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x0294
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPM1[n]      | n = 0 ~ 6 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPM1CON_u
 {
@@ -3824,7 +10597,134 @@ typedef union GPM1PUDPDN_u
     } bits;   
 } GPM1PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPM2CON
+ * 
+ * Address = GPIO Base Address 2 + 0x02A0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |      Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : Reserved        |                  |
+ * GPM2CON[0]   |  [3:0]  |  RW  | 0x3     : CAM_B_VSYNC     |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : TraceData[13]   |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT10[0]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : Reserved        |                  |
+ * GPM2CON[1]   |  [7:4]  |  RW  | 0x3     : CAM_B_HREF      |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : TraceData[14]   |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT10[1]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : Reserved        |                  |
+ * GPM2CON[2]   |  [11:8] |  RW  | 0x3     : CAM_B_CLKOUT    |       0x00       |
+ *              |         |      | 0x4     : Reserved        |                  |
+ *              |         |      | 0x5     : TraceData[15]   |                  |
+ *              |         |      | 0x6~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT10[2]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ * GPM2CON[3]   | [15:12] |  RW  | 0x2     : CAM_GPIO[0]     |       0x00       |
+ *              |         |      | 0x3     : MPWM1_OUT_ISP   |                  |
+ *              |         |      | 0x4~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT10[3]    |                  |
+ * -----------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input           |                  |
+ *              |         |      | 0x1     : Output          |                  |
+ *              |         |      | 0x2     : CAM_GPIO[1]     |                  |
+ * GPM2CON[4]   | [19:16] |  RW  | 0x3     : MPWM2_OUT_ISP   |       0x00       |
+ *              |         |      | 0x4~0xE : Reserved        |                  |
+ *              |         |      | 0xF     : EXT_INT10[4]     |                  |
+ * -----------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM2DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x02A4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPM2DAT[4:0] |  [4:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM2PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x02A8
+ * Reset Value = 0x0155
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPM2PUD[n]   | n = 0 ~ 4 |  RW  | 0x2 : Reserved                     |      0x1555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPM2DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x02AC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPM2DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 4 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM2CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x02B0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPM2[n]      | n = 0 ~ 4 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM2PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x02B4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPM2[n]      | n = 0 ~ 4 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPM2CON_u
 {
@@ -3902,7 +10802,151 @@ typedef union GPM2PUDPDN_u
     } bits;   
 } GPM2PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPM3CON
+ * 
+ * Address = GPIO Base Address 2 + 0x02C0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description       |   Reset Value    | 
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM3CON[0]   |  [3:0]  |  RW  | 0x2     : CAM_GPIO[2]   |       0x00       |
+ *              |         |      | 0x3     : MPWM3_OUT_ISP |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT11[0]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM3CON[1]   |  [7:4]  |  RW  | 0x2     : CAM_GPIO[3]   |       0x00       |
+ *              |         |      | 0x3     : MPWM4_OUT_ISP |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT11[1]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : CAM_GPIO[4]   |                  |
+ * GPM3CON[2]   |  [11:8] |  RW  | 0x3     : MPWM5_OUT_ISP |       0x00       |
+ *              |         |      | 0x4     : CAM_SPI1_MISO |                  |
+ *              |         |      | 0x5~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT11[2]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : CAM_GPIO[5]   |                  |
+ * GPM3CON[3]   | [15:12] |  RW  | 0x3     : MPWM6_OUT_ISP |       0x00       |
+ *              |         |      | 0x4     : CAM_SPI1_MOSI |                  |
+ *              |         |      | 0x5~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT11[3]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM3CON[4]   | [19:16] |  RW  | 0x2     : CAM_GPIO[6]   |       0x00       |
+ *              |         |      | 0x3     : nRTS_UART_ISP |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT11[4]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM3CON[5]   | [23:20] |  RW  | 0x2     : CAM_GPIO[7]   |       0x00       |
+ *              |         |      | 0x3     : TXD_UART_ISP  |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT11[5]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM3CON[6]   | [27:24] |  RW  | 0x2     : CAM_GPIO[8]   |       0x00       |
+ *              |         |      | 0x3     : nCTS_UART_ISP |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT11[6]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM3CON[7]   | [31:28] |  RW  | 0x2     : CAM_GPIO[9]   |       0x00       |
+ *              |         |      | 0x3     : RXD_UART_ISP  |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT11[7]  |                  |
+ * ---------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM3DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x02C4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPM3DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM3PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x02C8
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPM3PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPM3DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x02CC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPM3DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000      |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM3CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x02D0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPM3[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM3PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x02D4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPM3[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPM3CON_u
 {
@@ -3994,7 +11038,151 @@ typedef union GPM3PUDPDN_u
     } bits;   
 } GPM3PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * GPM4CON
+ * 
+ * Address = GPIO Base Address 2 + 0x02E0
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name     |   Bit   | Type |       Description       |   Reset Value    | 
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM4CON[0]   |  [3:0]  |  RW  | 0x2     : CAM_I2C0_SCL  |       0x00       |
+ *              |         |      | 0x3     : CAM_GPIO[10]  |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT12[0]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM4CON[1]   |  [7:4]  |  RW  | 0x2     : CAM_I2C0_SDA  |       0x00       |
+ *              |         |      | 0x3     : CAM_GPIO[11]  |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT12[1]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : CAM_I2C1_SCL  |                  |
+ * GPM4CON[2]   |  [11:8] |  RW  | 0x3     : CAM_GPIO[12]  |       0x00       |
+ *              |         |      | 0x4     : CAM_SPI1_CLK  |                  |
+ *              |         |      | 0x5~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT12[2]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ *              |         |      | 0x2     : CAM_I2C1_SDA  |                  |
+ * GPM4CON[3]   | [15:12] |  RW  | 0x3     : CAM_GPIO[13]  |       0x00       |
+ *              |         |      | 0x4     : CAM_SPI1_nSS  |                  |
+ *              |         |      | 0x5~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT12[3]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM4CON[4]   | [19:16] |  RW  | 0x2     : CAM_SPI_CLK   |       0x00       |
+ *              |         |      | 0x3     : CAM_GPIO[14]  |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT12[4]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM4CON[5]   | [23:20] |  RW  | 0x2     : CAM_SPI_nSS   |       0x00       |
+ *              |         |      | 0x3     : CAMP_GPIO[15] |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT12[5]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM4CON[6]   | [27:24] |  RW  | 0x2     : CAM_SPI_MISO  |       0x00       |
+ *              |         |      | 0x3     : CAM_GPIO[16]  |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT12[6]  |                  |
+ * ---------------------------------------------------------------------------|
+ *              |         |      | 0x0     : Input         |                  |
+ *              |         |      | 0x1     : Output        |                  |
+ * GPM4CON[7]   | [31:28] |  RW  | 0x2     : CAM_SPI_MOSI  |       0x00       |
+ *              |         |      | 0x3     : CAM_GPIO[17]  |                  |
+ *              |         |      | 0x4~0xE : Reserved      |                  |
+ *              |         |      | 0xF     : EXT_INT12[7]  |                  |
+ * ---------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM4DAT
+ * 
+ * Address = GPIO Base Address 2 + 0x02E4
+ * Reset Value = 0x00
+ * 
+ *     Name     |   Bit   | Type |                       Description                    |    Reset Value   | 
+ * --------------------------------------------------------------------------------------------------------|
+ *              |         |      | When you configure port as input port, then          |                  |
+ *              |         |      | corresponding bit is pin state. When configureing as |                  |
+ * GPM4DAT[7:0] |  [7:0]  |  RWX | output port the pin state should be same as the      |       0x00       |
+ *              |         |      | corresponding bit. When the port is configured as    |                  |
+ *              |         |      | functional pin, the undefined value will be read     |                  |
+ * --------------------------------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM4PUD
+ * 
+ * Address = GPIO Base Address 2 + 0x02E8
+ * Reset Value = 0x5555
+ * 
+ *     Name     |    Bit    | Type |            Description             |    Reset Value   | 
+ * ----------------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |                  |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |                  |
+ * GPM4PUD[n]   | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |      0x5555      |
+ *              |           |      | 0x3 : Enables Pull-up              |                  |
+ * ----------------------------------------------------------------------------------------|
+ * 
+ *****************************************************************************
+ *
+ * GPM4DRV
+ * 
+ * Address = GPIO Base Address 2 + 0x02EC
+ * Reset Value = 0x00_0000
+ * 
+ *     Name     |    Bit    | Type |          Description          |    Reset Value   | 
+ * -----------------------------------------------------------------------------------|
+ *              |  [23:16]  |  RW  | Reserved (Should be zero)     |       0x00       |
+ *              |---------------------------------------------------------------------|
+ *              |           |      | 0x0 : 1x                      |                  |
+ * GPM4DRV[n]   | [2n+1:2n] |      | 0x1 : 2x                      |                  |
+ *              | n = 0 ~ 7 |  RW  | 0x2 : 3x                      |      0x0000     |
+ *              |           |      | 0x3 : 4x                      |                  |
+ * -----------------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM4CONPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x02F0
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |       Description       | Reset Value | 
+ * ------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Outputs 0         |             |
+ *              | [2n+1:2n] |      | 0x1 : Outputs 1         |             |
+ * GPM4[n]      | n = 0 ~ 7 |  RW  | 0x2 : Input             |     0x00    |
+ *              |           |      | 0x3 : Previous state    |             |
+ * ------------------------------------------------------------------------|
+ * 
+ ****************************************************************************
+ *
+ * GPM4PUDPDN
+ * 
+ * Address = GPIO Base Address 2 + 0x02F4
+ * Reset Value = 0x0000
+ * 
+ *     Name     |    Bit    | Type |            Description             | Reset Value | 
+ * -----------------------------------------------------------------------------------|
+ *              |           |      | 0x0 : Disalbes Pull-up/Pull-down   |             |
+ *              | [2n+1:2n] |      | 0x1 : Enables Pull-down            |             |
+ * GPM4[n]      | n = 0 ~ 7 |  RW  | 0x2 : Reserved                     |    0x00     |
+ *              |           |      | 0x3 : Enables Pull-up              |             |
+ * -----------------------------------------------------------------------------------| 
+ */
 
 typedef union GPM4CON_u
 {
@@ -4086,7 +11274,87 @@ typedef union GPM4PUDPDN_u
     } bits;   
 } GPM4PUDPDN;
 
-/////////////////////////////////////////////////
+/*
+ * EXT_INT23CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0708
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT23[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT23_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT23[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT23_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT23[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT23_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT23[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT23_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT23[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT23_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT23[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT23_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT23[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT23_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             | [31:28] |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT23CON_u
 {
@@ -4111,6 +11379,88 @@ typedef union EXTINT23CON_u
     } bits;   
 } EXTINT23CON;
 
+/*
+ * EXT_INT24CON
+ * 
+ * Address = GPIO Base Address 2 + 0x070C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT24[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT24_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT24[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT24_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT24[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT24_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT24[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT24_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT24[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT24_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT24[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT24_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT24[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT24_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             | [31:28] |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT24CON_u
 {
     uint32_t all_val;
@@ -4133,6 +11483,88 @@ typedef union EXTINT24CON_u
         uint32_t Reserved7:4;   //31:28
     } bits;   
 } EXTINT24CON;
+
+/*
+ * EXT_INT25CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0710
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT25[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT25_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT25[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT25_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT25[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT25_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT25[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT25_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT25[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT25_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT25[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT25_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT25[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT25_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             | [31:28] |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT25CON_u
 {
@@ -4157,6 +11589,88 @@ typedef union EXTINT25CON_u
     } bits;   
 } EXTINT25CON;
 
+/*
+ * EXT_INT26CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0714
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT26[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT26_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT26[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT26_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT26[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT26_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT26[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT26_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT26[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT26_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT26[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT26_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT26[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT26_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             | [31:28] |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT26CON_u
 {
     uint32_t all_val;
@@ -4179,6 +11693,88 @@ typedef union EXTINT26CON_u
         uint32_t Reserved7:4;   //31:28
     } bits;   
 } EXTINT26CON;
+
+/*
+ * EXT_INT27CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0718
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT27[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT27_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT27[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT27_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT27[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT27_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT27[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT27_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT27[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT27_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT27[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT27_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT27[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT27_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             | [31:28] |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT27CON_u
 {
@@ -4203,6 +11799,38 @@ typedef union EXTINT27CON_u
     } bits;   
 } EXTINT27CON;
 
+/*
+ * EXT_INT28CON
+ * 
+ * Address = GPIO Base Address 2 + 0x071C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT28[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT28_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT28[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT28_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             | [31:8] |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT28CON_u
 {
     uint32_t all_val;
@@ -4215,6 +11843,96 @@ typedef union EXTINT28CON_u
         uint32_t Reserved2:24;   //31:8
     } bits;   
 } EXTINT28CON;
+
+/*
+ * EXT_INT29CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0720
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT29[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT29_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT29[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT29_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT29[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT29_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT29[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT29_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT29[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT29_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT29[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT29_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT29[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT29_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT29[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT29_CON[6] | [30:28] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT29CON_u
 {
@@ -4240,6 +11958,96 @@ typedef union EXTINT29CON_u
     } bits;   
 } EXTINT29CON;
 
+/*
+ * EXT_INT8CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0724
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT8[0]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT8_CON[0]  |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT8[1]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT8_CON[1]  |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT8[2]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT8_CON[2]  | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT8[3]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT8_CON[3]  | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT8[4]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT8_CON[4]  | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT8[5]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT8_CON[5]  | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT8[6]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT8_CON[6]  | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT8[6]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT8_CON[6]  | [30:28] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT8CON_u
 {
     uint32_t all_val;
@@ -4264,6 +12072,88 @@ typedef union EXTINT8CON_u
     } bits;   
 } EXTINT8CON;
 
+/*
+ * EXT_INT9CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0728
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT9[0]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT9_CON[0]  |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT9[1]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT9_CON[1]  |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT9[2]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT9_CON[2]  | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT9[3]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT9_CON[3]  | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT9[4]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT9_CON[4]  | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT9[5]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT9_CON[5]  | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT9[6]  |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT9_CON[6]  | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             | [31:28] |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT9CON_u
 {
     uint32_t all_val;
@@ -4287,6 +12177,68 @@ typedef union EXTINT9CON_u
     } bits;   
 } EXTINT9CON;
 
+/*
+ * EXT_INT10CON
+ * 
+ * Address = GPIO Base Address 2 + 0x072C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT10[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT10_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT10[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT10_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT10[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT10_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT10[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT10_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT10[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT10_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             | [31:20] |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT10CON_u
 {
     uint32_t all_val;
@@ -4305,6 +12257,96 @@ typedef union EXTINT10CON_u
         uint32_t Reserved5:12; //31:20
     } bits;   
 } EXTINT10CON;
+
+/*
+ * EXT_INT11CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0730
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT11[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT11_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT11[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT11_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT11[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT11_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT11[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT11_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT11[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT11_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT11[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT11_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT11[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT11_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT11[7] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT11_CON[7] | [30:28] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT11CON_u
 {
@@ -4330,6 +12372,96 @@ typedef union EXTINT11CON_u
     } bits;   
 } EXTINT11CON;
 
+/*
+ * EXT_INT12CON
+ * 
+ * Address = GPIO Base Address 2 + 0x0734
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |              Description              |   Reset Value   | 
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT12[0] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT12_CON[0] |  [2:0]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT12[1] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT12_CON[1] |  [6:4]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [7]   |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT12[2] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT12_CON[2] | [10:8]  |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [11]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT12[3] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT12_CON[3] | [14:12] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT12[4] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT12_CON[4] | [18:16] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT12[5] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT12_CON[5] | [22:20] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [23]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT12[6] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT12_CON[6] | [26:24] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [27]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ *                  |         |      | Sets signaling method of EXT_INT12[7] |                 |
+ *                  |         |      | 0x0     : Low Level                   |                 |
+ *                  |         |      | 0x1     : High Level                  |                 |
+ * EXT_INT12_CON[7] | [30:28] |  RW  | 0x2     : Triggers falling edge       |       0x0       |
+ *                  |         |      | 0x3     : Triggers rising edge        |                 |
+ *                  |         |      | 0x4     : Triggers both edge          |                 |
+ *                  |         |      | 0x5~0x7 : Reserved                    |                 |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD             |   [31]  |  -   | Reserved                              |       0x0       |
+ * --------------------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT12CON_u
 {
     uint32_t all_val;
@@ -4354,7 +12486,67 @@ typedef union EXTINT12CON_u
     } bits;   
 } EXTINT12CON;
 
-/////////////////////////////////////////////////
+/*
+ * EXT_INT23_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0810
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT23[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT23[0]  |             |
+ * FLTEN3[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[1]     |  [14:8] |  RW  | Filtering width of EXT_INT23[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT23[1]  |             |
+ * FLTEN3[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[2]     | [22:16] |  RW  | Filtering width of EXT_INT23[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT23[2]  |             |
+ * FLTEN3[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[3]     | [30:24] |  RW  | Filtering width of EXT_INT23[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT23[3]  |             |
+ * FLTEN3[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT23_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x0814
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT23[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT23[4]  |             |
+ * FLTEN3[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[5]     |  [14:8] |  RW  | Filtering width of EXT_INT23[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT23[5]  |             |
+ * FLTEN3[5]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH3[6]     | [22:16] |  RW  | Filtering width of EXT_INT23[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT23[6]  |             |
+ * FLTEN3[6]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:24] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT23FLTCON0_u
 {
@@ -4388,6 +12580,68 @@ typedef union EXTINT23FLTCON1_u
     } bits;    
 } EXTINT23FLTCON1;
 
+/*
+ * EXT_INT24_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0818
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT24[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT24[0]  |             |
+ * FLTEN4[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[1]     |  [14:8] |  RW  | Filtering width of EXT_INT24[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT24[1]  |             |
+ * FLTEN4[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[2]     | [22:16] |  RW  | Filtering width of EXT_INT24[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT24[2]  |             |
+ * FLTEN4[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[3]     | [30:24] |  RW  | Filtering width of EXT_INT24[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT24[3]  |             |
+ * FLTEN4[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT24_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x081C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT24[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT24[4]  |             |
+ * FLTEN4[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[5]     |  [14:8] |  RW  | Filtering width of EXT_INT24[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT24[5]  |             |
+ * FLTEN4[5]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH4[6]     | [22:16] |  RW  | Filtering width of EXT_INT24[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT24[6]  |             |
+ * FLTEN4[6]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:24] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT24FLTCON0_u
 {
     uint32_t all_val;
@@ -4419,6 +12673,68 @@ typedef union EXTINT24FLTCON1_u
         uint32_t FLTEN47:1;     //31
     } bits;    
 } EXTINT24FLTCON1;
+
+/*
+ * EXT_INT25_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0820
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT25[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT25[0]  |             |
+ * FLTEN5[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[1]     |  [14:8] |  RW  | Filtering width of EXT_INT25[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT25[1]  |             |
+ * FLTEN5[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[2]     | [22:16] |  RW  | Filtering width of EXT_INT25[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT25[2]  |             |
+ * FLTEN5[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[3]     | [30:24] |  RW  | Filtering width of EXT_INT25[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT25[3]  |             |
+ * FLTEN5[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT25_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x0824
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT25[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT25[4]  |             |
+ * FLTEN5[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[5]     |  [14:8] |  RW  | Filtering width of EXT_INT25[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT25[5]  |             |
+ * FLTEN5[5]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH5[6]     | [22:16] |  RW  | Filtering width of EXT_INT25[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT25[6]  |             |
+ * FLTEN5[6]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:24] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT25FLTCON0_u
 {
@@ -4452,6 +12768,68 @@ typedef union EXTINT25FLTCON1_u
     } bits;    
 } EXTINT25FLTCON1;
 
+/*
+ * EXT_INT26_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0828
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT26[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT26[0]  |             |
+ * FLTEN6[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[1]     |  [14:8] |  RW  | Filtering width of EXT_INT26[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT26[1]  |             |
+ * FLTEN6[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[2]     | [22:16] |  RW  | Filtering width of EXT_INT26[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT26[2]  |             |
+ * FLTEN6[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[3]     | [30:24] |  RW  | Filtering width of EXT_INT26[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT26[3]  |             |
+ * FLTEN6[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT26_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x082C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT26[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT26[4]  |             |
+ * FLTEN6[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[5]     |  [14:8] |  RW  | Filtering width of EXT_INT26[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT26[5]  |             |
+ * FLTEN6[5]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[6]     | [22:16] |  RW  | Filtering width of EXT_INT26[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT26[6]  |             |
+ * FLTEN6[6]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:24] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT26FLTCON0_u
 {
     uint32_t all_val;
@@ -4483,6 +12861,68 @@ typedef union EXTINT26FLTCON1_u
         uint32_t FLTEN67:1;     //31
     } bits;    
 } EXTINT26FLTCON1;
+
+/*
+ * EXT_INT27_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0830
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT27[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT27[0]  |             |
+ * FLTEN7[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[1]     |  [14:8] |  RW  | Filtering width of EXT_INT27[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT27[1]  |             |
+ * FLTEN7[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[2]     | [22:16] |  RW  | Filtering width of EXT_INT27[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT27[2]  |             |
+ * FLTEN7[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[3]     | [30:24] |  RW  | Filtering width of EXT_INT27[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT27[3]  |             |
+ * FLTEN7[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT27_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x0834
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT27[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT27[4]  |             |
+ * FLTEN7[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[5]     |  [14:8] |  RW  | Filtering width of EXT_INT27[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT27[5]  |             |
+ * FLTEN7[5]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH7[6]     | [22:16] |  RW  | Filtering width of EXT_INT27[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT27[6]  |             |
+ * FLTEN7[6]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:24] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT27FLTCON0_u
 {
@@ -4516,6 +12956,40 @@ typedef union EXTINT27FLTCON1_u
     } bits;    
 } EXTINT27FLTCON1;
 
+/*
+ * EXT_INT26_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0838
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT26[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT26[0]  |             |
+ * FLTEN6[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH6[1]     |  [14:8] |  RW  | Filtering width of EXT_INT26[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT26[1]  |             |
+ * FLTEN6[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:16] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT26_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x083C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:0]  |  -   | Reserved                        | 0x00000000  |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT28FLTCON0_u
 {
     uint32_t all_val;
@@ -4537,6 +13011,72 @@ typedef union EXTINT28FLTCON1_u
         uint32_t Reserved;
     } bits;    
 } EXTINT28FLTCON1;
+
+/*
+ * EXT_INT29_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0840
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH9[0]     |  [6:0]  |  RW  | Filtering width of EXT_INT29[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT29[0]  |             |
+ * FLTEN9[0]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH9[1]     |  [14:8] |  RW  | Filtering width of EXT_INT29[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT29[1]  |             |
+ * FLTEN9[1]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH9[2]     | [22:16] |  RW  | Filtering width of EXT_INT29[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT29[2]  |             |
+ * FLTEN9[2]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH9[3]     | [30:24] |  RW  | Filtering width of EXT_INT29[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT29[3]  |             |
+ * FLTEN9[3]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT29_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x0844
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH9[4]     |  [6:0]  |  RW  | Filtering width of EXT_INT29[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT29[4]  |             |
+ * FLTEN9[4]        |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH9[5]     |  [14:8] |  RW  | Filtering width of EXT_INT29[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT29[5]  |             |
+ * FLTEN9[5]        |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH9[6]     | [22:16] |  RW  | Filtering width of EXT_INT29[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT29[6]  |             |
+ * FLTEN9[6]        |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH9[7]     | [30:24] |  RW  | Filtering width of EXT_INT29[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT29[6]  |             |
+ * FLTEN9[7]        |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT29FLTCON0_u
 {
@@ -4570,6 +13110,72 @@ typedef union EXTINT29FLTCON1_u
     } bits;    
 } EXTINT29FLTCON1;
 
+/*
+ * EXT_INT8_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0848
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH10[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT8[0]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT8[0]   |             |
+ * FLTEN10[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH10[1]    |  [14:8] |  RW  | Filtering width of EXT_INT8[1]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT8[1]   |             |
+ * FLTEN10[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH10[2]    | [22:16] |  RW  | Filtering width of EXT_INT8[2]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT8[2]   |             |
+ * FLTEN10[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH10[3]    | [30:24] |  RW  | Filtering width of EXT_INT8[3]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT8[3]   |             |
+ * FLTEN10[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT8_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x084C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH10[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT8[4]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT8[4]   |             |
+ * FLTEN10[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH10[5]    |  [14:8] |  RW  | Filtering width of EXT_INT8[5]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT8[5]   |             |
+ * FLTEN10[5]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH10[6]    | [22:16] |  RW  | Filtering width of EXT_INT8[6]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT8[6]   |             |
+ * FLTEN10[6]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH10[7]    | [30:24] |  RW  | Filtering width of EXT_INT8[7]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT8[7]   |             |
+ * FLTEN10[7]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT8FLTCON0_u
 {
     uint32_t all_val;
@@ -4602,6 +13208,68 @@ typedef union EXTINT8FLTCON1_u
     } bits;    
 } EXTINT8FLTCON1;
 
+/*
+ * EXT_INT9_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0850
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH11[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT9[0]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT9[0]   |             |
+ * FLTEN11[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH11[1]    |  [14:8] |  RW  | Filtering width of EXT_INT9[1]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT9[1]   |             |
+ * FLTEN11[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH11[2]    | [22:16] |  RW  | Filtering width of EXT_INT9[2]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT9[2]   |             |
+ * FLTEN11[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH11[3]    | [30:24] |  RW  | Filtering width of EXT_INT9[3]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT9[3]   |             |
+ * FLTEN11[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT9_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x0854
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH11[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT9[4]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT9[4]   |             |
+ * FLTEN11[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH11[5]    |  [14:8] |  RW  | Filtering width of EXT_INT9[5]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT9[5]   |             |
+ * FLTEN11[5]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH11[6]    | [22:16] |  RW  | Filtering width of EXT_INT9[6]  |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT9[6]   |             |
+ * FLTEN11[6]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:24] |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT9FLTCON0_u
 {
     uint32_t all_val;
@@ -4633,6 +13301,56 @@ typedef union EXTINT9FLTCON1_u
         uint32_t FLTEN117:1;     //31
     } bits;    
 } EXTINT9FLTCON1;
+
+/*
+ * EXT_INT10_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0858
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH12[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT10[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT10[0]  |             |
+ * FLTEN12[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH12[1]    |  [14:8] |  RW  | Filtering width of EXT_INT10[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT10[1]  |             |
+ * FLTEN12[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH12[2]    | [22:16] |  RW  | Filtering width of EXT_INT10[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT10[2]  |             |
+ * FLTEN12[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH12[3]    | [30:24] |  RW  | Filtering width of EXT_INT10[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT10[3]  |             |
+ * FLTEN12[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT10_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x085C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH12[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT10[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT10[4]  |             |
+ * FLTEN12[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * RSVD             | [31:8]  |  -   | Reserved                        |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT10FLTCON0_u
 {
@@ -4677,6 +13395,72 @@ typedef union EXTINT11FLTCON0_u
     } bits;    
 } EXTINT11FLTCON0;
 
+/*
+ * EXT_INT11_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0860
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT11[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT11[0]  |             |
+ * FLTEN13[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[1]    |  [14:8] |  RW  | Filtering width of EXT_INT11[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT11[1]  |             |
+ * FLTEN13[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[2]    | [22:16] |  RW  | Filtering width of EXT_INT11[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT11[2]  |             |
+ * FLTEN13[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[3]    | [30:24] |  RW  | Filtering width of EXT_INT11[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT11[3]  |             |
+ * FLTEN13[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT11_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x0864
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT11[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT11[4]  |             |
+ * FLTEN13[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[5]    |  [14:8] |  RW  | Filtering width of EXT_INT11[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT11[5]  |             |
+ * FLTEN13[5]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[6]    | [22:16] |  RW  | Filtering width of EXT_INT11[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT11[6]  |             |
+ * FLTEN13[6]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH13[7]    | [30:24] |  RW  | Filtering width of EXT_INT11[7] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT11[7]  |             |
+ * FLTEN13[7]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ */
+
 typedef union EXTINT11FLTCON1_u
 {
     uint32_t all_val;
@@ -4692,6 +13476,72 @@ typedef union EXTINT11FLTCON1_u
         uint32_t FLTEN137:1;     //31
     } bits;    
 } EXTINT11FLTCON1;
+
+/*
+ * EXT_INT12_FLTCON0
+ * 
+ * Address = GPIO Base Address 2 + 0x0868
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[0]    |  [6:0]  |  RW  | Filtering width of EXT_INT12[0] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT12[0]  |             |
+ * FLTEN14[0]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[1]    |  [14:8] |  RW  | Filtering width of EXT_INT12[1] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT12[1]  |             |
+ * FLTEN14[1]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[2]    | [22:16] |  RW  | Filtering width of EXT_INT12[2] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT12[2]  |             |
+ * FLTEN14[2]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[3]    | [30:24] |  RW  | Filtering width of EXT_INT12[3] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT12[3]  |             |
+ * FLTEN14[3]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * 
+ * EXT_INT12_FLTCON1
+ * 
+ * Address = GPIO Base Address 2 + 0x086C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name         |   Bit   | Type |            Description          | Reset Value | 
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[4]    |  [6:0]  |  RW  | Filtering width of EXT_INT12[4] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT12[4]  |             |
+ * FLTEN14[4]       |   [7]   |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[5]    |  [14:8] |  RW  | Filtering width of EXT_INT12[5] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT12[5]  |             |
+ * FLTEN14[5]       |   [15]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[6]    | [22:16] |  RW  | Filtering width of EXT_INT12[6] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT12[6]  |             |
+ * FLTEN14[6]       |   [23]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ * FLTWIDTH14[7]    | [30:24] |  RW  | Filtering width of EXT_INT12[7] |     0x00    |
+ * ----------------------------------------------------------------------------------|
+ *                  |         |      | Filter Enable for EXT_INT12[7]  |             |
+ * FLTEN14[7]       |   [31]  |  RW  | 0x0 = Disable Filter            |     0x0     |
+ *                  |         |      | 0x1 = Enable Filter             |             |
+ * ----------------------------------------------------------------------------------|
+ */
 
 typedef union EXTINT12FLTCON0_u
 {
