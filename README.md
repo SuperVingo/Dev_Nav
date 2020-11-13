@@ -1,2 +1,2 @@
 # Exynos4412
- Exynos4412 Documents And Data
+This Repository is based on Exynos 4412 Revision 1.00 User's Manual.
