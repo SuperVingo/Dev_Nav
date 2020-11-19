@@ -3060,4 +3060,2252 @@ typedef union CLK_DIV_ISP_u
     } bits;
 } CLK_DIV_ISP;
 
+/*
+ * CLK_DIV_MAUDIO
+ * 
+ * Address = CLOCK Base Address 1 + 0xC53C
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                Description                 | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ *                |         |      | DIVAUDIO0 Clock Divider Ratio              |             |
+ * AUDIO0_RATIO   |  [3:0]  |  RW  | SCLK_AUDIO0 = MOUTAUDIO0 / (AUDIO0_RATIO + |     0x0     |
+ *                |         |      | 1)                                         |             |
+ * -------------------------------------------------------------------------------------------|
+ * PCM0_RATIO     |  [11:4] |  RW  | DIVPCM0 Clock Divider Ratio                |     0x0     |
+ *                |         |      | SCLK_PCM0 = SCLK_AUDIO0 / (PCM0_RATIO + 1) |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           | [31:12] |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ * 
+ */
+
+typedef union CLK_DIV_MAUDIO_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t AUDIO0_RATIO:4; //3:0
+        uint32_t PCM0_RATIO:8;   //11:4
+        uint32_t Reserved:20;    //31:12
+    } bits;
+} CLK_DIV_MAUDIO;
+
+/*
+ * CLK_DIV_FSYS0
+ * 
+ * Address = CLOCK Base Address 1 + 0xC544
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                 Description                  | Reset Value | 
+ * ---------------------------------------------------------------------------------------------|
+ * RSVD           |  [19:0] |  -   | Reserved                                     |     0x0     |   
+ * ---------------------------------------------------------------------------------------------|
+ *                |         |      | DIVMIPIHSI Clock Divider Ratio               |             |
+ * MIPIHSI_RATIO  | [23:20] |  RW  | SCLK_MIPIHSI = [MOUTMIPISHI / (MIPIHSI_RATIO |     0x0     |
+ *                |         |      | + 1)]                                        |             |
+ * ---------------------------------------------------------------------------------------------|
+ * RSVD           | [31:24] |  -   | Reserved                                     |     0x0     |   
+ * ---------------------------------------------------------------------------------------------|
+ * 
+ */
+
+typedef union CLK_DIV_FSYS0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t Reserved:20;     //19:0
+        uint32_t MIPIHSI_RATIO:4; //23:20
+        uint32_t Reserved:8;      //31:24
+    } bits;
+} CLK_DIV_FSYS0;
+
+/*
+ * CLK_DIV_FSYS1
+ * 
+ * Address = CLOCK Base Address 1 + 0xC544
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                Description                 | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ * MMC0_RATIO     |  [3:0]  |  RW  | DIVMMC0 Clock Divider Ratio                |     0x0     |
+ *                |         |      | DOUTMMC0 = MOUTMMC0 / (MMC0_RATIO + 1)     |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           |  [7:4]  |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ *                |         |      | DIVMMC0_PRE Clock Divider Ratio            |             |
+ * MMC0_PRE_RATIO |  [15:8] |  RW  | SCLK_MMC0 = [DOUTMMC0 / (MMC0_PRE_RATIO    |     0x0     |
+ *                |         |      | + 1)]                                      |             |
+ * -------------------------------------------------------------------------------------------|
+ * MMC1_RATIO     | [19:16] |  RW  | DIVMMC1 Clock Divider Ratio                |     0x0     |
+ *                |         |      | DOUTMMC1 = MOUTMMC1 / (MMC1_RATI1 + 1)     |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           | [23:20] |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ *                |         |      | DIVMMC1_PRE Clock Divider Ratio            |             |
+ * MMC1_PRE_RATIO | [31:24] |  RW  | CLK_MMC1 = DOUTMMC1 / (MMC1_PRE_RATIO +    |     0x0     |
+ *                |         |      | + 1)                                       |             |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_FSYS1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t MMC0_RATIO:4;      //3:0
+        uint32_t Reserved0:4;       //7:4
+        uint32_t MMC0_PRE_RATIO:8;  //15:8
+        uint32_t MMC1_RATIO:4;      //19:16
+        uint32_t Reserved1:4;       //23:20
+        uint32_t MMC1_PRE_RATIO:8;  //31:24
+    } bits;
+} CLK_DIV_FSYS1;
+
+/*
+ * CLK_DIV_FSYS2
+ * 
+ * Address = CLOCK Base Address 1 + 0xC548
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                Description                 | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ * MMC2_RATIO     |  [3:0]  |  RW  | DIVMMC2 Clock Divider Ratio                |     0x0     |
+ *                |         |      | DOUTMMC2 = MOUTMMC2 / (MMC2_RATIO + 1)     |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           |  [7:4]  |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ *                |         |      | DIVMMC2_PRE Clock Divider Ratio            |             |
+ * MMC2_PRE_RATIO |  [15:8] |  RW  | SCLK_MMC2 = [DOUTMMC2 / (MMC2_PRE_RATIO    |     0x0     |
+ *                |         |      | + 1)]                                      |             |
+ * -------------------------------------------------------------------------------------------|
+ * MMC3_RATIO     | [19:16] |  RW  | DIVMMC3 Clock Divider Ratio                |     0x0     |
+ *                |         |      | DOUTMMC3 = MOUTMMC3 / (MMC3_RATIO + 1)     |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           | [23:20] |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ *                |         |      | DIVMMC3_PRE Clock Divider Ratio            |             |
+ * MMC3_PRE_RATIO | [31:24] |  RW  | CLK_MMC3= DOUTMMC3 / (MMC3_PRE_RATIO +     |     0x0     |
+ *                |         |      | + 1)                                       |             |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_FSYS2_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t MMC2_RATIO:4;      //3:0
+        uint32_t Reserved0:4;       //7:4
+        uint32_t MMC2_PRE_RATIO:8;  //15:8
+        uint32_t MMC3_RATIO:4;      //19:16
+        uint32_t Reserved1:4;       //23:20
+        uint32_t MMC3_PRE_RATIO:8;  //31:24
+    } bits;
+} CLK_DIV_FSYS2;
+
+/*
+ * CLK_DIV_FSYS3
+ * 
+ * Address = CLOCK Base Address 1 + 0xC54C
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                Description                 | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ * MMC4_RATIO     |  [3:0]  |  RW  | DIVMMC4 Clock Divider Ratio                |     0x0     |
+ *                |         |      | DOUTMMC4 = MOUTMMC4 / (MMC4_RATIO + 1)     |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           |  [7:4]  |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ *                |         |      | DIVMMC4_PRE Clock Divider Ratio            |             |
+ * MMC4_PRE_RATIO |  [15:8] |  RW  | SCLK_MMC4 = [DOUTMMC4 / (MMC4_PRE_RATIO    |     0x0     |
+ *                |         |      | + 1)]                                      |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           | [31:16] |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_FSYS3_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t MMC2_RATIO:4;      //3:0
+        uint32_t Reserved0:4;       //7:4
+        uint32_t MMC2_PRE_RATIO:8;  //15:8
+        uint32_t Reserved1:16;       //31:16
+    } bits;
+} CLK_DIV_FSYS3;
+
+/*
+ * CLK_DIV_PERIL0
+ * 
+ * Address = CLOCK Base Address 1 + 0xC550
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                Description                 | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ * UART0_RATIO    |  [3:0]  |  RW  | DIVUART0 Clock Divider Ratio               |     0x0     |
+ *                |         |      | SCLK_UART0 = MOUTUART0 / (UART0_RATIO + 1) |             |
+ * -------------------------------------------------------------------------------------------|
+ * UART1_RATIO    |  [7:4]  |  RW  | DIVUART1 Clock Divider Ratio               |     0x0     |
+ *                |         |      | SCLK_UART1 = MOUTUART1 / (UART1_RATIO + 1) |             |
+ * -------------------------------------------------------------------------------------------|
+ * UART2_RATIO    |  [11:8] |  RW  | DIVUART2 Clock Divider Ratio               |     0x0     |
+ *                |         |      | SCLK_UART2 = MOUTUART2 / (UART2_RATIO + 1) |             |
+ * -------------------------------------------------------------------------------------------|
+ * UART3_RATIO    | [15:12] |  RW  | DIVUART3 Clock Divider Ratio               |     0x0     |
+ *                |         |      | SCLK_UART3 = MOUTUART3 / (UART3_RATIO + 1) |             |
+ * -------------------------------------------------------------------------------------------|
+ * UART4_RATIO    | [19:16] |  RW  | DIVUART4 Clock Divider Ratio               |     0x0     |
+ *                |         |      | SCLK_UART4 = MOUTUART4 / (UART4_RATIO + 1) |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           | [31:20] |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_PERIL0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t UART0_RATIO:4;  //3:0
+        uint32_t UART1_RATIO:4;  //7:4
+        uint32_t UART2_RATIO:4;  //11:8
+        uint32_t UART3_RATIO:4;  //15:12
+        uint32_t UART4_RATIO:4;  //19:16
+        uint32_t Reserved:12;    //31:20
+    } bits;
+} CLK_DIV_PERIL0;
+
+/*
+ * CLK_DIV_PERIL1
+ * 
+ * Address = CLOCK Base Address 1 + 0xC554
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                 Description                 | Reset Value | 
+ * --------------------------------------------------------------------------------------------|
+ * SPI0_RATIO     |  [3:0]  |  RW  | DIVSPI0 Clock Divider Ratio                 |     0x0     |
+ *                |         |      | DOUTSPI0 = MOUTSPI0 / (SPI0_RATIO + 1)      |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD           |  [7:4]  |  -   | Reserved                                    |     0x0     |   
+ * --------------------------------------------------------------------------------------------|
+ * SPI0_PRE_RATIO |  [15:8] |  RW  | DIVSPI0_PRE Clock Divider Ratio             |     0x0     |
+ *                |         |      | SCLK_SPI0 = DOUTSPI0 / (SPI0_PRE_RATIO + 1) |             |
+ * --------------------------------------------------------------------------------------------|
+ * SPI1_RATIO     | [19:16] |  RW  | DIVSPI1 Clock Divider Ratio                 |     0x0     |
+ *                |         |      | DOUTSPI1 = MOUTSPI1 / (SPI1_RATIO + 1)      |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD           | [23:20] |  -   | Reserved                                    |     0x0     |   
+ * --------------------------------------------------------------------------------------------|
+ * SPI1_PRE_RATIO | [31:24] |  RW  | DIVSPI1_PRE Clock Divider Ratio             |     0x0     |
+ *                |         |      | SCLK_SPI1 = DOUTSPI1 / (SPI1_PRE_RATIO + 1) |             |
+ * --------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_PERIL1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t SPI0_RATIO:4;      //3:0
+        uint32_t Reserved0:4;       //7:4
+        uint32_t SPI0_PRE_RATIO:8;  //15:8
+        uint32_t SPI1_RATIO:4;      //19:16
+        uint32_t Reserved1:4;       //23:20
+        uint32_t SPI1_PRE_RATIO:8;  //31:24
+    } bits;
+} CLK_DIV_PERIL1;
+
+/*
+ * CLK_DIV_PERIL2
+ * 
+ * Address = CLOCK Base Address 1 + 0xC558
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                 Description                 | Reset Value | 
+ * --------------------------------------------------------------------------------------------|
+ * SPI2_RATIO     |  [3:0]  |  RW  | DIVSPI2 Clock Divider Ratio                 |     0x0     |
+ *                |         |      | DOUTSPI2 = MOUTSPI2 / (SPI2_RATIO + 1)      |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD           |  [7:4]  |  -   | Reserved                                    |     0x0     |   
+ * --------------------------------------------------------------------------------------------|
+ * SPI2_PRE_RATIO |  [15:8] |  RW  | DIVSPI2_PRE Clock Divider Ratio             |     0x0     |
+ *                |         |      | SCLK_SPI2 = DOUTSPI2 / (SPI2_PRE_RATIO + 1) |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD           | [31:16] |  -   | Reserved                                    |     0x0     |   
+ * --------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_PERIL2_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t SPI2_RATIO:4;      //3:0
+        uint32_t Reserved0:4;       //7:4
+        uint32_t SPI2_PRE_RATIO:8;  //15:8
+        uint32_t Reserved1:16;       //31:16
+    } bits;
+} CLK_DIV_PERIL2;
+
+/*
+ * CLK_DIV_PERIL3
+ * 
+ * Address = CLOCK Base Address 1 + 0xC55C
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                 Description                 | Reset Value | 
+ * --------------------------------------------------------------------------------------------|
+ * RSVD           |  [3:0]  |  -   | Reserved                                    |     0x0     |   
+ * --------------------------------------------------------------------------------------------|
+ * SLIMBUS_RATIO  |  [7:4]  |  RW  | DIVSLIMBUS Clock Divider Ratio              |     0x0     |
+ *                |         |      | SCLK_SLIMBUS = SCLKEPLL(SLIMBUS_RATIO + 1)  |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD           |  [31:8] |  -   | Reserved                                    |     0x0     |   
+ * --------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_PERIL3_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t Reserved0:4;       //3:0
+        uint32_t SLIMBUS_RATIO:4;   //7:4
+        uint32_t Reserved1:24;      //31:8
+    } bits;
+} CLK_DIV_PERIL3;
+
+/*
+ * CLK_DIV_PERIL4
+ * 
+ * Address = CLOCK Base Address 1 + 0xC560
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                 Description                 | Reset Value | 
+ * --------------------------------------------------------------------------------------------|
+ *                |         |      | DIVAUDIO1 Clock Divider Ratio               |             |
+ * AUDIO1_RATIO   |  [3:0]  |  RW  | SCLK_AUDIO1 = [MOUTAUDIO1 / (AUDIO1_RATIO + |     0x0     |
+ *                |         |      | 1)]                                         |             |
+ * --------------------------------------------------------------------------------------------|
+ * PCM1_RATIO     |  [11:4] |  RW  | DIVPCM1 Clock Divider Ratio                 |     0x0     |
+ *                |         |      | SCLK_PCM1 = SCLK_AUDIO1 / (PCM1_RATIO + 1)  |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD           | [15:12] |  -   | Reserved                                    |     0x0     |   
+ * --------------------------------------------------------------------------------------------|
+ *                |         |      | DIVAUDIO2 Clock Divider Ratio               |             |
+ * AUDIO2_RATIO   | [19:16] |  RW  | SCLK_AUDIO2 = [MOUTAUDIO2 / (AUDIO2_RATIO + |     0x0     |
+ *                |         |      | 1)]                                         |             |
+ * --------------------------------------------------------------------------------------------|
+ * PCM2_RATIO     | [27:20] |  RW  | DIVPCM2 Clock Divider Ratio                 |     0x0     |
+ *                |         |      | SCLK_PCM2 = SCLK_AUDIO2 / (PCM2_RATIO + 1)  |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD           | [31:28] |  -   | Reserved                                    |     0x0     |   
+ * --------------------------------------------------------------------------------------------|
+ * 
+ */
+
+typedef union CLK_DIV_PERIL4_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t AUDIO1_RATIO:4;  //3:0
+        uint32_t PCM1_RATIO:8;    //11:4
+        uint32_t Reserved0:4;     //15:2
+        uint32_t AUDIO2_RATIO:4;  //19:16
+        uint32_t PCM2_RATIO:8;    //27:20
+        uint32_t Reserved1:4;     //31:28
+    } bits;
+} CLK_DIV_PERIL4;
+
+/*
+ * CLK_DIV_PERIL5
+ * 
+ * Address = CLOCK Base Address 1 + 0xC564
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                Description                 | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ * I2S1_RATIO     |  [5:0]  |  RW  | DIVI2S1 Clock Divider Ratio                |     0x0     |
+ *                |         |      | SCLK_I2S1 = SCLK_AUDIO1 / (IS21_RATIO + 1) |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           |  [7:6]  |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ * I2S2_RATIO     |  [13:8] |  RW  | DIVI2S2 Clock Divider Ratio                |     0x0     |
+ *                |         |      | SCLK_I2S2 = SCLK_AUDIO2 / (IS2S_RATIO + 1) |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           | [31:14] |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_PERIL5_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t I2S1_RATIO:6;  //5:0
+        uint32_t Reserved0:2;   //7:6
+        uint32_t I2S2_RATIO:6;  //13:8
+        uint32_t Reserved1:18;  //31:14
+    } bits;
+} CLK_DIV_PERIL5;
+
+/*
+ * CLK_DIV_CAM1
+ * 
+ * Address = CLOCK Base Address 1 + 0xC568
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                Description                 | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ * JPEG_RATIO     |  [3:0]  |  RW  | DIVJPEG Clock Divider Ratio                |     0x0     |
+ *                |         |      | ACLK_JPEG = MOUTJPEG / (JPEG_RATIO + 1)    |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           |  [31:4] |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_CAM1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t JPEG_RATIO:4;  //3:0
+        uint32_t Reserved:28;  //31:4
+    } bits;
+} CLK_DIV_CAM1;
+
+/*
+ * CLKDIV2_RATIO
+ * 
+ * Address = CLOCK Base Address 1 + 0xC580
+ * Reset Value = 0x0110_1011
+ * 
+ *       Name     |   Bit   | Type |                   Description                    | Reset Value | 
+ * -------------------------------------------------------------------------------------------------|
+ *                |         |      | PCLK Divider Ratio in FSYS_BLK                   |             |
+ *                |         |      | 0 : Reserved                                     |             |
+ * FSYS_BLK       |  [1:0]  |  RW  | 1 : Divides by 2                                 |     0x1     |
+ *                |         |      | 2 : Divides by 3                                 |             |
+ *                |         |      | 3 : Divides by 4                                 |             |
+ * -------------------------------------------------------------------------------------------------|
+ * RSVD           |  [3:2]  |  -   | Reserved                                         |     0x0     |
+ * -------------------------------------------------------------------------------------------------|
+ *                |         |      | PCLK Divider Ratio in CAM_BLK                    |             |
+ *                |         |      | 0 : Reserved                                     |             |
+ * CAM_BLK        |  [5:4]  |  RW  | 1 : Divides by 2                                 |     0x1     |
+ *                |         |      | 2 : Divides by 3                                 |             |
+ *                |         |      | 3 : Divides by 4                                 |             |
+ * -------------------------------------------------------------------------------------------------|
+ * RSVD           |  [11:6] |  -   | Reserved                                         |     0x0     |
+ * -------------------------------------------------------------------------------------------------|
+ *                |         |      | PCLK Divider Ratio in LCD_BLK for 160 MHz domain |             |
+ *                |         |      | 0 : Reserved                                     |             |
+ * LCD_BLK        | [13:12] |  RW  | 1 : Divides by 2                                 |     0x1     |
+ *                |         |      | 2 : Divides by 3                                 |             |
+ *                |         |      | 3 : Divides by 4                                 |             |
+ * -------------------------------------------------------------------------------------------------|
+ * RSVD           | [19:14] |  -   | Reserved                                         |     0x0     |
+ * -------------------------------------------------------------------------------------------------|
+ *                |         |      | PCLK Divider Ratio in TV_BLK                     |             |
+ *                |         |      | 0 : Reserved                                     |             |
+ * TV_BLK         | [21:20] |  RW  | 1 : Divides by 2                                 |     0x1     |
+ *                |         |      | 2 : Divides by 3                                 |             |
+ *                |         |      | 3 : Divides by 4                                 |             |
+ * -------------------------------------------------------------------------------------------------|
+ * RSVD           | [23:22] |  -   | Reserved                                         |     0x0     |
+ * -------------------------------------------------------------------------------------------------|
+ *                |         |      | PCLK Divider Ratio in GPS_BLK                    |             |
+ *                |         |      | 0 : Reserved                                     |             |
+ * GPS_BLK        | [25:24] |  RW  | 1 : Divides by 2                                 |     0x1     |
+ *                |         |      | 2 : Divides by 3                                 |             |
+ *                |         |      | 3 : Divides by 4                                 |             |
+ * -------------------------------------------------------------------------------------------------|
+ * RSVD           | [31:26] |  -   | Reserved                                         |     0x0     |
+ * -------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLKDIV2_RATIO_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t FSYS_BLK:2;  //1:0
+        uint32_t Reserved0:2; //3:2
+        uint32_t CAM_BLK:2;   //5:4
+        uint32_t Reserved1:6; //11:6
+        uint32_t LCD_BLK:2;   //13:12
+        uint32_t Reserved2:6; //19:14
+        uint32_t TV_BLK:2;    //21:20
+        uint32_t Reserved3:2; //23:22
+        uint32_t GPS_BLK:2;   //25:24
+        uint32_t Reserved4:6; //31:26
+    } bits;
+} CLKDIV2_RATIO;
+
+/*
+ * CLK_DIV_STAT_TOP
+ * 
+ * Address = CLOCK Base Address 1 + 0xC610
+ * Reset Value = 0x0000_0000
+ * 
+ *         Name        |   Bit   | Type |                   Description                    | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                     |         |      | DIVACLK_200 Status                               |             |
+ * DIV_ACLK_200        |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                     |         |      | 1 : Status that the divider is changing          |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                |  [3:1]  |  -   | Reserved                                         |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ *                     |         |      | 1IVACLK_200 Status                               |             |
+ * DIV_ACLK_100        |   [4]   |  R   | 0 : Stable                                       |     0x0     |
+ *                     |         |      | 1 : Status that the divider is changing          |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                |  [7:5]  |  -   | Reserved                                         |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ *                     |         |      | DIVACLK_160 Status                               |             |
+ * DIV_ACLK_160        |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                     |         |      | 1 : Status that the divider is changing          |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                |  [11:9] |  -   | Reserved                                         |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ *                     |         |      | DIVACLK_133 Status                               |             |
+ * DIV_ACLK_133        |   [12]  |  R   | 0 : Stable                                       |     0x0     |
+ *                     |         |      | 1 : Status that the divider is changing          |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                | [15:13] |  -   | Reserved                                         |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ *                     |         |      | DIV_ONENAND Status                               |             |
+ * DIV_ONENAND         |   [16]  |  R   | 0 : Stable                                       |     0x0     |
+ *                     |         |      | 1 : Status that the divider is changing          |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                | [19:17] |  -   | Reserved                                         |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ *                     |         |      | DIVACLK_266_GPS Status                           |             |
+ * DIV_ACLK_266_GPS    |   [20]  |  R   | 0 : Stable                                       |     0x0     |
+ *                     |         |      | 1 : Status that the divider is changing          |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                | [23:21] |  -   | Reserved                                         |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ *                     |         |      | DIVACLK_400_MCUISP Status                        |             |
+ * DIV_ACLK_400_MCUISP |   [24]  |  R   | 0 : Stable                                       |     0x0     |
+ *                     |         |      | 1 : Status that the divider is changing          |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                | [31:25] |  -   | Reserved                                         |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_TOP_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_ACLK_200:1;        //0
+        uint32_t Reserved0:3;           //3:1
+        uint32_t DIV_ACLK_100:1;        //4
+        uint32_t Reserved1:3;           //7:5
+        uint32_t DIV_ACLK_160:1;        //8
+        uint32_t Reserved2:3;           //11:9
+        uint32_t DIV_ACLK_133:1;        //12
+        uint32_t Reserved3:3;           //15:13
+        uint32_t DIV_ONENAND:1;         //16
+        uint32_t Reserved4:3;           //19:17
+        uint32_t DIV_ACLK_266_GPS:1;    //20
+        uint32_t Reserved5:3;           //23:21
+        uint32_t DIV_ACLK_400_MCUISP:1; //24
+        uint32_t Reserved6:7;           //31:25
+    } bits;
+} CLK_DIV_STAT_TOP;
+
+/*
+ * CLK_DIV_STAT_CAM0
+ * 
+ * Address = CLOCK Base Address 1 + 0xC620
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVFIMC0_LCLK Status                             |             |
+ * DIV_FIMC0_LCLK   |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [3:1]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVFIMC1_LCLK Status                             |             |
+ * DIV_FIMC1_LCLK   |   [4]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [7:5]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVFIMC2_LCLK Status                             |             |
+ * DIV_FIMC2_LCLK   |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [11:9] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVFIMC3_LCLK Status                             |             |
+ * DIV_FIMC3_LCLK   |   [12]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [15:13] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVCAM0 Status                                   |             |
+ * DIV_CAM0         |   [16]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [19:17] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVCAM0 Status                                   |             |
+ * DIV_CAM1         |   [20]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [23:21] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVCSIS0 Status                                  |             |
+ * DIV_CSIS0        |   [24]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [27:25] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVCSIS1 Status                                  |             |
+ * DIV_CSIS1        |   [28]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [31:29] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_CAM0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_FIMC0_LCLK:1;  //0
+        uint32_t Reserved0:3;       //3:1
+        uint32_t DIV_FIMC1_LCLK:1;  //4
+        uint32_t Reserved1:3;       //7:5
+        uint32_t DIV_FIMC2_LCLK:1;  //8
+        uint32_t Reserved2:3;       //11:9
+        uint32_t DIV_FIMC3_LCLK:1;  //12
+        uint32_t Reserved3:3;       //15:13
+        uint32_t DIV_CAM0:1;        //16
+        uint32_t Reserved4:3;       //19:17
+        uint32_t DIV_CAM1:1;        //20
+        uint32_t Reserved5:3;       //23:21
+        uint32_t DIV_CSIS0:1;       //24
+        uint32_t Reserved6:3;       //27:25
+        uint32_t DIV_CSIS1:1;       //28
+        uint32_t Reserved6:3;       //31:29
+    } bits;
+} CLK_DIV_STAT_CAM0;
+
+/*
+ * CLK_DIV_STAT_TV
+ * 
+ * Address = CLOCK Base Address 1 + 0xC624
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVTV_BLK Status                                 |             |
+ * DIV_TV_BLK       |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [31:1] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_TV_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_TV_BLK:1;  //0
+        uint32_t Reserved:31;  //31:1
+        
+    } bits;
+} CLK_DIV_STAT_TV;
+
+/*
+ * CLK_DIV_STAT_MFC
+ * 
+ * Address = CLOCK Base Address 1 + 0xC628
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVMFC Status                                    |             |
+ * DIV_MFC          |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [31:1] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_MFC_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_MFC:1;     //0
+        uint32_t Reserved:31;  //31:1
+    } bits;
+} CLK_DIV_STAT_MFC;
+
+/*
+ * CLK_DIV_STAT_G3D
+ * 
+ * Address = CLOCK Base Address 1 + 0xC62C
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVG3D Status                                    |             |
+ * DIV_G3D          |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [31:1] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_G3D_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_G3D:1;     //0
+        uint32_t Reserved:31;  //31:1
+        
+    } bits;
+} CLK_DIV_STAT_G3D;
+
+/*
+ * CLK_DIV_STAT_LCD
+ * 
+ * Address = CLOCK Base Address 1 + 0xC634
+ * Reset Value = 0x0000_0000
+ * 
+ *        Name        |   Bit   | Type |                   Description                    | Reset Value | 
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVFIMD0 Status                                  |             |
+ * DIV_FIMD0          |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               |  [3:1]  |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMDNIE0 Status                                 |             |
+ * DIV_MDNIE0         |   [4]   |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               |  [7:5]  |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMDNIE_PWM0 Status                             |             |
+ * DIV_MDNIE_PWM0     |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               |  [11:9] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMDNIE_PWM0_PRE Status                         |             |
+ * DIV_MDNIE_PWM0_PRE |   [12]  |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               | [15:13] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMIPI0 Status                                  |             |
+ * DIV_MIPI0          |   [16]  |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               | [19:17] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMIPI0_PRE Status                              |             |
+ * DIV_MIPI0_PRE      |   [20]  |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               | [31:21] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_LCD_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_FIMD0:1;           //0
+        uint32_t Reserved0:3;           //3:1
+        uint32_t DIV_MDNIE0:1;          //4
+        uint32_t Reserved1:3;           //7:5
+        uint32_t DIV_MDNIE_PWM0:1;      //8
+        uint32_t Reserved2:3;           //11:9
+        uint32_t DIV_MDNIE_PWM0_PRE:1;  //12
+        uint32_t Reserved3:3;           //15:13
+        uint32_t DIV_MIPI0:1;           //16
+        uint32_t Reserved4:3;           //19:17
+        uint32_t DIV_MIPI0_PRE:1;       //20
+        uint32_t Reserved5:11;           //31:21
+    } bits;
+} CLK_DIV_STAT_LCD;
+
+/*
+ * CLK_DIV_STAT_ISP
+ * 
+ * Address = CLOCK Base Address 1 + 0xC638
+ * Reset Value = 0x0000_0000
+ * 
+ *        Name        |   Bit   | Type |                   Description                    | Reset Value | 
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVPWM_ISP Status                                |             |
+ * DIV_PWM_ISP        |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               |  [3:1]  |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVSPI0_ISP Status                               |             |
+ * DIV_SPI0_ISP       |   [4]   |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               |  [7:5]  |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVSPI0_ISP_PRE Status                           |             |
+ * DIV_SPI0_ISP_PRE   |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               |  [15:9] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVSPI1_ISP Status                               |             |
+ * DIV_SPI1_ISP       |   [16]  |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               | [19:17] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVSPI1_ISP_PRE Status                           |             |
+ * DIV_SPI1_ISP_PRE   |   [20]  |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               | [27:21] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVUART_ISP Status                               |             |
+ * DIV_UART_ISP       |   [28]  |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               | [31:29] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_ISP_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_PWM_ISP:1;         //0
+        uint32_t Reserved0:3;           //3:1
+        uint32_t DIV_SPI0_ISP:1;        //4
+        uint32_t Reserved1:3;           //7:5
+        uint32_t DIV_SPI0_ISP_PRE:1;    //8
+        uint32_t Reserved2:7;           //15:9
+        uint32_t DIV_SPI1_ISP:1;        //16
+        uint32_t Reserved3:3;           //19:17
+        uint32_t DIV_SPI1_ISP_PRE:1;    //20
+        uint32_t Reserved4:7;           //27:21
+        uint32_t DIV_UART_ISP:1;        //28
+        uint32_t Reserved5:3;           //31:29
+    } bits;
+} CLK_DIV_STAT_ISP;
+
+/*
+ * CLK_DIV_STAT_MAUDIO
+ * 
+ * Address = CLOCK Base Address 1 + 0xC63C
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVAUDIO0 Status                                 |             |
+ * DIV_AUDIO0       |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [3:1]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVPCM0 Status                                   |             |
+ * DIV_PCM0         |   [4]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [31:5] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_MAUDIO_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_AUDIO0:1; //0
+        uint32_t Reserved0:3;   //3:1
+        uint32_t DIV_PCM0:1;   //4
+        uint32_t Reserved1:27;  //31:5
+    } bits;
+} CLK_DIV_STAT_MAUDIO;
+
+/*
+ * CLK_DIV_STAT_FSYS0
+ * 
+ * Address = CLOCK Base Address 1 + 0xC640
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [19:0] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVMIPIHSI Status                                |             |
+ * DIV_MIPIHSI      |   [20]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [31:21] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_FSYS0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t Reserved0:20;  //19:0
+        uint32_t DIV_MIPIHSI:1; //20
+        uint32_t Reserved1:11;  //31:21
+    } bits;
+} CLK_DIV_STAT_FSYS0;
+
+/*
+ * CLK_DIV_STAT_FSYS1
+ * 
+ * Address = CLOCK Base Address 1 + 0xC644
+ * Reset Value = 0x0000_0000
+ * 
+ *        Name        |   Bit   | Type |                   Description                    | Reset Value | 
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMMC0 Status                                   |             |
+ * DIV_MMC0           |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               |  [7:1]  |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMMC0_PRE Status                               |             |
+ * DIV_MMC0_PRE       |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               |  [15:9] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMMC1 Status                                   |             |
+ * DIV_MMC1           |   [16]  |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               | [23:17] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMMC1_PRE Status                               |             |
+ * DIV_MMC1_PRE       |   [24]  |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               | [31:25] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_FSYS1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_MMC0:1;      //0
+        uint32_t Reserved0:7;     //7:1
+        uint32_t DIV_MMC0_PRE:1;  //8
+        uint32_t Reserved1:7;     //15:9
+        uint32_t DIV_MMC1:1;      //16
+        uint32_t Reserved2:7;     //23:17
+        uint32_t DIV_MMC1_PRE:1;  //24
+        uint32_t Reserved3:7;     //31:25
+    } bits;
+} CLK_DIV_STAT_FSYS1;
+
+/*
+ * CLK_DIV_STAT_FSYS2
+ * 
+ * Address = CLOCK Base Address 1 + 0xC648
+ * Reset Value = 0x0000_0000
+ * 
+ *        Name        |   Bit   | Type |                   Description                    | Reset Value | 
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMMC2 Status                                   |             |
+ * DIV_MMC2           |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               |  [7:1]  |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMMC2_PRE Status                               |             |
+ * DIV_MMC2_PRE       |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               |  [15:9] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMMC3 Status                                   |             |
+ * DIV_MMC3           |   [16]  |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               | [23:17] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ *                    |         |      | DIVMMC3_PRE Status                               |             |
+ * DIV_MMC3_PRE       |   [24]  |  R   | 0 : Stable                                       |     0x0     |
+ *                    |         |      | 1 : Status that the divider is changing          |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD               | [31:25] |  -   | Reserved                                         |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_FSYS2_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_MMC2:1;      //0
+        uint32_t Reserved0:7;     //7:1
+        uint32_t DIV_MMC2_PRE:1;  //8
+        uint32_t Reserved1:7;     //15:9
+        uint32_t DIV_MMC3:1;      //16
+        uint32_t Reserved2:7;     //23:17
+        uint32_t DIV_MMC3_PRE:1;  //24
+        uint32_t Reserved3:7;     //31:25
+    } bits;
+} CLK_DIV_STAT_FSYS2;
+
+/*
+ * CLK_DIV_STAT_FSYS3
+ * 
+ * Address = CLOCK Base Address 1 + 0xC64C
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVMMC4 Status                                   |             |
+ * DIV_MMC4         |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [7:1]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVMMC4_PRE Status                               |             |
+ * DIV_MMC4_PRE     |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [31:9] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_FSYS3_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_AUDIV_MMC4DIO0:1;  //0
+        uint32_t Reserved0:7;           //7:1
+        uint32_t DIV_MMC4_PRE:1;        //8
+        uint32_t Reserved1:23;          //31:9
+    } bits;
+} CLK_DIV_STAT_FSYS3;
+
+/*
+ * CLK_DIV_STAT_PERIL0
+ * 
+ * Address = CLOCK Base Address 1 + 0xC650
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIV_UART0 Status                                 |             |
+ * DIV_UART0        |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [3:1]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIV_UART1 Status                                 |             |
+ * DIV_UART1        |   [4]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [7:5]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIV_UART2 Status                                 |             |
+ * DIV_UART2        |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [11:9] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIV_UART3 Status                                 |             |
+ * DIV_UART3        |   [12]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [15:13] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIV_UART4 Status                                 |             |
+ * DIV_UART4        |   [16]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [31:17] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_PERIL0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_UART0:1;  //0
+        uint32_t Reserved0:3;  //3:1
+        uint32_t DIV_UART1:1;  //4
+        uint32_t Reserved1:3;  //7:5
+        uint32_t DIV_UART2:1;  //8
+        uint32_t Reserved2:3;  //11:9
+        uint32_t DIV_UART3:1;  //12
+        uint32_t Reserved3:3;  //15:13
+        uint32_t DIV_UART4:1;  //16
+        uint32_t Reserved4:15;  //31:17
+    } bits;
+} CLK_DIV_STAT_PERIL0;
+
+/*
+ * CLK_DIV_STAT_PERIL1
+ * 
+ * Address = CLOCK Base Address 1 + 0xC654
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVSPI0 Status                                   |             |
+ * DIV_SPI0         |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [7:1]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVSPI0_PRE Status                               |             |
+ * DIV_SPI0_PRE     |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [15:9] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVSPI1 Status                                   |             |
+ * DIV_SPI1         |   [16]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [23:17] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVSPI1_PRE Status                               |             |
+ * DIV_SPI1_PRE     |   [24]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [31:25] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_PERIL1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_SPI0:1;        //0
+        uint32_t Reserved0:7;       //7:1
+        uint32_t DIV_SPI0_PRE:1;    //8
+        uint32_t Reserved1:7;       //15:9
+        uint32_t DIV_SPI1:1;        //16
+        uint32_t Reserved2:7;       //23:17
+        uint32_t DIV_SPI1_PRE:1;    //24
+        uint32_t Reserved3:7;       //31:25
+    } bits;
+} CLK_DIV_STAT_PERIL1;
+
+/*
+ * CLK_DIV_STAT_PERIL2
+ * 
+ * Address = CLOCK Base Address 1 + 0xC658
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVSPI2 Status                                   |             |
+ * DIV_SPI2         |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [7:1]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVSPI2_PRE Status                               |             |
+ * DIV_SPI2_PRE     |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [31:9] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_PERIL2_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_SPI2:1;        //0
+        uint32_t Reserved0:7;       //7:1
+        uint32_t DIV_SPI2_PRE:1;    //8
+        uint32_t Reserved1:23;      //31:9
+    } bits;
+} CLK_DIV_STAT_PERIL2;
+
+/*
+ * CLK_DIV_STAT_PERIL3
+ * 
+ * Address = CLOCK Base Address 1 + 0xC65C
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [3:0]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVSLIMBUS Status                                |             |
+ * DIV_SLIMBUS      |   [4]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [31:5] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_PERIL3_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t Reserved0:3;       //3:0
+        uint32_t DIV_SLIMBUS:1;     //4
+        uint32_t Reserved1:27;      //31:5
+    } bits;
+} CLK_DIV_STAT_PERIL3;
+
+/*
+ * CLK_DIV_STAT_PERIL4
+ * 
+ * Address = CLOCK Base Address 1 + 0xC660
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVAUDIO1 Status                                 |             |
+ * DIV_AUDIO1       |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [3:1]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVPCM1 Status                                   |             |
+ * DIV_PCM1         |   [4]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [15:5] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVAUDIO2 Status                                 |             |
+ * DIV_AUDIO2       |   [16]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [19:17] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVPCM2 Status                                   |             |
+ * DIV_PCM2         |   [20]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [31:21] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_PERIL4_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_AUDIO1:1;  //0
+        uint32_t Reserved0:3;   //3:1
+        uint32_t DIV_PCM1:1;    //4
+        uint32_t Reserved1:11;  //15:5
+        uint32_t DIV_AUDIO2:1;  //16
+        uint32_t Reserved2:3;   //19:17
+        uint32_t DIV_PCM2:1;    //20
+        uint32_t Reserved3:11;  //31:21
+    } bits;
+} CLK_DIV_STAT_PERIL4;
+
+/*
+ * CLK_DIV_STAT_PERIL5
+ * 
+ * Address = CLOCK Base Address 1 + 0xC664
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVI2S1 Status                                   |             |
+ * DIV_I2S1         |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [7:1]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVI2S2 Status                               |             |
+ * DIV_I2S2         |   [8]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [31:9] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_PERIL5_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_I2S1:1;    //0
+        uint32_t Reserved0:7;   //7:1
+        uint32_t DIV_I2S2:1;    //8
+        uint32_t Reserved1:23;  //31:9
+    } bits;
+} CLK_DIV_STAT_PERIL5;
+
+/*
+ * CLK_DIV_STAT_CAM1
+ * 
+ * Address = CLOCK Base Address 1 + 0xC668
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                Description               | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | DIVJEPG Status                           |             |
+ * DIV_JEPG         |   [0]   |  R   | 0 : Stable                               |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing  |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |  [31:1] |  -   | Reserved                                 |     0x0     |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_CAM1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_SLIMBUS:1;    //0
+        uint32_t Reserved:31;      //31:1
+    } bits;
+} CLK_DIV_STAT_CAM1;
+
+/*
+ * CLKDIV2_STAT
+ * 
+ * Address = CLOCK Base Address 1 + 0xC680
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name       |   Bit   | Type |                   Description                    | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | PCLK Divider Status in FSYS_BLK                  |             |
+ * FSYS_BLK         |   [0]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [3:1]  |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | PCLK Divider Status in CAM_BLK                   |             |
+ * CAM_BLK          |   [4]   |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             |  [11:5] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | PCLK Divider Status in LCD_BLK                   |             |
+ * LCD_BLK          |   [12]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [19:13] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | PCLK Divider Status in TV_BLK                    |             |
+ * TV_BLK           |   [20]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [23:21] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ *                  |         |      | PCLK Divider Status in GPS_BLK                   |             |
+ * GPS_BLK          |   [24]  |  R   | 0 : Stable                                       |     0x0     |
+ *                  |         |      | 1 : Status that the divider is changing          |             |
+ * ---------------------------------------------------------------------------------------------------|
+ * RSVD             | [31:25] |  -   | Reserved                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLKDIV2_STAT_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t FSYS_BLK:1;    //0
+        uint32_t Reserved0:3;   //3:1
+        uint32_t CAM_BLK:1;     //4
+        uint32_t Reserved1:7;   //11:5
+        uint32_t LCD_BLK:1;     //12
+        uint32_t Reserved2:7;   //19:13
+        uint32_t TV_BLK:1;      //20
+        uint32_t Reserved3:3;   //23:21
+        uint32_t GPS_BLK:1;     //24
+        uint32_t Reserved3:7;   //31:25
+    } bits;
+} CLKDIV2_STAT;
+
+/*
+ * CLK_GATE_BUS_FSYS1
+ * 
+ * Address = CLOCK Base Address 1 + 0xC744
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *       Name       |   Bit   | Type |                Description               | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |  [15:0] |  -   | Reserved                                 |    0xFFFF   |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating APB clock for FSYS_ADC            |             |
+ * PCLK_ADC         |   [16]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating APB clock for PPMUFILE            |             |
+ * PCLK_PPMUFILE    |   [17]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [19:18] |  -   | Reserved                                 |     0x3     |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating APB clock for PCLK_AXI_FSYSD      |             |
+ * PCLK_AXI_FSYSD   |   [20]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating APB clock for PCLK_AXI_FSYSS      |             |
+ * PCLK_AXI_FSYSS   |   [21]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating APB clock for                     |             |
+ * PCLK_ASYNCAXIS_  |   [22]  |  RW  | ASYNCAXIS_GPS_FSYSD                      |     0x1     |
+ * GPS_FSYSD        |         |      | 0 : Mask                                 |             |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:23] |  -   | Reserved                                 |     0x3     |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_BUS_FSYS1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t Reserved0:16;                   //15:0
+        uint32_t PCLK_ADC:1;                    //16
+        uint32_t PCLK_PPMUFILE:1;               //17
+        uint32_t Reserved1:2;                    //19:18
+        uint32_t PCLK_AXI_FSYSD:1;              //20
+        uint32_t PCLK_AXI_FSYSS:1;              //21
+        uint32_t PCLK_ASYNCAXIS_GPS_FSYSD:1;    //22
+        uint32_t Reserved2:9;                    //31:23
+    } bits;
+} CLK_GATE_BUS_FSYS1;
+
+/*
+ * CLK_GATE_IP_CAM
+ * 
+ * Address = CLOCK Base Address 1 + 0xC920
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *       Name       |   Bit   | Type |                Description               | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for FIMC0               |             |
+ * CLK_FIMC0        |   [0]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for FIMC1               |             |
+ * CLK_FIMC1        |   [1]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for FIMC2               |             |
+ * CLK_FIMC2        |   [2]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for FIMC3               |             |
+ * CLK_FIMC3        |   [3]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for CSIS0               |             |
+ * CLK_CSIS0        |   [4]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for CSIS1               |             |
+ * CLK_CSIS1        |   [5]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for JEPG                |             |
+ * CLK_JEPG         |   [6]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SMMUFIMC0           |             |
+ * CLK_SMMUFIMC0    |   [7]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SMMUFIMC1           |             |
+ * CLK_SMMUFIMC1    |   [8]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SMMUFIMC2           |             |
+ * CLK_SMMUFIMC2    |   [9]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SMMUFIMC3           |             |
+ * CLK_SMMUFIMC3    |   [10]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SMMUJPEG            |             |
+ * CLK_SMMUJPEG     |   [11]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [15:12] |  -   | Reserved                                 |     0xF     |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PPMUCAMIF           |             |
+ * CLK_PPMUCAMIF    |   [16]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PIXELASYNCM0        |             |
+ * CLK_PIXELASYNCM0 |   [17]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PIXELASYNCM1        |             |
+ * CLK_PIXELASYNCM1 |   [18]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                                 |     0x1     |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:20] |  -   | Reserved                                 |    0xFFF    |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_CAM_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_FIMC0:1;           //0
+        uint32_t CLK_FIMC1:1;           //1
+        uint32_t CLK_FIMC2:1;           //2
+        uint32_t CLK_FIMC3:1;           //3
+        uint32_t CLK_CSIS0:1;           //4
+        uint32_t CLK_CSIS1:1;           //5
+        uint32_t CLK_JEPG:1;            //6
+        uint32_t CLK_SMMUFIMC0:1;       //7
+        uint32_t CLK_SMMUFIMC1:1;       //8
+        uint32_t CLK_SMMUFIMC2:1;       //9
+        uint32_t CLK_SMMUFIMC3:1;       //10
+        uint32_t CLK_SMMUJPEG:1;        //11
+        uint32_t Reserved0:4;           //15:12
+        uint32_t CLK_PPMUCAMIF:1;       //16
+        uint32_t CLK_PIXELASYNCM0:1;    //17
+        uint32_t CLK_PIXELASYNCM1:1;    //18
+        uint32_t Reserved1:1;           //19
+        uint32_t Reserved2:12;          //31:20
+    } bits;
+} CLK_GATE_IP_CAM;
+
+/*
+ * CLK_GATE_IP_TV
+ * 
+ * Address = CLOCK Base Address 1 + 0xC924
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *       Name       |   Bit   | Type |                Description               | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for VP                  |             |
+ * CLK_VP           |   [0]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for MIXER               |             |
+ * CLK_MIXER        |   [1]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [2]   |  -   | Reserved                                 |     0x1     |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for HDMI link           |             |
+ * CLK_HDMI         |   [3]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SMMUTV              |             |
+ * CLK_SMMUTV       |   [4]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PPMUTV              |             |
+ * CLK_PPMUTV       |   [5]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:6]  |  -   | Reserved                                 |  0x3FFFFFF  |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_TV_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_VP:1;      //0
+        uint32_t CLK_MIXER:1;   //1
+        uint32_t Reserved0:1;   //15:12
+        uint32_t CLK_HDMI:1;    //16
+        uint32_t CLK_SMMUTV:1;  //17
+        uint32_t CLK_PPMUTV:1;  //18
+        uint32_t Reserved1:26;  //19
+    } bits;
+} CLK_GATE_IP_TV;
+
+/*
+ * CLK_GATE_IP_MFC
+ * 
+ * Address = CLOCK Base Address 1 + 0xC928
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *       Name       |   Bit   | Type |                Description               | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for MFC                 |             |
+ * CLK_MFC          |   [0]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SMMUMFC_L           |             |
+ * CLK_SMMUMFC_L    |   [1]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SMMUMFC_R           |             |
+ * CLK_SMMUMFC_R    |   [2]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PPMUMFC_L           |             |
+ * CLK_PPMUMFC_L    |   [3]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PPMUMFC_R           |             |
+ * CLK_PPMUMFC_R    |   [4]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:5]  |  -   | Reserved                                 |  0x7FFFFFF  |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_MFC_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_MFC:1;        //0
+        uint32_t CLK_SMMUMFC_L:1;  //1
+        uint32_t CLK_SMMUMFC_R:1;  //2
+        uint32_t CLK_PPMUMFC_L:1;  //3
+        uint32_t CLK_PPMUMFC_R:1;  //4
+        uint32_t Reserved0:27;     //31:5
+    } bits;
+} CLK_GATE_IP_MFC;
+
+/*
+ * CLK_GATE_IP_G3D
+ * 
+ * Address = CLOCK Base Address 1 + 0xC92C
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *       Name       |   Bit   | Type |                Description               | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for G3D                 |             |
+ * CLK_G3D          |   [0]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PPMUG3D             |             |
+ * CLK_PPMUG3D      |   [1]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [2]   |  -   | Reserved                                 |     0x1     |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:3]  |  -   | Reserved                                 | 0x1FFFFFFF  |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_G3D_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_G3D:1;      //0
+        uint32_t CLK_PPMUG3D:1;  //1
+        uint32_t Reserved0:1;    //2
+        uint32_t Reserved1:29;   //31:3
+    } bits;
+} CLK_GATE_IP_G3D;
+
+/*
+ * CLK_GATE_IP_LCD
+ * 
+ * Address = CLOCK Base Address 1 + 0xC934
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *       Name       |   Bit   | Type |                Description               | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for FIMD0               |             |
+ * CLK_FIMD0        |   [0]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for MIE0                |             |
+ * CLK_MIE0         |   [1]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for MDNIE0              |             |
+ * CLK_MDNIE0       |   [2]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for DSIM0               |             |
+ * CLK_DSIM0        |   [3]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SMMUFIMD0           |             |
+ * CLK_SMMUFIMD0    |   [4]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PPMULCD0            |             |
+ * CLK_PPMULCD0     |   [5]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:6]  |  -   | Reserved                                 |  0x3FFFFFF  |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_LCD_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_FIMD0:1;     //0
+        uint32_t CLK_MIE0:1;      //1
+        uint32_t CLK_MDNIE0:1;    //2
+        uint32_t CLK_DSIM0:1;     //3
+        uint32_t CLK_SMMUFIMD0:1; //4
+        uint32_t CLK_PPMULCD0:1;  //5
+        uint32_t Reserved:26;    //31:6
+    } bits;
+} CLK_GATE_IP_LCD;
+
+/*
+ * CLK_GATE_IP_ISP
+ * 
+ * Address = CLOCK Base Address 1 + 0xC938
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *        Name       |   Bit   | Type |                Description               | Reset Value | 
+ * --------------------------------------------------------------------------------------------|
+ *                   |         |      | Gating all clock for PWM_ISP             |             |
+ * CLK_PWM_ISP_SCLK  |   [0]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                   |         |      | 1 : Pass                                 |             |
+ * --------------------------------------------------------------------------------------------|
+ *                   |         |      | Gating all clock for SPI0_ISP            |             |
+ * CLK_SPI0_ISP_SCLK |   [1]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                   |         |      | 1 : Pass                                 |             |
+ * --------------------------------------------------------------------------------------------|
+ *                   |         |      | Gating all clock for SPI1_ISP            |             |
+ * CLK_SPI1_ISP_SCLK |   [2]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                   |         |      | 1 : Pass                                 |             |
+ * --------------------------------------------------------------------------------------------|
+ *                   |         |      | Gating all clock for UART_ISP            |             |
+ * CLK_UART_ISP_SCLK |   [3]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                   |         |      | 1 : Pass                                 |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD              | [31:4]  |  -   | Reserved                                 |  0xFFFFFFF  |
+ * --------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_ISP_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_PWM_ISP_SCLK:1;    //0
+        uint32_t CLK_SPI0_ISP_SCLK:1;   //1
+        uint32_t CLK_SPI1_ISP_SCLK:1;   //2
+        uint32_t CLK_UART_ISP_SCLK:1;   //3
+        uint32_t Reserved:28;           //31:4
+    } bits;
+} CLK_GATE_IP_ISP;
+
+/*
+ * CLK_GATE_IP_FSYS
+ * 
+ * Address = CLOCK Base Address 1 + 0xC940
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *       Name      |   Bit   | Type |                Description               | Reset Value | 
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for PDMA0               |             |
+ * CLK_PDMA0       |   [0]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for PDMA1               |             |
+ * CLK_PDMA1       |   [1]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ * RSVD            |  [3:2]  |  -   | Reserved                                 |     0x3     |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for TSI                 |             |
+ * CLK_TSI         |   [4]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for SDMMC0              |             |
+ * CLK_SDMMC0      |   [5]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for SDMMC1              |             |
+ * CLK_SDMMC1      |   [6]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for SDMMC2              |             |
+ * CLK_SDMMC2      |   [7]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for SDMMC3              |             |
+ * CLK_SDMMC3      |   [8]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for SDMMC4              |             |
+ * CLK_SDMMC4      |   [9]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for MIPIHSI             |             |
+ * CLK_MIPIHSI     |   [10]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for SROM                |             |
+ * CLK_SROMC       |   [11]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for USB HOST            |             |
+ * CLK_USBHOST     |   [12]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for USB Device          |             |
+ * CLK_USBDEVICE   |   [13]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ * RSVD            |   [14]  |  -   | Reserved                                 |     0x1     |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for ONENAND             |             |
+ * CLK_ONENAND     |   [15]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for NFCON               |             |
+ * CLK_NFCON       |   [16]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ *                 |         |      | Gating all clock for PPMUFILE            |             |
+ * CLK_PPMUFILE    |   [17]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                 |         |      | 1 : Pass                                 |             |
+ * ------------------------------------------------------------------------------------------|
+ * RSVD            | [31:18] |  -   | Reserved                                 |    0x1FFF   |
+ * ------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_FSYS_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_PDMA0:1;     //0
+        uint32_t CLK_PDMA0:1;     //1
+        uint32_t Reserved0:1;     //3:2
+        uint32_t CLK_TSI:1;       //4
+        uint32_t CLK_SDMMC0:1;    //5
+        uint32_t CLK_SDMMC1:1;    //6
+        uint32_t CLK_SDMMC2:1;    //7
+        uint32_t CLK_SDMMC3:1;    //8
+        uint32_t CLK_SDMMC4:1;    //9
+        uint32_t CLK_MIPIHSI:1;   //10
+        uint32_t CLK_SROMC:1;     //11
+        uint32_t CLK_USBHOST:1;   //12
+        uint32_t CLK_USBDEVICE:1; //13
+        uint32_t Reserved1:1;     //14
+        uint32_t CLK_ONENAND:1;   //15
+        uint32_t CLK_NFCON:1;     //16
+        uint32_t CLK_PPMUFILE:1;  //17
+        uint32_t Reserved2:28;    //31:18
+    } bits;
+} CLK_GATE_IP_FSYS;
+
+/*
+ * CLK_GATE_IP_GPS
+ * 
+ * Address = CLOCK Base Address 1 + 0xC94C
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *       Name       |   Bit   | Type |                Description               | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for G3D                 |             |
+ * CLK_GPS          |   [0]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PPMUG3D             |             |
+ * CLK_SMMUGPS      |   [1]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PPMUG3D             |             |
+ * CLK_PPMUGPS      |   [2]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [3]   |  -   | Reserved                                 |     0x1     |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:4]  |  -   | Reserved                                 |  0xFFFFFFF  |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_GPS_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_GPS:1;      //0
+        uint32_t CLK_SMMUGPS:1;  //1
+        uint32_t CLK_PPMUGPS:1;  //2
+        uint32_t Reserved0:1;    //3
+        uint32_t Reserved1:28;   //31:4
+    } bits;
+} CLK_GATE_IP_GPS;
+
+/*
+ * CLK_GATE_IP_PERIL
+ * 
+ * Address = CLOCK Base Address 1 + 0xC950
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *       Name       |   Bit   | Type |                Description               | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for UART0               |             |
+ * CLK_UART0        |   [0]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for UART1               |             |
+ * CLK_UART1        |   [1]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for UART2               |             |
+ * CLK_UART2        |   [2]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for UART3               |             |
+ * CLK_UART3        |   [3]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for UART4               |             |
+ * CLK_UART4        |   [4]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [5]   |  -   | Reserved                                 |  0xFFFFFFF  |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for I2C0                |             |
+ * CLK_I2C0         |   [6]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for I2C1                |             |
+ * CLK_I2C1         |   [7]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for I2C2                |             |
+ * CLK_I2C2         |   [8]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for I2C3                |             |
+ * CLK_I2C3         |   [9]   |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for I2C4                |             |
+ * CLK_I2C4         |   [10]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for I2C5                |             |
+ * CLK_I2C5         |   [11]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for I2C6                |             |
+ * CLK_I2C6         |   [12]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for I2C7                |             |
+ * CLK_I2C7         |   [13]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for ISCHDMI             |             |
+ * CLK_I2CHDMI      |   [14]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [15]  |  -   | Reserved                                 |     0x1     |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SPI0                |             |
+ * CLK_SPI0         |   [16]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SPI1                |             |
+ * CLK_SPI1         |   [17]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SPI2                |             |
+ * CLK_SPI2         |   [18]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             |   [19]  |  -   | Reserved                                 |     0x1     |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for I2S1                |             |
+ * CLK_I2S1         |   [20]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for I2S2                |             |
+ * CLK_I2S2         |   [21]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PCM1                |             |
+ * CLK_PCM1         |   [22]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PCM2                |             |
+ * CLK_PCM2         |   [23]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for PWM                 |             |
+ * CLK_PWM          |   [24]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for Slimbus             |             |
+ * CLK_SLIMBUS      |   [25]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for SPDIF               |             |
+ * CLK_SPDIF        |   [26]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ *                  |         |      | Gating all clock for AC97                |             |
+ * CLK_AC97         |   [27]  |  RW  | 0 : Mask                                 |     0x1     |
+ *                  |         |      | 1 : Pass                                 |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD             | [31:28] |  -   | Reserved                                 |     0xF     |
+ * -------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_PERIL_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_UART0:1;     //0
+        uint32_t CLK_UART1:1;     //1
+        uint32_t CLK_UART2:1;     //2
+        uint32_t CLK_UART3:1;     //3
+        uint32_t CLK_UART4:1;     //4
+        uint32_t Reserved0:1;     //5
+        uint32_t CLK_I2C0:1;      //6
+        uint32_t CLK_I2C1:1;      //7
+        uint32_t CLK_I2C2:1;      //8
+        uint32_t CLK_I2C3:1;      //9
+        uint32_t CLK_I2C4:1;      //10
+        uint32_t CLK_I2C5:1;      //11
+        uint32_t CLK_I2C6:1;      //12
+        uint32_t CLK_I2C7:1;      //13
+        uint32_t CLK_I2CHDMI:1;   //14
+        uint32_t Reserved1:1;     //15
+        uint32_t CLK_SPI0:1;      //16
+        uint32_t CLK_SPI0:1;      //17
+        uint32_t CLK_SPI0:1;      //18
+        uint32_t Reserved2:1;     //19
+        uint32_t CLK_I2S1:1;      //20
+        uint32_t CLK_I2S2:1;      //21
+        uint32_t CLK_PCM1:1;      //22
+        uint32_t CLK_PCM2:1;      //23
+        uint32_t CLK_PWM:1;       //24
+        uint32_t CLK_SLIMBUS:1;   //25
+        uint32_t CLK_SPDIF:1;     //26
+        uint32_t CLK_AC97:1;      //27
+        uint32_t Reserved3:4;     //31:28
+    } bits;
+} CLK_GATE_IP_PERIL;
+
+/*
+ * CLK_GATE_BLOCK
+ * 
+ * Address = CLOCK Base Address 1 + 0xC970
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *    Name   |   Bit   | Type |                     Description                    | Reset Value | 
+ * ----------------------------------------------------------------------------------------------|
+ *           |         |      | Gating all clock for CAM_BLK(FIMC0, FIMC1, FIMC2,  |             |
+ * CLK_CAM   |   [0]   |  RW  | 0 : Mask                                           |     0x1     |
+ *           |         |      | and FIMC3)                                         |             |
+ *           |         |      | 1 : Pass                                           |             |
+ * ----------------------------------------------------------------------------------------------|
+ *           |         |      | Gating all clock for TV_BLK (VP, MIXER, TVENC, and |             |
+ * CLK_TV    |   [1]   |  RW  | and HDMI)                                          |     0x1     |
+ *           |         |      | 0 : Mask                                           |             |
+ *           |         |      | 1 : Pass                                           |             |
+ * ----------------------------------------------------------------------------------------------|
+ *           |         |      | Gating all clock for MFC_BLK (MFC)                 |             |
+ * CLK_MFC   |   [2]   |  RW  | 0 : Mask                                           |     0x1     |
+ *           |         |      | 1 : Pass                                           |             |
+ * ----------------------------------------------------------------------------------------------|
+ *           |         |      | Gating all clock for G3D_BLK (G3D)                 |             |
+ * CLK_G3D   |   [3]   |  RW  | 0 : Mask                                           |     0x1     |
+ *           |         |      | 1 : Pass                                           |             |
+ * ----------------------------------------------------------------------------------------------|
+ *           |         |      | Gating all clock for LCD_BLK (FIMD0, MIE0, and     |             |
+ * CLK_LCD   |   [4]   |  RW  | DSIM0)                                             |     0x1     |
+ *           |         |      | 0 : Mask                                           |             |
+ *           |         |      | 1 : Pass                                           |             |
+ * ----------------------------------------------------------------------------------------------|
+ * RSVD      |  [6:5]  |  -   | Reserved                                           |     0x3     |
+ * ----------------------------------------------------------------------------------------------|
+ *           |         |      | Gating all clock for GPS_BLK (GPS)                 |             |
+ * CLK_GPS   |   [7]   |  RW  | 0 : Mask                                           |     0x1     |
+ *           |         |      | 1 : Pass                                           |             |
+ * ----------------------------------------------------------------------------------------------|
+ * RSVD      | [31:8]  |  -   | Reserved                                           |  0xFFFFFFF  |
+ * ----------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_BLOCK_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_CAM:1;     //0
+        uint32_t CLK_TV:1;      //1
+        uint32_t CLK_MFC:1;     //2
+        uint32_t CLK_G3D:1;     //3
+        uint32_t CLK_LCD:1;     //4
+        uint32_t Reserved0:2;   //6:5
+        uint32_t CLK_GPS:1;     //7
+        uint32_t Reserved1:24;  //31:8
+    } bits;
+} CLK_GATE_BLOCK;
+
+/*
+ * CLKOUT_CMU_TOP
+ * 
+ * Address = CLOCK Base Address 1 + 0xCA00
+ * Reset Value = 0x0001_0000
+ * 
+ *       Name       |   Bit   | Type |             Description            | Reset Value | 
+ * -------------------------------------------------------------------------------------|
+ *                  |         |      | MUX Selection                      |             |
+ *                  |         |      | 00000 : EPLL_FOUT                  |             |
+ *                  |         |      | 00001 : VPLL_FOUT                  |             |
+ *                  |         |      | 00010 : SCLK_HDMI24M               |             |
+ *                  |         |      | 00011 : SCLK_USBPHY0               |             |
+ *                  |         |      | 00101 : SCLK_HDMIPHY               |             |
+ *                  |         |      | 00110 : AUDIOCDCLK0                |             |
+ *                  |         |      | 00111 : AUDIOCDCLK1                |             |
+ *                  |         |      | 01000 : AUDIOCDCLK2                |             |
+ *                  |         |      | 01001 : SPDIF_EXTCLK               |             |
+ *                  |         |      | 01010 : ACLK_160                   |             |
+ *                  |         |      | 01011 : ACLK_133                   |             |
+ *                  |         |      | 01100 : ACLK_200                   |             |
+ *                  |         |      | 01101 : ACLK_100                   |             |
+ *                  |         |      | 01110 : SCLK_MFC                   |             |
+ * MUX_SEL          |  [4:0]  |  RW  | 01111 : SCLK_G3D                   |     0x0     |
+ *                  |         |      | 10000 : ACLK_4500_MCUISP           |             |
+ *                  |         |      | 10001 : CAM_A_PCLK                 |             |
+ *                  |         |      | 10010 : CAM_B_PCLK                 |             |
+ *                  |         |      | 10011 : S_RXBYTECLKHS0_2L          |             |
+ *                  |         |      | 10100 : S_RXBYTECLKHS0_4L          |             |
+ *                  |         |      | 10101 : RX_HALF_BYTE_CLK_CSIS0     |             |
+ *                  |         |      | 10110 : RX_HALF_BYTE_CLK_CSIS1     |             |
+ *                  |         |      | 10111 : SCLK_JEPG                  |             |
+ *                  |         |      | 11000 : SCLK_PWM_ISP               |             |
+ *                  |         |      | 11001 : SCLK_SPI0_ISP              |             |
+ *                  |         |      | 11010 : SCLK_SPI1_ISP              |             |
+ *                  |         |      | 11011 : SCLK_UART_ISP              |             |
+ *                  |         |      | 11100 : SCLK_MIPIHSI               |             |
+ *                  |         |      | 11101 : SCLK_HDMI                  |             |
+ *                  |         |      | 11110 : SCLK_FIMD0                 |             |
+ *                  |         |      | 11111 : SCLK_PCM0                  |             |
+ * -------------------------------------------------------------------------------------|
+ * RSVD             |  [7:5]  |  -   | Reserved                           |     0x0     |
+ * -------------------------------------------------------------------------------------|
+ * DIV_RATIO        |  [13:8] |  RW  | Divide Ratio                       |     0x0     |
+ *                  |         |      | Divide ratio = DIV_RATIO + 1       |             |
+ * -------------------------------------------------------------------------------------|
+ * RSVD             | [15:14] |  -   | Reserved                           |     0x0     |
+ * -------------------------------------------------------------------------------------|
+ *                  |         |      | Enable CLKOUT                      |             |
+ * ENB_CLKOUT       |   [16]  |  RW  | 0 : Disables                       |     0x1     |
+ *                  |         |      | 1 : Enables                        |             |
+ * -------------------------------------------------------------------------------------|
+ * RSVD             | [31:17] |  -   | Reserved                           |     0x0     | 
+ * -------------------------------------------------------------------------------------|
+ */
+
+typedef union CLKOUT_CMU_TOP_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t MUX_SEL:5;    //4:0
+        uint32_t Reserved0:3;  //7:5
+        uint32_t DIV_RATIO:5;  //13:8
+        uint32_t Reserved1:2;  //15:14
+        uint32_t ENB_CLKOUT:1; //16
+        uint32_t Reserved2:15; //31:17
+    } bits;
+} CLKOUT_CMU_TOP;
+
+/*
+ * CLKOUT_CMU_TOP_DIV_STAT
+ * 
+ * Address = CLOCK Base Address 1 + 0xCA04
+ * Reset Value = 0x0000_0000
+ * 
+ *       Name     |   Bit   | Type |                Description                 | Reset Value | 
+ * -------------------------------------------------------------------------------------------|
+ *                |         |      | DIVCLKOUT Status                           |             |
+ * DIV_STAT       |   [0]   |  R   | 0 : Stable                                 |     0x0     |
+ *                |         |      | 1 : Status that the divider is changing    |             |
+ * -------------------------------------------------------------------------------------------|
+ * RSVD           | [31:1]  |  -   | Reserved                                   |     0x0     |   
+ * -------------------------------------------------------------------------------------------|
+ * 
+ */
+
+typedef union CLKOUT_CMU_TOP_DIV_STAT_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_STAT:1;  //0
+        uint32_t Reserved:31; //31:1
+    } bits;
+} CLKOUT_CMU_TOP_DIV_STAT;
+
+/*
+ * MPLL_LOCK
+ * 
+ * Address = CLOCK Base Address 2 + 0x0008
+ * Reset Value = 0x0000_0FFF
+ * 
+ *       Name     |   Bit   | Type |                    Description                    | Reset Value | 
+ * --------------------------------------------------------------------------------------------------|
+ *                |         |      | Required period to generate a stable clock output |             |
+ *                |         |      | Set (270cycles x PDIV) to PLL_LOCKTIME for the    |             |
+ * PLL_LOCKTIME   | [15:0]  |  RW  | PLL maximum lock time.                            |     0x0     |
+ *                |         |      | 1 cycle = 1 / FREF = 1 / (FIN / PDIV)             |             |
+ *                |         |      | The maximum PLL lock time is 22.5usec where FIN   |             |
+ *                |         |      | is 24MHz, PDIV is 2 and PLL_LOCKTIME is 540       |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD           | [31:16] |  -   | Reserved                                          |     0x0     |   
+ * --------------------------------------------------------------------------------------------------|
+ * 
+ * 
+ */
+
+typedef union MPLL_LOCK_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t PLL_LOCKTIME:16;  //15:0
+        uint32_t Reserved:16;      //31:16
+    } bits;
+} MPLL_LOCK;
+
 #endif
