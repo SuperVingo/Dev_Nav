@@ -1,5 +1,5 @@
-#ifndef __GPIO_GPIO_STRUCTURE_H__     
-#define __GPIO_GPIO_STRUCTURE_H__    
+#ifndef __CLOCK_CLOCK_ADDR_H__    
+#define __CLOCK_CLOCK_ADDR_H__  
 
 #include "ustdint.h"
 
@@ -6448,29 +6448,1582 @@ typedef union DMC_PAUSE_CTRL_u
  * Reset Value = 0x0000_0000
  * 
  * 
- *        Name      |   Bit   | Type |                 Description                  | Reset Value | 
- * -----------------------------------------------------------------------------------------------|
- * DUR_CTRL_ST      |   [0]   |  RW  | DREX2 pause function works when DMC_RATIO or |     0x0     |
- * _CLR             |         |      | DMCD_RATIO in CLK_DIV_DMC0 register is       |             |
- * -----------------------------------------------------------------------------------------------|
- * RSVD             | [15:1]  |  -   | Reserved                                     |     0x0     |
- * -----------------------------------------------------------------------------------------------|
- * STATE            | [18:16] |  R   | Specifies current status for debugging       |     0x0     |
- * -----------------------------------------------------------------------------------------------|
- * RSVD             | [31:19] |  -   | Reserved                                     |     0x0     |
- * -----------------------------------------------------------------------------------------------|
+ *        Name      |   Bit   | Type |                     Description                      | Reset Value | 
+ * -------------------------------------------------------------------------------------------------------|
+ * DUR_CTRL_ST      |  [7:0]  |  RW  | Sets Duration for clearing ctrl_start signal of      |     0x0     |
+ * _CLR             |         |      | DDR_PHY                                              |             |
+ * -------------------------------------------------------------------------------------------------------|
+ * DUR_LOCK_WAIT    | [15:8]  |  RW  | Sets Duration for DLL Lock Wait of DDR_PHY           |     0x0     |
+ * -------------------------------------------------------------------------------------------------------|
+ * CURR_STATE       | [17:16] |  R   | Specifies current status for debugging               |     0x0     |
+ * -------------------------------------------------------------------------------------------------------|
+ * RSVD             | [27:18] |  -   | Reserved                                             |     0x0     |
+ * -------------------------------------------------------------------------------------------------------|
+ * CTRL_RESYNC      |  [28]   |  RW  | Mask ctrl_resync pulse form DREX2 during             |     0x0     |
+ * _MASK            |         |      | DDRPHY DLL Locking time                              |             |
+ * -------------------------------------------------------------------------------------------------------|
+ * CTRL_RESYNC      |  [29]   |  RW  | Enable ctrl_resync pulse generation                  |     0x0     |
+ * _ENABLE          |         |      |                                                      |             |
+ * -------------------------------------------------------------------------------------------------------|
+ * CTRL_START       |  [30]   |  RW  | Enable Clearing of ctrl_start signal                 |     0x0     |
+ * _ENABLE          |         |      |                                                      |             |
+ * -------------------------------------------------------------------------------------------------------|
+ *                  |         |      | Use ctrl_locked signal coming from LPDDR_PHY to      |             |
+ *                  |         |      | check DLL lock-time duration                         |             |
+ * USE_CTRL         |  [31]   |  RW  | 1 = Uses ctrl_locked signal                          |     0x0     |
+ * _LOCKED          |         |      | 0 = Uses internal counter to measure DLL Lock        |             |
+ *                  |         |      | duration                                             |             |
+ * -------------------------------------------------------------------------------------------------------|
  */
 
-typedef union DMC_PAUSE_CTRL_u
+typedef union DDRPHY_LOCK_CTRL_u
 {
     uint32_t all_val;
     struct
     {
-        uint32_t DMC_PAUSE_ENABLE:1;    //0
-        uint32_t Reserved0:15;          //15:1
-        uint32_t STATE:3;               //18:16
-        uint32_t Reserved0:13;          //31:19
+        uint32_t DUR_CTRL_ST_CLR:8;     //7:0
+        uint32_t DUR_LOCK_WAIT:8;       //15:8
+        uint32_t CURR_STATE:2;          //17:16
+        uint32_t Reserved0:10;          //27:18
+        uint32_t CTRL_RESYNC_MASK:1;    //28
+        uint32_t CTRL_RESYNC_ENABLE:1;  //29
+        uint32_t CTRL_START_ENABLE:1;   //30
+        uint32_t USE_CTRL_LOCKED:1;     //31
     } bits;
-} DMC_PAUSE_CTRL;
+} DDRPHY_LOCK_CTRL;
 
+/*
+ * C2C_STATE
+ * 
+ * Address = CLOCK Base Address 2 + 0x109C
+ * Reset Value = 0x0000_0000
+ * 
+ *        Name      |   Bit   | Type |            Description             | Reset Value | 
+ * -------------------------------------------------------------------------------------|
+ * CURR_STATE       |  [2:0]  |  R   | Current State of C2C_SEC_FSM       |     0x0     |
+ * -------------------------------------------------------------------------------------|
+ * RSVD             | [31:3]  |  -   | Reserved                           |     0x0     |
+ * -------------------------------------------------------------------------------------|
+ */
+
+typedef union C2C_STATE_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CURR_STATE:3;      //0
+        uint32_t Reserved0:29;      //15:1
+    } bits;
+} C2C_STATE;
+
+/*
+ * APLL_LOCK
+ * 
+ * Address = CLOCK Base Address 2 + 0x4000
+ * Reset Value = 0x0000_0FFF
+ * 
+ *        Name      |   Bit   | Type |                    Description                     | Reset Value | 
+ * -----------------------------------------------------------------------------------------------------|
+ *                  |         |      | Required period to generate a stable clock output  |             |
+ *                  |         |      | Set (270cycles x PDIV) to PLL_LOCKTIME for the     |             |
+ * PLL_LOCKTIME     | [15:0]  |  R   | PLL maximum lock time.                             |    0xFFF    |
+ *                  |         |      | 1 cycle = 1/FREF = 1/(FIN/PDIV)                    |             |
+ *                  |         |      | The maximum PLL lock time is 22.5usec where FIN    |             |
+ *                  |         |      | is 24MHz, PDIV is 2 and PLL_TIME Is 540.           |             |
+ * -----------------------------------------------------------------------------------------------------|
+ * RSVD             | [31:16] |  -   | Reserved                                           |     0x0     |
+ * -----------------------------------------------------------------------------------------------------|
+ * 
+ * The maximum lock time means the waiting time for locking in the worst case. Therefore, the user of this PLL must
+ * wait for more than the maximum lock time unconditionally before the PLL is locked. (Waiting time before locking >=
+ * the maximum locktime)
+ */
+
+typedef union APLL_LOCK_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t PLL_LOCKTIME:16;       //15:0
+        uint32_t Reserved0:16;          //31:16
+    } bits;
+} APLL_LOCK;
+
+/*
+ * APLL_CON0
+ * 
+ * Address = CLOCK Base Address 2 + 0x4100
+ * Reset Value = 0x0064_0300
+ * 
+ *        Name      |   Bit   | Type |                      Description                       | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------------|
+ * SDIV             |  [2:0]  | RWX  | PLL S Divide Value                                     |     0x1     |
+ * ---------------------------------------------------------------------------------------------------------|
+ * RSVD             |  [7:3]  |  -   | Reserved                                               |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------|
+ * PDIV             | [13:8]  | RWX  | PLL P Divide Value                                     |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------|
+ * RSVD             | [15:14] |  -   | Reserved                                               |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------|
+ * MDIV             | [25:16] | RWX  | PLL M Divide Value                                     |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------|
+ * RSVD             |  [26]   |  -   | Reserved                                               |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------|
+ *                  |         |      | Monitors Frequency Select PIn                          |             |
+ * FSEL             |  [27]   | RWX  | 0 = F_VCO_OUT = F_REF                                  |     0x0     |
+ *                  |         |      | 1 = F_VCO_OUT = F_VCO                                  |             |
+ * ---------------------------------------------------------------------------------------------------------|
+ * RSVD             |  [28]   |  -   | Reserved                                               |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------|
+ *                  |         |      | PLL Locking Indiciation                                |             |
+ *                  |         |      | 0 = Unlocks                                            |             |
+ *                  |         |      | 1 = Locks                                              |             |
+ *                  |         |      | If ENABLE_LOCK_DET = 0, then this field is set to      |             |
+ * LOCKED           |  [29]   |  R   | 1 after the locking time. THe lock-time is set using   |    0xFFF    |
+ *                  |         |      | the APLL_LOCK SFR register.                            |             |
+ *                  |         |      | If ENABLE_LOCK_DET = 1, then this field is set         |             |
+ *                  |         |      | when the hardware lock detector meets the PLL          |             |
+ *                  |         |      | locking condition.                                     |             |
+ *                  |         |      | This bit is Read Only                                  |             |
+ * ---------------------------------------------------------------------------------------------------------|
+ * RSVD             |  [30]   |  -   | Reserved                                               |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------|
+ *                  |         |      | PLL Enable Control                                     |             |
+ * ENABLE           |  [31]   |  RW  | 0 = Disables                                           |     0x0     |
+ *                  |         |      | 1 = Enables                                            |             |
+ * ---------------------------------------------------------------------------------------------------------|
+ * 
+ * The reset value of APLL_CON0 generates an 800 MHz output clock for an input clock frequency of 24MHz.
+ * 
+ * The equation to calculate the output frequency is: FOUT = MDIV x FIN / (PDIV x 2SDIV)
+ * 
+ * FOUT should fall in the range of: 21.9 MHz <= FOUT <= 1400 MHz
+ * 
+ * The conditions MDIV, PDIV, SDIV for APLL and MPLL should meet are:
+ * 
+ * - PDIV: 1 <= PDIV <= 63
+ * - MDIV: 64 <= MDIV <= 1023
+ * - SDIV: 0 <= SDIV <= 5
+ * - F_ref = FIN / PDIV) Fref should fall in the range of: 2 MHz <= Fref <= 12 MHz
+ * - F_vco = MDIV x F_IN / PDIV) F_vco should fall in the range of 700 MHz <= F_vco <= 1400 MHz 
+ * 
+ * Refer to the section 7.3.1 Recommended PLL_PMS Value for APLL and MPLL for recommended PMS value
+ */
+
+typedef union APLL_CON0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t SDIV:3;            //2:0
+        uint32_t Reserved0:5;       //7:3
+        uint32_t PDIV:6;            //13:8
+        uint32_t Reserved1:2;       //15:14
+        uint32_t MDIV:10;           //25:16
+        uint32_t Reserved2:1;       //26
+        uint32_t FSEL:1;            //27
+        uint32_t Reserved3:1;       //28
+        uint32_t LOCKED:1;          //29
+        uint32_t Reserved4:1;       //30
+        uint32_t ENABLE:1;          //31
+    } bits;
+} APLL_CON0;
+
+/*
+ * APLL_CON1
+ * 
+ * Address = CLOCK Base Address 2 + 0x4104
+ * Reset Value = 0x0080_3800
+ * 
+ *       Name     |   Bit   | Type |                      Description                       | Reset Value | 
+ * -------------------------------------------------------------------------------------------------------|
+ * AFC            |  [4:0]  | RWX  | AFC value                                              |     0x0     |
+ * -------------------------------------------------------------------------------------------------------|
+ * RSVD           |  [7:5]  |  -   | Reserved                                               |     0x0     |
+ * -------------------------------------------------------------------------------------------------------|
+ * LOCK_CON_DLY   | [11:8]  |  RW  | Specifies Lock detector settings of the detection      |     0x8     |
+ *                |         |      | resolution.                                            |             |
+ * -------------------------------------------------------------------------------------------------------|
+ * LOCK_CON_IN    | [13:12] |  RW  | Specifies Lock detector settings of the input margin   |     0x3     |
+ * -------------------------------------------------------------------------------------------------------|
+ * LOCK_CON_OUT   | [15:14] |  RW  | Specifies Lock detector settings of the output         |     0x0     |
+ *                |         |      | margin.                                                |     0x8     |
+ * -------------------------------------------------------------------------------------------------------|
+ * FEED_EN        |  [16]   |  RW  | Enable signal for FEED_OUT                             |     0x0     |
+ * -------------------------------------------------------------------------------------------------------|
+ * RSVD           |  [17]   |  -   | Reserved                                               |     0x0     |
+ * -------------------------------------------------------------------------------------------------------|
+ * RSVD           | [19:18] |  -   | Reserved                                               |     0x0     |
+ * -------------------------------------------------------------------------------------------------------|
+ *                |         |      | Decides whether AFC is enabled or not. When AFC        |             |
+ *                |         |      | is enabled, it calibrates VCO automatically            |             |
+ * AFC_ENB        |  [20]   | RWX  | 0 = Enables AFC                                        |     0x0     |
+ *                |         |      | 1 = Disables AFC                                       |             |
+ *                |         |      | It is an active low signal                             |             |
+ * -------------------------------------------------------------------------------------------------------|
+ *                |         |      | Decides whether the DCC is enabled or not.             |             |
+ * DCC_ENB        |  [21]   |  RW  | 0 = Enables DCC                                        |     0x0     |
+ *                |         |      | 1 = Disables DCC                                       |             |
+ *                |         |      | Thist bit is Read Only                                 |             |
+ * -------------------------------------------------------------------------------------------------------|
+ *                |         |      | If BYPASS = 1, bypass mode is enabled. (F_out          |             |
+ * BYPASS         |  [22]   |  RW  | = F_in)                                                |     0x0     |
+ *                |         |      | If BYPASS = 0, PLL3500X operates normally.             |             |
+ * -------------------------------------------------------------------------------------------------------|
+ * RESV0          |  [23]   |  RW  | Specifies VCO Range boost-up when the signal is        |     0x1     |
+ *                |         |      | high                                                   |             |
+ * -------------------------------------------------------------------------------------------------------|
+ * RESV1          |  [24]   |  RW  | Specifies status of Linear-Region Detector(LDR)        |     0x0     |
+ *                |         |      | when it detects a low signal                           |             |
+ * -------------------------------------------------------------------------------------------------------|
+ * RSVD           | [31:25] |  -   | Reserved                                               |     0x0     |
+ * -------------------------------------------------------------------------------------------------------|
+ * 
+ * AFC automatically selects adaptive frequency curve of VCO using switched current bank for wide range, high
+ * phase noise (or filter), and fast lock time
+ * 
+ * Refer to the section 7.3.1 Recommended PLL_PMS Value for APLL and MPLL for recommended AFC_ENB and
+ * AFC values.
+ *
+ * Note: The other PLL control inputs should be set as: 
+ *      RESV1 = 0           RESV0 = 0
+ *      DCC_ENB = 1         EXTAFC = 0
+ *      LOCK_CON_IN = 3     LOCK_COIN_OUT = 0
+ *      LOCK_CON_DLY = 8    AFC_ENB = 0 
+ */
+
+typedef union APLL_CON1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t AFC:5;             //4:0
+        uint32_t Reserved0:3;       //7:5
+        uint32_t LOCK_CON_DLY:4;    //11:8
+        uint32_t LOCK_CON_IN:2;     //13:12
+        uint32_t LOCK_CON_OUT:1;    //15:14
+        uint32_t FEED_EN:1;         //16
+        uint32_t Reserved3:2;       //17
+        uint32_t Reserved3:1;       //19:18
+        uint32_t AFC_ENB:1;         //20
+        uint32_t DCC_ENB:1;         //21
+        uint32_t BYPASS:1;          //22
+        uint32_t RESV0:1;           //23
+        uint32_t RESV1:1;           //24
+        uint32_t Reserved3:7;       //31:25
+    } bits;
+} APLL_CON1;
+
+/*
+ * CLK_SRC_CPU
+ * 
+ * Address = CLOCK Base Address 2 + 0x4200
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |      Description      | Reset Value | 
+ * ----------------------------------------------------------------------------|
+ *                      |         |      | Controls MUXAPLL      |             |
+ * MUX_APLL_SEL         |   [0]   |  RW  | 0 = FINPLL            |     0x0     |
+ *                      |         |      | 1 = MOUTAPLLFOUT      |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD                 | [15:1]  |  -   | Reserved              |     0x0     |
+ * ----------------------------------------------------------------------------|
+ *                      |         |      | Controls MUXCORE      |             |
+ * MUX_CORE_SEL         |   [16]  |  RW  | 0 = MOUTAPLL          |     0x0     |
+ *                      |         |      | 1 = SCLKMPLL          |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD                 | [19:17] |  -   | Reserved              |     0x0     |
+ * ----------------------------------------------------------------------------|
+ *                      |         |      | Controls MUXHPM       |             |
+ * MUX_HPM_SEL          |   [20]  |  RW  | 0 = MOUTAPLL          |     0x0     |
+ *                      |         |      | 1 = SCLKMPLL          |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD                 | [23:21] |  -   | Reserved              |     0x0     |
+ * ----------------------------------------------------------------------------|
+ *                      |         |      | Controls MUXMPLL      |             |
+ * MUX_MPLL_USER_SEL_C  |   [24]  |  RW  | 0 = FINPLL            |     0x0     |
+ *                      |         |      | 1 = FOUTMPLL          |             |
+ * ----------------------------------------------------------------------------|
+ * RSVD                 | [31:25] |  -   | Reserved              |     0x0     |
+ * ----------------------------------------------------------------------------|
+ */
+
+typedef union CLK_SRC_CPU_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t MUX_APLL_SEL:1;            //0
+        uint32_t Reserved0:15;              //15:1
+        uint32_t MUX_CORE_SEL:1;            //16
+        uint32_t Reserved1:3;               //19:17
+        uint32_t MUX_HPM_SEL:1;             //20
+        uint32_t Reserved2:3;               //23:21
+        uint32_t MUX_MPLL_USER_SEL_C:1;     //24
+        uint32_t Reserved3:7;               //31:25
+    } bits;
+} CLK_SRC_CPU;
+
+/*
+ * CLK_MUX_STAT_CPU
+ * 
+ * Address = CLOCK Base Address 2 + 0x4400
+ * Reset Value = 0x0111_0001
+ * 
+ *          Name        |   Bit   | Type |              Description              | Reset Value | 
+ * --------------------------------------------------------------------------------------------|
+ *                      |         |      | Selection signal status of MUXAPLL    |             |
+ * APLL_SEL             |  [2:0]  |  RW  | 001 = FINPLL                          |     0x1     |
+ *                      |         |      | 010 = MOUTAPLLFOUT                    |             |
+ *                      |         |      | 1xx = Status that the mux is changing |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD                 |  [7:3]  |  -   | Reserved                              |     0x0     |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD                 | [15:8]  |  -   | Reserved                              |     0x0     |
+ * --------------------------------------------------------------------------------------------|
+ *                      |         |      | Selection signal status of MUXCORE    |             |
+ * CORE_SEL             | [18:16] |  RW  | 001 = MOUTAPLL                        |     0x1     |
+ *                      |         |      | 010 = SCLKMPLL                        |             |
+ *                      |         |      | 1xx = Status that the mux is changing |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD                 |  [19]   |  -   | Reserved                              |     0x0     |
+ * --------------------------------------------------------------------------------------------|
+ *                      |         |      | Selection signal status of MUXHPM     |             |
+ * HPM_SEL              | [22:20] |  RW  | 001 = MOUTAPLL                        |     0x1     |
+ *                      |         |      | 010 = SCLKMPLL                        |             |
+ *                      |         |      | 1xx = Status that the mux is changing |             |
+ * --------------------------------------------------------------------------------------------|
+ *                      |         |      | Selection signal status of MUXMPLL    |             |
+ * MPLL_USER_SEL_C      | [26:24] |  RW  | 001 = FINMPLL                         |     0x1     |
+ *                      |         |      | 010 = FOUTMPLL                        |             |
+ *                      |         |      | 1xx = Status that the mux is changing |             |
+ * --------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:27] |  -   | Reserved                              |     0x0     |
+ * --------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_MUX_STAT_CPU_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t APLL_SEL:3;            //2:0
+        uint32_t Reserved0:5;           //7:3
+        uint32_t Reserved1:8;           //15:8
+        uint32_t CORE_SEL:3;            //18:16
+        uint32_t Reserved2:1;           //19
+        uint32_t HPM_SEL:3;             //22:20
+        uint32_t MPLL_USER_SEL_C:3;     //26:24
+        uint32_t Reserved3:5;           //31:27
+    } bits;
+} CLK_MUX_STAT_CPU;
+
+/*
+ * CLK_DIV_CPU0
+ * 
+ * Address = CLOCK Base Address 2 + 0x4500
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                Description                | Reset Value | 
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCORE Clock Divider Ratio               |             |
+ * CORE_RATIO           |  [2:0]  |  RW  | DIVCORE_OUT = MOUTCORE / (CORE_RATIO +    |     0x0     |
+ *                      |         |      | 1)                                        |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [3]   |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ * COREM0_RATIO         |  [6:4]  |  RW  | DIVCOREM0 Clock Divider Ratio             |     0x0     |
+ *                      |         |      | ACLK_COREM0 = ARMCLK / (COREM0_RAIOT + 1) |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [7]   |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ * COREM1_RATIO         | [10:8]  |  RW  | DIVCOREM1 Clock Divider Ratio             |     0x0     |
+ *                      |         |      | ACLK_COREM1 = ARMCLK / (COREM1_RATIO + 1) |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [11]   |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ * PERIPH_RATIO         | [14:12] |  RW  | DIVPERIPH Clock Divider Ratio             |     0x0     |
+ *                      |         |      | PERIPHCLK = DOUTCORE / (PERIPH_RATIO + 1) |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [15]   |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ * ATB_RATIO            | [18:16] |  RW  | DIVATB Clock Divider Ratio                |     0x0     |
+ *                      |         |      | ATCLK = MOUTCORE / (ATB_RATIO + 1)        |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [19]   |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ * PCLK_DBG_RATIO       | [22:20] |  RW  | DIVPCLK_DBG Clock Divider Ratio           |     0x0     |
+ *                      |         |      | PCLK_DBG = ATCLK / (PCLK_DBG_RATIO + 1)   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [23]   |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ * APLL_RATIO           | [26:24] |  RW  | DIVAPLL Clock Divider Ratio               |     0x0     |
+ *                      |         |      | SCLKAPLL = MOUTAPLL / (APLL_RATIO + 1)    |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [27]   |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ * CORE2_RATIO          | [30:28] |  RW  | DIVCORE2 Clock Divider Ratio              |     0x0     |
+ *                      |         |      | ARMCLK = DOUTCORE / (CORE2_RATIO + 1)     |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [31]   |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_CPU0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CORE_RATIO:3;          //2:0
+        uint32_t Reserved0:1;           //3
+        uint32_t COREM0_RATIO:3;        //6:4
+        uint32_t Reserved1:1;           //7
+        uint32_t COREM1_RATIO:3;        //10:8
+        uint32_t Reserved2:1;           //11
+        uint32_t PERIPH_RATIO:3;        //14:12
+        uint32_t Reserved3:1;           //15
+        uint32_t ATB_RATIO:3;           //18:16
+        uint32_t Reserved4:1;           //19
+        uint32_t PCLK_DBG_RATIO:3;      //22:20
+        uint32_t Reserved5:1;           //23
+        uint32_t APLL_RATIO:3;          //26:24
+        uint32_t Reserved6:1;           //27
+        uint32_t CORE2_RATIO:3;         //30:28
+        uint32_t Reserved7:1;           //31
+    } bits;
+} CLK_DIV_CPU0;
+
+/*
+ * CLK_DIV_CPU1
+ * 
+ * Address = CLOCK Base Address 2 + 0x4504
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                Description                | Reset Value | 
+ * ------------------------------------------------------------------------------------------------|
+ * COPY_RATIO           |  [2:0]  | RWX  | DIVCOPY Clock Divider Ratio               |     0x0     |
+ *                      |         |      | DOUTCOPT = MOUTHPM / (COPY_RATIO + 1)     |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [3]   |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ * HPM_RATIO            |  [6:4]  | RWX  | DIVHPM Clock Divider Ratio                |     0x0     |
+ *                      |         |      | SCLK_HPM = DOUTCOPY / (HPM_RATIO + 1)     |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [7]   |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ * CORES_RATIO          | [10:8]  |  RW  | DIVCORES Clock Divider Ratio              |     0x0     |
+ *                      |         |      | ACLK_CORES = ARMCLK / (CORES_RATIO + 1)   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:11] |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_CPU1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t COPY_RATIO:3;          //2:0
+        uint32_t Reserved0:1;           //3
+        uint32_t HPM_RATIO:3;        //6:4
+        uint32_t Reserved1:1;           //7
+        uint32_t CORES_RATIO:3;        //10:8
+        uint32_t Reserved2:21;          //31:11
+    } bits;
+} CLK_DIV_CPU1;
+
+/*
+ * CLK_DIV_STAT_CPU0
+ * 
+ * Address = CLOCK Base Address 2 + 0x4600
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                Description                | Reset Value | 
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCORE Status                            |             |
+ * DIV_CORE             |   [0]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [3:1]  |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCOREM0 Status                          |             |
+ * DIV_COREM0           |   [4]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [7:5]  |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCOREM1 Status                          |             |
+ * DIV_COREM1           |   [8]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 | [11:9]  |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVPERIPH Status                          |             |
+ * DIV_PERIPH           |  [12]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 | [15:13] |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVATB Status                             |             |
+ * DIV_ATB              |  [16]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 | [19:17] |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCPCLK_DBG Status                       |             |
+ * DIV_PCLK_DBG         |  [20]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 | [23:21] |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVAPLL Status                            |             |
+ * DIV_APLL             |  [24]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 | [27:25] |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCORE2 Status                           |             |
+ * DIV_CORE2            |  [28]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:29] |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_CPU0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_CORE:1;            //0
+        uint32_t Reserved0:3;           //3:1
+        uint32_t DIV_COREM0:1;          //4
+        uint32_t Reserved1:3;           //7:5
+        uint32_t DIV_COREM1:1;          //8
+        uint32_t Reserved2:3;           //11:9
+        uint32_t DIV_PERIPH:1;          //12
+        uint32_t Reserved3:3;           //15:13
+        uint32_t DIV_ATB:1;             //16
+        uint32_t Reserved4:3;           //19:17
+        uint32_t DIV_PCLK_DBG:1;        //20
+        uint32_t Reserved5:3;           //23:21
+        uint32_t DIV_APLL:1;            //24
+        uint32_t Reserved6:3;           //27:25
+        uint32_t DIV_CORE2:1;           //28
+        uint32_t Reserved7:3;           //31:29
+    } bits;
+} CLK_DIV_STAT_CPU0;
+
+/*
+ * CLK_DIV_STAT_CPU1
+ * 
+ * Address = CLOCK Base Address 2 + 0x4604
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                Description                | Reset Value | 
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCOPY Status                            |             |
+ * DIV_COPY             |   [0]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [3:1]  |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVHPM Status                             |             |
+ * DIV_HPM              |   [4]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [7:5]  |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCORES Status                           |             |
+ * DIV_CORES            |   [8]   |  R   | 0 = Stable                                |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing   |             |
+ * ------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:9]  |  -   | Reserved                                  |     0x0     |
+ * ------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_CPU1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_COPY:1;            //0
+        uint32_t Reserved0:3;           //3:1
+        uint32_t DIV_HPM:1;          //4
+        uint32_t Reserved1:3;           //7:5
+        uint32_t DIV_CORES:1;          //8
+        uint32_t Reserved2:3;           //31:9
+    } bits;
+} CLK_DIV_STAT_CPU1;
+
+/*
+ * CLK_GATE_IP_CPU
+ * 
+ * Address = CLOCK Base Address 2 + 0x4900
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *          Name        |   Bit   | Type |                   Description                   | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for HPM                       |             |
+ * CLK_HPM              |   [0]   |  R   | 0 = Mask                                        |     0x1     |
+ *                      |         |      | 1 = Pass                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for COreSight and SecureJTAG  |             |
+ * CLK_CSSYS            |   [1]   |  R   | 0 = Mask                                        |     0x1     |
+ *                      |         |      | 1 = Pass                                        |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:2]  |  -   | Reserved                                        | 0xFFFF_FFF3 |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_CPU_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_HPM:1;            //0
+        uint32_t CLK_CSSYS:1;           //1
+        uint32_t Reserved2:3;           //31:2
+    } bits;
+} CLK_GATE_IP_CPU;
+
+/*
+ * CLKOUT_CMU_CPU
+ * 
+ * Address = CLOCK Base Address 2 + 0x4A00
+ * Reset Value = 0x0001_0000
+ * 
+ *          Name        |   Bit   | Type |                   Description                   | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                      |         |      | MUX Selection                                   |             |
+ *                      |         |      | 00000 = APLL_FOUT / 2                           |             |
+ *                      |         |      | 00001 = Reserved                                |             |
+ *                      |         |      | 00010 = Reserved                                |             |
+ *                      |         |      | 00011 = Reserved                                |             |
+ *                      |         |      | 00100 = ARMCLK / 2                              |             |
+ *                      |         |      | 00101 = ACLK_COREM0                             |             |
+ *                      |         |      | 00110 = ACLK_COREM1                             |             |
+ * MUX_SEL              |  [4:0]  |  RW  | 00111 = ACLK_CORES                              |     0x0     |
+ *                      |         |      | 01000 = ATCLK                                   |             |
+ *                      |         |      | 01001 = PERIPHCLK                               |             |
+ *                      |         |      | 01010 = PCLK_DBG                                |             |
+ *                      |         |      | 01011 = SCLK_HPM                                |             |
+ *                      |         |      | ATCLK and PCLK_DBG are the gated clocks. You    |             |
+ *                      |         |      | should not gate ATCLK or PCLK_DBG clocks before |             |
+ *                      |         |      | changing te DIV_RATIO value on selection of     |             |
+ *                      |         |      | ATCLK or PCLK_DBG                               |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [7:5]  |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ * DIV_RATIO            | [13:8]  |  RW  | Divide Ratio                                    |     0x0     |
+ *                      |         |      | Divide ratio = DIV_RATIO + 1                    |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [15:14] |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Enable CLKOUT                                   |             |
+ * ENB_CLKOUT           |  [16]   |  RW  | 0 = Disables                                    |     0x1     |
+ *                      |         |      | 1 = Enable                                      |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:17] |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLKOUT_CMU_CPU_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t MUX_SEL:5;             //4:0
+        uint32_t Reserved0:3;           //7:5
+        uint32_t DIV_RATIO:6;           //13:8
+        uint32_t Reserved1:2;           //15:14
+        uint32_t ENB_CLKOUT:1;          //16
+        uint32_t Reserved2:15;          //31:17
+    } bits;
+} CLKOUT_CMU_CPU;
+
+/*
+ * CLKOUT_CMU_CPU_DIV_STAT
+ * 
+ * Address = CLOCK Base Address 2 + 0x4A04
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                   Description                   | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCLKOUT Status                                |             |
+ * DIV_STAT             |   [0]   |  R   | 0 = Stable                                      |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing         |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:1]  |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLKOUT_CMU_CPU_DIV_STAT_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_STAT:1;             //0
+        uint32_t Reserved0:31;           //31:1
+    } bits;
+} CLKOUT_CMU_CPU_DIV_STAT;
+
+/*
+ * ARMCLK_STOPCTRL
+ * 
+ * Address = CLOCK Base Address 2 + 0x5000
+ * Reset Value = 0x0404_0404
+ * 
+ *          Name        |   Bit   | Type |                    Description                    | Reset Value | 
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Specifies clock freeze cycle before the ARM       |             |
+ *                      |         |      | clamp (CLAMPCORE0, CLAMPCORE1,                    |             |
+ *                      |         |      | CLAMPCOREOUT, CLAMPL2_0, and                      |             |
+ * POST_WAIT_CNT        |  [7:0]  |  RW  | CLAMPL2_1) or reset signal (nCPURESET,            |     0x4     |
+ *                      |         |      | nDBGRESET, nSCURESET, L2nRESET,                   |             |
+ *                      |         |      | nWDRESET, nPERIPHRESET, and                       |             |
+ *                      |         |      | nPTMRESET) transition                             |             |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Specifies clock freeze cycle after the ARM clamp  |             |
+ *                      |         |      | (CLAMPCORE0, CLAMPCORE1,                          |             |
+ *                      |         |      | CLAMPCOREOUT, CLAMPL2_0, and                      |             |
+ * PRE_WAIT_CNT         | [15:8]  |  RW  | CLAMPL2_1) or reset signal (nCPURESET,            |     0x4     |
+ *                      |         |      | nDBGRESET, nSCURESET, L2nRESET,                   |             |
+ *                      |         |      | nWDRESET, nPERIPHRESET, and                       |             |
+ *                      |         |      | nPTMRESET) transition                             |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * L2_POST_WAIT_CNT     | [23:16] |  RW  | Specifies clock freeze cycle after the L2RET1N_0  |     0x4     |
+ *                      |         |      | and L2RET1N_1 rising transition                   |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * L2_PRE_WAIT_CNT      | [31:24] |  RW  | Specifies clock freeze cycle before the           |     0x4     |
+ *                      |         |      | CLAMP_L2_0 and CLAMP_L2_1 rising transition       |             |
+ * --------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union ARMCLK_STOPCTRL_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t POST_WAIT_CNT:8;           //7:0
+        uint32_t PRE_WAIT_CNT:8;            //15:8
+        uint32_t L2_POST_WAIT_CNT:8;        //23:16
+        uint32_t L2_PRE_WAIT_CNT:8;         //31:24
+    } bits;
+} ARMCLK_STOPCTRL;
+
+/*
+ * ATCLK_STOPCTRL
+ * 
+ * Address = CLOCK Base Address 2 + 0x5004
+ * Reset Value = 0x0000_0404
+ * 
+ *          Name        |   Bit   | Type |                    Description                    | Reset Value | 
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Specifies clock freeze cycle after the ATRESETn,  |             |
+ * POST_WAIT_CNT        |  [7:0]  |  RW  | nPRESETDBG, and CSSYS_nRESET signal               |     0x4     |
+ *                      |         |      | transition                                        |             |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Specifies clock freeze cycle before the           |             |
+ * PRE_WAIT_CNT         | [15:8]  |  RW  | ATRESETn, nPRESETDBG, and                         |     0x4     |
+ *                      |         |      | CSSYS_NRESET signal transition                    |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:16] |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union ATCLK_STOPCTRL_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t POST_WAIT_CNT:8;       //7:0
+        uint32_t PRE_WAIT_CNT:8;        //15:8
+        uint32_t Reserved0:16;          //31:16
+    } bits;
+} ATCLK_STOPCTRL;
+
+/*
+ * PWR_CTRL
+ * 
+ * Address = CLOCK Base Address 2 + 0x5020
+ * Reset Value = 0x0000_04FF
+ * 
+ *          Name        |   Bit   | Type |                    Description                    | Reset Value | 
+ * --------------------------------------------------------------------------------------------------------|
+ * USE_STANDBYWFI       |   [0]   |  RW  | Use ARM CORE0 STANDBYWFI to change                |     0x1     |
+ * _ARM_CORE0           |         |      | ARMCLK frequency in ARM IDLE state                |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * USE_STANDBYWFI       |   [1]   |  RW  | Use ARM CORE1 STANDBYWFI to change                |     0x1     |
+ * _ARM_CORE1           |         |      | ARMCLK frequency in ARM IDLE state                |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * USE_STANDBYWFI       |   [2]   |  RW  | Use ARM CORE2 STANDBYWFI to change                |     0x1     |
+ * _ARM_CORE2           |         |      | ARMCLK frequency in ARM IDLE state                |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * USE_STANDBYWFI       |   [3]   |  RW  | Use ARM CORE3 STANDBYWFI to change                |     0x1     |
+ * _ARM_CORE3           |         |      | ARMCLK frequency in ARM IDLE state                |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * USE_STANDBYWFE       |   [4]   |  RW  | Use ARM CORE0 STANDBYWFE to change                |     0x1     |
+ * _ARM_CORE0           |         |      | ARMCLK frequency in ARM IDLE state                |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * USE_STANDBYWFE       |   [5]   |  RW  | Use ARM CORE1 STANDBYWFE to change                |     0x1     |
+ * _ARM_CORE1           |         |      | ARMCLK frequency in ARM IDLE state                |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * USE_STANDBYWFE       |   [6]   |  RW  | Use ARM CORE2 STANDBYWFE to change                |     0x1     |
+ * _ARM_CORE2           |         |      | ARMCLK frequency in ARM IDLE state                |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * USE_STANDBYWFE       |   [7]   |  RW  | Use ARM CORE3 STANDBYWFE to change                |     0x1     |
+ * _ARM_CORE3           |         |      | ARMCLK frequency in ARM IDLE state                |             |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Enable ARMCLK Down feature when both ARM          |             |
+ * DIVCORE_DOWN         |   [8]   |  RW  | cores are in IDLE mode for DIVCORE                |     0x0     |
+ * _ENB                 |         |      | 0 = Disalbes                                      |             |
+ *                      |         |      | 1 = Enables                                       |             |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Enable ARMCLK Down feature when both ARM          |             |
+ * DIVCORE2_            |   [9]   |  RW  | cores are in IDLE mode for DIVCORE2               |     0x0     |
+ * DOWN_ENB             |         |      | 0 = Disalbes                                      |             |
+ *                      |         |      | 1 = Enables                                       |             |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating F4D CoreSight clocks both ARM cores in     |             |
+ * F4D_CORESIGHT_E      |  [10]   |  RW  | IDLE mode                                         |     0x1     |
+ * N                    |         |      | 0 = Mask                                          |             |
+ *                      |         |      | 1 = Pass                                          |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [15:11] |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCORE on WFIWFE                                 |             |
+ * CORE_RATIO           | [18:16] |  RW  | Set DIVCORE clock divider ratio when both         |     0x0     |
+ *                      |         |      | ARM cores are in Wait For Interrupt/Event state   |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [19]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Forces CoreSight clocks to toggle when the        |             |
+ * CSCLK_AUT0_          |  [20]   |  RW  | debugger is attached                              |     0x0     |
+ * ENB_IN_DEBUG         |         |      | 0 = Disalbes                                      |             |
+ *                      |         |      | 1 = Enables                                       |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [27:21] |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCORE2 on WFIWFE                                |             |
+ * CORE2_RATIO          | [30:28] |  RW  | Set DIVCORE2 clock divider ratio when both        |     0x0     |
+ *                      |         |      | ARM cores are in Wait For Interrupt/Even stat     |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [31]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union PWR_CTRL_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t USE_STANDBYWFI_ARM_CORE0:1;        //0
+        uint32_t USE_STANDBYWFI_ARM_CORE1:1;        //1
+        uint32_t USE_STANDBYWFI_ARM_CORE2:1;        //2
+        uint32_t USE_STANDBYWFI_ARM_CORE3:1;        //3
+        uint32_t USE_STANDBYWFE_ARM_CORE0:1;        //4
+        uint32_t USE_STANDBYWFE_ARM_CORE1:1;        //5
+        uint32_t USE_STANDBYWFE_ARM_CORE2:1;        //6
+        uint32_t USE_STANDBYWFE_ARM_CORE3:1;        //7
+        uint32_t DIVCORE_DOWN_ENB:1;                //8
+        uint32_t DIVCORE2_DOWN_ENB:1;               //9
+        uint32_t F4D_CORESIGHT_EN:1;                //10
+        uint32_t Reserved0:5;                       //15:11
+        uint32_t CORE_RATIO:3;                      //18:16
+        uint32_t Reserved1:1;                       //19
+        uint32_t CSCLK_AUTO_ENB_IN_DEBUG:1;         //20
+        uint32_t Reserved2:7;                       //27:21
+        uint32_t CORE2_RATIO:3;                     //30:28
+        uint32_t Reserved3:1;                       //31
+    } bits;
+} PWR_CTRL;
+
+/*
+ * PWR_CTRL2
+ * 
+ * Address = CLOCK Base Address 2 + 0x5024
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                    Description                    | Reset Value |   
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Specifies DIVCORE clock divider ratio when        |             |
+ * UP_CORE_RATIO        |  [2:0]  |  RW  | ARM0 or ARM1 cores are not in a wait state for    |     0x0     |
+ *                      |         |      | an interrupt or event to occur.                   |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [3]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Specifies DIVCORE2 clock divider ratio when       |             |
+ * UP_CORE2_RATIO       |  [6:4]  |  RW  | ARM0 or ARM1 cores are not in a wait state for    |     0x0     |
+ *                      |         |      | an interrupt or event to occur.                   |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [7]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Sets duration to change to the middle divider     |             |
+ * DUR_STANBY1          | [15:8]  |  RW  | value from the divider value in ARM idle state.   |     0x0     |
+ *                      |         |      | This bit should be left-shifted by 4-bit before   |             |
+ *                      |         |      | comparing it to counter value.                    |             |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Sets duration to change to the noraml divider     |             |
+ * DUR_STANBY2          | [23:16] |  RW  | value from the middle divider value               |     0x0     |
+ *                      |         |      | This bit should be left-shifted by 4-bit before   |             |
+ *                      |         |      | comparing it to counter value.                    |             |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Enable ARMCLK Up feature when both ARM            |             |
+ * DIVCORE_UP_ENB       |  [24]   |  RW  | cores exit from IDLE mode for DIVCORE             |     0x0     |
+ *                      |         |      | 0 = Disables                                      |             |
+ *                      |         |      | 1 = Enables                                       |             |
+ * --------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Enable ARMCLK Up feature when both ARM            |             |
+ * DIVCORE2_UP_ENB      |  [25]   |  RW  | cores exit from IDLE mode for DIVCORE2            |     0x0     |
+ *                      |         |      | 0 = Disables                                      |             |
+ *                      |         |      | 1 = Enables                                       |             |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:26] |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union PWR_CTRL2_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t UP_CORE_RATIO:3;           //2:0
+        uint32_t Reserved0:1;               //3
+        uint32_t UP_CORE2_RATIO:3;          //6:4
+        uint32_t Reserved1:1;               //7
+        uint32_t DUR_STANBY1:8;             //15:8
+        uint32_t DUR_STANBY2:8;             //23:16
+        uint32_t DIVCORE_UP_ENB:1;          //24
+        uint32_t DIVCORE2_UP_ENB:1;         //25
+        uint32_t Reserved2:6;               //31:26
+    } bits;
+} PWR_CTRL2;
+
+/*
+ * L2_STATUS
+ *  
+ * Address = CLOCK Base Address 2 + 0x5400
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                    Description                    | Reset Value |   
+ * --------------------------------------------------------------------------------------------------------|
+ * DATAWRITELAT         |  [2:0]  |  R   | Write access Latency for Data RAM                 |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [3]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * DATAREADLAT          |  [6:4]  |  R   | Read access Latency for Data RAM                  |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [7]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * DATASETUPLAT         | [10:9]  |  R   | Setup Latency for Data RAM                        |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [11]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * TAGWRITELAT          | [14:12] |  R   | Write access Latency for Tag RAM                  |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [15]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * TAGREADLAT           | [18:16] |  R   | Read access Latency for Tag RAM                   |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [19]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * TAGSETUPLAT          | [22:20] |  R   | Setup Latency for Tag RAM                         |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [23]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * L2_CLKSTOPPED        | [26:24] |  R   | Indicates L2 cache controller is in stanby-mode   |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [27]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * L2IDLE               | [30:28] |  R   | Indicates L2 cache controller is in idle state    |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [31]   |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union L2_STATUS_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DATAWRITELAT:3;        //2:0
+        uint32_t Reserved0:1;           //3
+        uint32_t DATAREADLAT:3;         //6:4
+        uint32_t Reserved1:1;           //7
+        uint32_t DATASETUPLAT:3;        //10:8
+        uint32_t Reserved2:1;           //11
+        uint32_t TAGWRITELAT:3;         //14:12
+        uint32_t Reserved3:1;           //15
+        uint32_t TAGREADLAT:3;          //18:16
+        uint32_t Reserved4:1;           //19
+        uint32_t TAGSETUPLAT:3;         //22:20
+        uint32_t Reserved5:1;           //23
+        uint32_t L2_CLKSTOPPED:3;       //26:24
+        uint32_t Reserved6:1;           //27
+        uint32_t L2IDLE:3;              //30:28
+        uint32_t Reserved7:1;           //31
+    } bits;
+} L2_STATUS;
+
+/*
+ * CPU_STATUS
+ * 
+ * Address = CLOCK Base Address 2 + 0x5410
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                     Description                     | Reset Value |   
+ * ----------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Specifies signals AMP or SMP mode for each          |             |
+ * SMPnAMP              |  [3:0]  |  R   | Cortex-A9 processor                                 |     0x0     |
+ *                      |         |      | 0 = Asymmetric signal                               |             |
+ *                      |         |      | 1 = Symmetric signal                                |             |
+ * ----------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Returns security status of the Cortex-A9 processor  |             |
+ * PMUSECURE            |  [7:4]  |  R   | 0 = Non-secure state                                |     0x0     |
+ *                      |         |      | 1 = Secure state                                    |             |
+ * ----------------------------------------------------------------------------------------------------------|
+ *                      |         |      | Returns status of the Cortex-A9 processor           |             |
+ * PMUPRIV              | [11:8]  |  R   | 0 = User mode                                       |     0x0     |
+ *                      |         |      | 1 = Privileged mode                                 |             |
+ * ----------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:12] |  -   | Reserved                                            |     0x0     |
+ * ----------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CPU_STATUS_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t SMPnAMP:4;         //3:0
+        uint32_t PMUSECURE:4;       //7:4
+        uint32_t PMUPRIV:4;         //11:8
+        uint32_t Reserved0:20;      //31:12
+    } bits;
+} CPU_STATUS;
+
+/*
+ * PTM_STATUS
+ *  
+ * Address = CLOCK Base Address 2 + 0x5420
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                    Description                    | Reset Value |   
+ * --------------------------------------------------------------------------------------------------------|
+ * PTMIDLEnACK1         |   [0]   |  R   | PTM for CPU1 is an idle state indicator           |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * PTMIDLEnACK0         |   [1]   |  R   | PTM for CPU0 is an idle state indicator           |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * PTMPWRUP1            |   [2]   |  R   | PTM for CPU1 is active                            |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * PTMPWRUP0            |   [3]   |  R   | PTM for CPU0 is active                            |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:4]  |  -   | Reserved                                          |     0x0     |
+ * --------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union PTM_STATUS_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t PTMIDLEnACK1:1;        //0
+        uint32_t PTMIDLEnACK0:1;        //1
+        uint32_t PTMPWRUP1:1;           //2
+        uint32_t PTMPWRUP0:1;           //3
+        uint32_t DATASETUPLAT:28;       //31:4
+    } bits;
+} PTM_STATUS;
+
+/*
+ * CLK_DIV_ISP0
+ * 
+ * Address = CLOCK Base Address 2 + 0x8300
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                   Description                   | Reset Value |   
+ * ------------------------------------------------------------------------------------------------------|
+ * ISPDIV0_RATIO        |  [2:0]  |  RW  | ISPDIV0 Clock Divider Ratio                     |     0x0     |
+ *                      |         |      | ISPDIV0_CLK = ACLK_200 / (ISPDIV0_RATIO + 1)    |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [3]   |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ * ISPDIV1_RATIO        |  [6:4]  |  RW  | ISPDIV1 Clock Divider Ratio                     |     0x0     |
+ *                      |         |      | ISPDIV1_CLK = ACLK_200 / (ISPDIV1_RATIO + 1)    |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:7]  |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_ISP0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t ISPDIV0_RATIO:3;       //2:0
+        uint32_t Reserved0:1;           //3
+        uint32_t ISPDIV1_RATIO:3;       //6:4
+        uint32_t Reserved1:25;          //31:7
+    } bits;
+} CLK_DIV_ISP0;
+
+/*
+ * CLK_DIV_ISP1
+ * 
+ * Address = CLOCK Base Address 2 + 0x8304
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                   Description                   | Reset Value |   
+ * ------------------------------------------------------------------------------------------------------|
+ * MPWMDIV              |         |      | MPWM Clock Divider Ratio                        |             |
+ * _RATIO               |  [2:0]  |  RW  | MPWMDIV_CLK = [MOUTISPDIV1_CLK                  |     0x0     |
+ *                      |         |      | / (MPWMDIV_RATIO + 1)]                          |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [3]   |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ * MCUISPDIV0           |         |      | MCUISPDIV0 Clock Divider Ratio                  |             |
+ * _RATIO               |  [6:4]  |  RW  | MCUISPDIV0_CLK = [ACLK_400_MCUIPS               |     0x0     |
+ *                      |         |      | / (MCUISPDIV0_RATIO + 1)]                       |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [7]   |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ * MCUISPDIV1           |         |      | MCUISPDIV1 Clock Divider Ratio                  |             |
+ * _RATIO               | [10:8]  |  RW  | MCUISPDIV1_CLK = [MOUTISPDIV1_CLK               |     0x0     |
+ *                      |         |      | / (MPWMDIV_RATIO + 1)]                          |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:11] |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_ISP1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t MPWMDIV_RATIO:3;       //2:0
+        uint32_t Reserved0:1;           //3
+        uint32_t MCUISPDIV0_RATIO:1;    //6:4
+        uint32_t Reserved1:1;           //7
+        uint32_t MCUISPDIV1_RATIO:3;    //10:8
+        uint32_t Reserved2:21;          //31:11
+    } bits;
+} CLK_DIV_ISP1;
+
+/*
+ * CLK_DIV_STAT_ISP0
+ * 
+ * Address = CLOCK Base Address 2 + 0x8400
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                   Description                   | Reset Value |   
+ * ------------------------------------------------------------------------------------------------------|
+ *                      |         |      | ISPDIV0 Status                                  |             |
+ * DIV_ISPDIV0          |   [0]   |  R   | 0 = Stable                                      |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing         |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [3:1]  |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ *                      |         |      | ISPDIV1 Status                                  |             |
+ * DIV_ISPDIV1          |   [4]   |  R   | 0 = Stable                                      |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing         |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:5]  |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_ISP0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_ISPDIV0:1;         //0
+        uint32_t Reserved0:3;           //3:1
+        uint32_t DIV_ISPDIV1:1;         //4
+        uint32_t Reserved1:27;          //31:5
+    } bits;
+} CLK_DIV_STAT_ISP0;
+
+/*
+ * CLK_DIV_STAT_ISP1
+ * 
+ * Address = CLOCK Base Address 2 + 0x8404
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                   Description                   | Reset Value |   
+ * ------------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVMPWM Status                                  |             |
+ * DIV_MPWMDIV          |   [0]   |  R   | 0 = Stable                                      |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing         |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [3:1]  |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVMCUISP0 Status                               |             |
+ * DIV_MCUISPDIV0       |   [4]   |  R   | 0 = Stable                                      |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing         |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [7:5]  |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVMUCISP1 Status                               |             |
+ * DIV_MCUISPDIV1       |   [8]   |  R   | 0 = Stable                                      |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing         |             |
+ * ------------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:9]  |  -   | Reserved                                        |     0x0     |
+ * ------------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_DIV_STAT_ISP1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_MPWMDIV:1;         //0
+        uint32_t Reserved0:3;           //3:1
+        uint32_t DIV_MCUISPDIV0:1;      //4
+        uint32_t Reserved1:3;           //7:5
+        uint32_t DIV_MCUISPDIV1:1;      //8
+        uint32_t Reserved2:23;          //31:9
+    } bits;
+} CLK_DIV_STAT_ISP1;
+
+/*
+ * CLK_GATE_IP_ISP0
+ * 
+ * Address = CLOCK Base Address 2 + 0x8800
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *          Name        |   Bit   | Type |                 Description                 | Reset Value | 
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for ISP                   |             |
+ * CLK_ISP              |   [0]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for DRC                   |             |
+ * CLK_DRC              |   [1]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for FD                    |             |
+ * CLK_FD               |   [2]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for LITE0                 |             |
+ * CLK_LITE0            |   [3]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for LITE1                 |             |
+ * CLK_LITE1            |   [4]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for MCUISP                |             |
+ * CLK_MCUISP           |   [5]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 |   [6]   |  -   | Reserved                                    |     0x1     |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for GICISP                |             |
+ * CLK_GICISP           |   [7]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for SMMU_ISP              |             |
+ * CLK_SMMU_ISP         |   [8]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for SMMU_DRC              |             |
+ * CLK_SMMU_DRC         |   [9]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for SMMU_FD               |             |
+ * CLK_SMMU_FD          |  [10]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for SMMU_LITE0            |             |
+ * CLK_SMMU_LITE0       |  [11]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for SMMU_LITE1            |             |
+ * CLK_SMMU_LITE1       |  [12]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 | [19:13] |  -   | Reserved                                    |     0x0     |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for PPMUISPMX             |             |
+ * CLK_PPMUISPMX        |  [20]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for PPMUISPX              |             |
+ * CLK_PPMUISPX         |  [21]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [22]   |  -   | Reserved                                    |     0x0     |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for MCUCTL_ISP            |             |
+ * CLK_MCUCTL_ISP       |  [23]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for MPWM_ISP              |             |
+ * CLK_MPWM_ISP         |  [24]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for I2C0_ISP              |             |
+ * CLK_I2C0_ISP         |  [25]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for I2C1_ISP              |             |
+ * CLK_I2C1_ISP         |  [26]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for MTCADC_ISP            |             |
+ * CLK_MTCADC_ISP       |  [27]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for PWM_ISP except SCLK   |             |
+ * CLK_PWM_ISP          |  [28]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [29]   |  -   | Reserved                                    |     0x0     |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for WDT_ISP               |             |
+ * CLK_WDT_ISP          |  [30]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for UART_ISP except SCLK  |             |
+ * CLK_UART_ISP         |  [31]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_ISP0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_ISP:1;             //0
+        uint32_t CLK_DRC:1;             //1
+        uint32_t CLK_FD:1;              //2
+        uint32_t CLK_LITE0:1;           //3
+        uint32_t CLK_LITE1:1;           //4
+        uint32_t CLK_MCUISP:1;          //5
+        uint32_t Reserved0:1;           //6
+        uint32_t CLK_GICISP:1;          //7
+        uint32_t CLK_SMMU_ISP:1;        //8
+        uint32_t CLK_SMMU_DRC:1;        //9
+        uint32_t CLK_SMMU_FD:1;         //10
+        uint32_t CLK_SMMU_LITE0:1;      //11
+        uint32_t CLK_SMMU_LITE1:1;      //12
+        uint32_t Reserved1:7;           //19:13
+        uint32_t CLK_PPMUISPMX:1;       //20
+        uint32_t CLK_PPMUISPX:1;        //21
+        uint32_t Reserved2:1;           //22
+        uint32_t CLK_MCUCTL_ISP:1;      //23
+        uint32_t CLK_MPWM_ISP:1;        //24
+        uint32_t CLK_I2C0_ISP:1;        //25
+        uint32_t CLK_I2C1_ISP:1;        //26
+        uint32_t CLK_MTCADC_ISP:1;      //27
+        uint32_t CLK_PWM_ISP:1;         //28
+        uint32_t Reserved3:1;           //29
+        uint32_t CLK_WDT_ISP:1;         //30
+        uint32_t CLK_UART_ISP:1;        //31
+    } bits;
+} CLK_GATE_IP_ISP0;
+
+/*
+ * CLK_GATE_IP_ISP1
+ * 
+ * Address = CLOCK Base Address 2 + 0x8804
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ *          Name        |   Bit   | Type |                 Description                 | Reset Value | 
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for CLK_ASYNCAXIM         |             |
+ * CLK_ASYNCAXIM        |   [0]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [3:1]  |  -   | Reserved                                    |     0x7     |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for CLK_SMMU_ISPCX        |             |
+ * CLK_SMMU_ISPCX       |   [4]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 | [11:5]  |  -   | Reserved                                    |     0x7F    |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for SPI0_ISP except SCLK  |             |
+ * CLK_SPI0_ISP         |  [12]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Gating all clocks for SPI1_ISP except SCLK  |             |
+ * CLK_SPI1_ISP         |  [13]   |  RW  | 0 = Mask                                    |     0x1     |
+ *                      |         |      | 1 = Pass                                    |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:14] |  -   | Reserved                                    |   0x3FFFF   |
+ * --------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLK_GATE_IP_ISP1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t CLK_ASYNCAXIM:1;       //0
+        uint32_t Reserved0:3;           //3:1
+        uint32_t CLK_SMMU_ISPCX:1;      //4
+        uint32_t Reserved1:7;           //11:5
+        uint32_t CLK_SPI0_ISP:1;        //12
+        uint32_t CLK_SPI1_ISP:1;        //13
+        uint32_t Reserved2:18;          //31:14
+    } bits;
+} CLK_GATE_IP_ISP1;
+
+/*
+ * CLKOUT_CMU_ISP
+ * 
+ * Address = CLOCK Base Address 2 + 0x8A00
+ * Reset Value = 0x0001_0000
+ * 
+ *          Name        |   Bit   | Type |                 Description                 | Reset Value | 
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | MUX Selection                               |             |
+ *                      |         |      | 00000 = ACLK_MCUISP                         |             |
+ * MUX_SEL              |  [4:0]  |  RW  | 00001 = PCLKDBG_MCUISP                      |     0x0     |
+ *                      |         |      | 00010 = ACLK_DIV0                           |             |
+ *                      |         |      | 00011 = ACLK_DIV1                           |             |
+ *                      |         |      | 00100 = SCLK_MWPM_ISP                       |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 |  [7:5]  |  -   | Reserved                                    |     0x0     |
+ * --------------------------------------------------------------------------------------------------|
+ * DIV_RATIO            | [13:8]  |  RW  | Divide Ratio                                |     0x0     |
+ *                      |         |      | Divide ratio = DIV_RATIO + 1                |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 | [15:14] |  -   | Reserved                                    |     0x0     |
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | Enable CLKOUT                               |             |
+ * ENB_CLKOUT           |  [16]   |  RW  | 0 = Disables                                |     0x1     |
+ *                      |         |      | 1 = Enables                                 |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:17] |  -   | Reserved                                    |     0x0     |
+ * --------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLKOUT_CMU_ISP_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t MUX_SEL:5;         //4:0
+        uint32_t Reserved0:3;       //7:5
+        uint32_t DIV_RATIO:6;       //13:8
+        uint32_t Reserved1:2;       //15:14
+        uint32_t ENB_CLKOUT:1;      //16
+        uint32_t Reserved2:15;      //31:17
+    } bits;
+} CLKOUT_CMU_ISP;
+
+/*
+ * CLKOUT_CMU_ISP_DIV_STAT
+ * 
+ * Address = CLOCK Base Address 2 + 0x8A04
+ * Reset Value = 0x0000_0000
+ * 
+ *          Name        |   Bit   | Type |                 Description                 | Reset Value | 
+ * --------------------------------------------------------------------------------------------------|
+ *                      |         |      | DIVCLKOUT Status                            |             |
+ * DIV_STAT             |   [0]   |  R   | 0 = Stable                                  |     0x0     |
+ *                      |         |      | 1 = Status that the divider is changing     |             |
+ * --------------------------------------------------------------------------------------------------|
+ * RSVD                 | [31:1]  |  -   | Reserved                                    |     0x0     |
+ * --------------------------------------------------------------------------------------------------|
+ */
+
+typedef union CLKOUT_CMU_ISP_DIV_STAT_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t DIV_STAT:1;        //0
+        uint32_t Reserved0:31;      //31:1
+    } bits;
+} CLKOUT_CMU_ISP_DIV_STAT;
+
+/*
+ * CMU_ISP_SPARE0
+ * 
+ * Address = CLOCK Base Address 2 + 0x8B00
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name   |   Bit   | Type |         Description         | Reset Value | 
+ * ------------------------------------------------------------------------|
+ * SPARE      | [31:0]  |  RW  | CMU_ISP Spare Register      |     0x0     |
+ * ------------------------------------------------------------------------|
+ */
+
+typedef union CMU_ISP_SPARE0_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t SPARE:32;      //31:0
+    } bits;
+} CMU_ISP_SPARE0;
+
+/*
+ * CMU_ISP_SPARE1
+ * 
+ * Address = CLOCK Base Address 2 + 0x8B04
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name   |   Bit   | Type |         Description         | Reset Value | 
+ * ------------------------------------------------------------------------|
+ * SPARE      | [31:0]  |  RW  | CMU_ISP Spare Register      |     0x0     |
+ * ------------------------------------------------------------------------|
+ */
+
+typedef union CMU_ISP_SPARE1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t SPARE:32;      //31:0
+    } bits;
+} CMU_ISP_SPARE1;
+
+/*
+ * CMU_ISP_SPARE2
+ * 
+ * Address = CLOCK Base Address 2 + 0x8B08
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name   |   Bit   | Type |         Description         | Reset Value | 
+ * ------------------------------------------------------------------------|
+ * SPARE      | [31:0]  |  RW  | CMU_ISP Spare Register      |     0x0     |
+ * ------------------------------------------------------------------------|
+ */
+
+typedef union CMU_ISP_SPARE2_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t SPARE:32;      //31:0
+    } bits;
+} CMU_ISP_SPARE2;
+
+/*
+ * CMU_ISP_SPARE3
+ * 
+ * Address = CLOCK Base Address 2 + 0x8B0C
+ * Reset Value = 0x0000_0000
+ * 
+ *     Name   |   Bit   | Type |         Description         | Reset Value | 
+ * ------------------------------------------------------------------------|
+ * SPARE      | [31:0]  |  RW  | CMU_ISP Spare Register      |     0x0     |
+ * ------------------------------------------------------------------------|
+ */
+
+typedef union CMU_ISP_SPARE3_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t SPARE:32;      //31:0
+    } bits;
+} CMU_ISP_SPARE3;
 #endif

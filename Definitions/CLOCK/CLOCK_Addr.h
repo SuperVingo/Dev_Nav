@@ -1,5 +1,5 @@
-#ifndef __GPIO_GPIO_ADDR_H__    
-#define __GPIO_GPIO_ADDR_H__  
+#ifndef __CLOCK_CLOCK_ADDR_H__    
+#define __CLOCK_CLOCK_ADDR_H__  
 
 #define CLOCK_BASE_ADDR_1 0x10030000
 #define CLOCK_BASE_ADDR_2 0x10040000

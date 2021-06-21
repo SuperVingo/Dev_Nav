@@ -4,8 +4,8 @@ This Repository is based on Exynos 4412 Revision 1.00 User's Manual.
 Part:
 1.  CHIPID (100%)
 2.  GPIO (100%)
-3.  CLOCK Management (Proceeding / 2021.03.28 aboud 75%~80%)
-4.  Power Management
+3.  CLOCK Management (100% / 2021.03.28)
+4.  Power Management (Proceeding / 2021.03.29)
 5.  Interrupt Controller
 6.  Interrupt Combiner
 7.  Direct Memory Access Controller(DMAC)
