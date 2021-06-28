@@ -6,8 +6,8 @@ Part:
 2.  GPIO (100%)
 3.  CLOCK Management (100% / 2021.03.28)
 4.  Power Management (100% / 2021.06.28)
-5.  Interrupt Controller(100% / 2021.06.28)
-6.  Interrupt Combiner
+5.  Interrupt Controller (100% / 2021.06.28)
+6.  Interrupt Combiner (100% / 2021.06.29)
 7.  Direct Memory Access Controller(DMAC)
 8.  System Register
 9.  Trustzone Protection Controller(TZPC)
