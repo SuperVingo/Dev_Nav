@@ -4,6 +4,8 @@
 #include "ustdint.h"
 
 /*
+ * PRO_ID
+ *
  * Address = CHIPID Base Address + 0x0000
  * Reset Value = 0xE441_2XXX
  * 
@@ -30,6 +32,8 @@ typedef union PRO_ID_u
 } PRO_ID;
 
 /*
+ * PACKAGE_ID
+ *
  * Address = CHIPID Base Address + 0x0004
  * Reset Value = 0xXXXX_XXXX
  * 
