@@ -2518,57 +2518,62 @@ typedef union SPI_STATUS3_u
 } SPI_STATUS3;
 
 /*
- * icdsgir
+ * ICDSGIR
  * 
  * Address = INTERRUPT CONTROLLER Base Address 2 + 0x0F00 Reset Value = Undefined
  * 
- *     Name     |   Bit   | Type |                           Description                            | Reset Value | 
- * ---------------------------------------------------------------------------------------------------------------|
- *              |         |      | The interrupt ID of the SGI to send to the specified CPU         |             |
- * SPI_STATUS   |  [3:0]  |  W   | interfaces. The value of this field is the interrupt ID, in the  |      -      |
- *              |         |      | range 0-15. For example, a value of 0b0011 specifies             |             |
- *              |         |      | interrupt ID 3.                                                  |             |
- * ---------------------------------------------------------------------------------------------------------------|
- * RSVD         | [14:4]  |  -   | Reserved                                                         |      -      |
- * ---------------------------------------------------------------------------------------------------------------|
- *              |         |      | This field is writable only by using a Secure access.            |             |
- *              |         |      | Specifies the required security value of the SGI.                |             |
- *              |         |      | 0 = Sends the SGI specified in the SGINTID field to a            |             |
- * SPI_STATUS   |  [15]   |  W   | specified CPU interface only if the SGI is configured as         |      -      |
- *              |         |      | Secure on that interface.                                        |             |
- *              |         |      | 1 = Sends the specified SGI in the SGINTID field to              |             |
- *              |         |      | specified CPU interfaces only if the SGI is configured as        |             |
- *              |         |      | Non-secure on that interface.                                    |             |
- * ---------------------------------------------------------------------------------------------------------------|
- *              |         |      | When TargetList Filter = 0b00, it defines the CPU                |             |
- *              |         |      | interfaces the Distributor must send the interrupt to.           |             |
- * SPI_STATUS   | [23:16] |  W   | Each bit of CPUTargetList[7:0] refers to the corresponding       |      -      |
- *              |         |      | CPU interface, for example CPUTargetList[0] corresponds          |             |
- *              |         |      | to CPU interface 0. Setting a bit to 1 sends the interrupt to    |             |
- *              |         |      | the corresponding interface.                                     |             |
- * ---------------------------------------------------------------------------------------------------------------|
- *              |         |      | 0b00 : Sends the interrupt to the CPU interfaces specified       |             |
- *              |         |      | in the CPUTargetList field.                                      |             |
- *              |         |      | 0b01 : Sends the interrupt to all CPU interfaces except the      |             |
- * SPI_STATUS   | [25:24] |  W   | CPU interface that requested the interrupt.                      |      -      |
- *              |         |      | 0b10 : Sends the interrupt only to the CPU interface that        |             |
- *              |         |      | requeests the interrupt.                                         |             |
- *              |         |      | 0b11 : Reserved                                                  |             |
- * ---------------------------------------------------------------------------------------------------------------|
- * RSVD         | [31:26] |  -   | Reserved                                                         |      -      |
- * ---------------------------------------------------------------------------------------------------------------|
+ *     Name         |   Bit   | Type |                           Description                            | Reset Value | 
+ * -------------------------------------------------------------------------------------------------------------------|
+ *                  |         |      | The interrupt ID of the SGI to send to the specified CPU         |             |
+ * SPI_STATUS       |  [3:0]  |  W   | interfaces. The value of this field is the interrupt ID, in the  |      -      |
+ *                  |         |      | range 0-15. For example, a value of 0b0011 specifies             |             |
+ *                  |         |      | interrupt ID 3.                                                  |             |
+ * -------------------------------------------------------------------------------------------------------------------|
+ * RSVD             | [14:4]  |  -   | Reserved                                                         |      -      |
+ * -------------------------------------------------------------------------------------------------------------------|
+ *                  |         |      | This field is writable only by using a Secure access.            |             |
+ *                  |         |      | Specifies the required security value of the SGI.                |             |
+ *                  |         |      | 0 = Sends the SGI specified in the SGINTID field to a            |             |
+ * SATT             |  [15]   |  W   | specified CPU interface only if the SGI is configured as         |      -      |
+ *                  |         |      | Secure on that interface.                                        |             |
+ *                  |         |      | 1 = Sends the specified SGI in the SGINTID field to              |             |
+ *                  |         |      | specified CPU interfaces only if the SGI is configured as        |             |
+ *                  |         |      | Non-secure on that interface.                                    |             |
+ * -------------------------------------------------------------------------------------------------------------------|
+ *                  |         |      | When TargetList Filter = 0b00, it defines the CPU                |             |
+ *                  |         |      | interfaces the Distributor must send the interrupt to.           |             |
+ * CPUTargetList    | [23:16] |  W   | Each bit of CPUTargetList[7:0] refers to the corresponding       |      -      |
+ *                  |         |      | CPU interface, for example CPUTargetList[0] corresponds          |             |
+ *                  |         |      | to CPU interface 0. Setting a bit to 1 sends the interrupt to    |             |
+ *                  |         |      | the corresponding interface.                                     |             |
+ * -------------------------------------------------------------------------------------------------------------------|
+ *                  |         |      | 0b00 : Sends the interrupt to the CPU interfaces specified       |             |
+ *                  |         |      | in the CPUTargetList field.                                      |             |
+ *                  |         |      | 0b01 : Sends the interrupt to all CPU interfaces except the      |             |
+ * TargetListFilter | [25:24] |  W   | CPU interface that requested the interrupt.                      |      -      |
+ *                  |         |      | 0b10 : Sends the interrupt only to the CPU interface that        |             |
+ *                  |         |      | requeests the interrupt.                                         |             |
+ *                  |         |      | 0b11 : Reserved                                                  |             |
+ * -------------------------------------------------------------------------------------------------------------------|
+ * RSVD             | [31:26] |  -   | Reserved                                                         |      -      |
+ * -------------------------------------------------------------------------------------------------------------------|
  * 
  * This register controls the generation of SGIs. This register is available in all configurations of the GIC. When the
  * GIC implements the Security Extensions, this register is Common.
  */
 
-typedef union SPI_STATUS0_u
+typedef union ICDSGIR_u
 {
     uint32_t all_val;
     struct
     {
-        uint32_t SPI_STATUS;     //31:0
+        uint32_t SPI_STATUS:4;          //3:0
+        uint32_t Reserved0:11;          //14:4
+        uint32_t SATT:1;                //15
+        uint32_t CPUTargetList:8;       //23:16
+        uint32_t TargetListFilter:2;    //25:24
+        uint32_t Reserved1:6;           //31:26
     } bits;
-} SPI_STATUS0;
+} ICDSGIR;
 
 #endif
