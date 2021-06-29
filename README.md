@@ -8,8 +8,8 @@ Part:
 4.  Power Management (100% / 2021.06.28)
 5.  Interrupt Controller (100% / 2021.06.28)
 6.  Interrupt Combiner (100% / 2021.06.29)
-7.  Direct Memory Access Controller(DMAC)
-8.  System Register
+7.  Direct Memory Access Controller(DMAC) (100% / 2021.06.29)
+8.  System Register (100% / 2021.06.29)
 9.  Trustzone Protection Controller(TZPC)
 10. Trustzone Address Access Controller(TZASC)
 11. System Memory Management
