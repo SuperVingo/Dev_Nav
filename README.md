@@ -1,7 +1,8 @@
 # Exynos4412
 This Repository is based on Exynos 4412 Revision 1.00 User's Manual.
-
-Part:
+<details>
+<summary>Part:</summary>
+<br>
 1.  CHIPID (100%)
 2.  GPIO (100%)
 3.  CLOCK Management (100% / 2021.03.28)
@@ -53,3 +54,4 @@ Part:
 49. Keypad Controller
 50. ADC
 51. Thermal Management
+</details>
