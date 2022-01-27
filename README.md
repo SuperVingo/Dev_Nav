@@ -1,3 +1,3 @@
 # DevNav
-This Repository is based on Rasberry Pi 4 B.
+This Repository is based on Raspberry Pi 4.
 
