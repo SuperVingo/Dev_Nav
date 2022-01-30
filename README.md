@@ -1,3 +1,3 @@
 # DevNav
-This Repository is based on Raspberry Pi 4.
+This Repository is based on Exynos4412.
 
