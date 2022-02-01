@@ -1,5 +1,5 @@
-#ifndef __CLOCK_CLOCK_ADDR_H__    
-#define __CLOCK_CLOCK_ADDR_H__  
+#ifndef __UART_UART_ADDR_H__    
+#define __UART_UART_ADDR_H__  
 
 #include "ustdint.h"
 
@@ -796,5 +796,131 @@ typedef union UFRACVALn_u
         uint32_t Reserved0:28;      //31:4
     } bits;
 } UFRACVALn;
+
+/*
+ * UINTPn
+ * 
+ * Address = UART Base Address 1 + 0x0030
+ * Address = UART Base Address 2 + 0x0030
+ * Address = UART Base Address 3 + 0x0030
+ * Address = UART Base Address 4 + 0x0030
+ * Address = UART Base Address 5 + 0x0030
+ * Reset Value = 0x0000_0000
+ * 
+ *         Name        |   Bit   | Type |                              Description                              | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * RXD                 |   [0]   |   S  | Generates receive interrupt.                                          |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * ERROR               |   [1]   |   S  | Generates error interrupt.                                            |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * TXD                 |   [2]   |   S  | Generates transmit interrupt.                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * MODEM               |   [3]   |   S  | Generates modem interrupt.                                            |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * RSVD                | [31:4]  |  -   | Reserved                                                              |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * 
+ * Interrupt pending contains the information of the generated interrupts.
+ * If one of the 4 bits is logical high("1"), each UART channel generates interrupt.
+ * 
+ * Note: You must clear this in the interrupt service routine after cleaning interrupt pending in interrupt Controller (INTC). Clear
+ * specific bits of UINTP by writing 1's to bits that you want to clear
+ */
+
+typedef union UINTPn_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t RXD:1;             //0
+        uint32_t ERROR:1;           //1
+        uint32_t TXD:1;             //2
+        uint32_t MODEM:1;           //3
+        uint32_t Reserved0:28;      //31:4
+    } bits;
+} UINTPn;
+
+/*
+ * UINTSPn
+ * 
+ * Address = UART Base Address 1 + 0x0034
+ * Address = UART Base Address 2 + 0x0034
+ * Address = UART Base Address 3 + 0x0034
+ * Address = UART Base Address 4 + 0x0034
+ * Address = UART Base Address 5 + 0x0034
+ * Reset Value = 0x0000_0000
+ * 
+ *         Name        |   Bit   | Type |                              Description                              | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * RXD                 |   [0]   |   S  | Generates receive interrupt.                                          |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * ERROR               |   [1]   |   S  | Generates error interrupt.                                            |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * TXD                 |   [2]   |   S  | Generates transmit interrupt.                                         |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * MODEM               |   [3]   |   S  | Generates modem interrupt.                                            |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * RSVD                | [31:4]  |  -   | Reserved                                                              |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * 
+ * Note: Interrupt Source Pending contains the information of the generated interrupt regardless of the value of Interrupt Mask.
+ */
+
+typedef union UINTSPn_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t RXD:1;             //0
+        uint32_t ERROR:1;           //1
+        uint32_t TXD:1;             //2
+        uint32_t MODEM:1;           //3
+        uint32_t Reserved0:28;      //31:4
+    } bits;
+} UINTSPn;
+
+/*
+ * UINTMn
+ * 
+ * Address = UART Base Address 1 + 0x0038
+ * Address = UART Base Address 2 + 0x0038
+ * Address = UART Base Address 3 + 0x0038
+ * Address = UART Base Address 4 + 0x0038
+ * Address = UART Base Address 5 + 0x0038
+ * Reset Value = 0x0000_0000
+ * 
+ *         Name        |   Bit   | Type |                              Description                              | Reset Value | 
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * RXD                 |   [0]   |  RW  | Masks receive interrupt.                                              |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * ERROR               |   [1]   |  RW  | Masks error interrupt.                                                |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * TXD                 |   [2]   |  RW  | Masks transmit interrupt.                                             |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * MODEM               |   [3]   |  RW  | Masks modem interrupt.                                                |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * RSVD                | [31:4]  |  -   | Reserved                                                              |     0x0     |
+ * ---------------------------------------------------------------------------------------------------------------------------|
+ * 
+ * Interrupt mask contains the information about masked interrupt sources. When a specific bit is set to 1, UART
+ * does not generate interrupt request signal to the Interrupt Controller even though it generates corresponding
+ * interrupt.
+ * 
+ * Note: In such cases, the corresponding bit of UINTSPn is set to 1. When the mask bit is set to 0, CPU services the interrupt
+ * requests from the corresponding interrupt source.
+ */
+
+typedef union UINTMn_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t RXD:1;             //0
+        uint32_t ERROR:1;           //1
+        uint32_t TXD:1;             //2
+        uint32_t MODEM:1;           //3
+        uint32_t Reserved0:28;      //31:4
+    } bits;
+} UINTMn;
 
 #endif
