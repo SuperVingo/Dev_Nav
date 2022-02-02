@@ -1,5 +1,5 @@
-#ifndef __UART_UART_ADDR_H__    
-#define __UART_UART_ADDR_H__  
+#ifndef __SROM_SROM_ADDR_H__    
+#define __SROM_SROM_ADDR_H__  
 
 #include "ustdint.h"
 

@@ -7,6 +7,8 @@
 #define UART_BASE_ADDR_4 0x13830000
 #define UART_BASE_ADDR_5 0x13840000
 
+#pragma region UART_BASE_ADDR_1
+
 //////////////////////////////////////////////////////
 //                  Offset Part                     //
 //////////////////////////////////////////////////////
@@ -30,7 +32,6 @@
 //                  Address Part                    //
 //////////////////////////////////////////////////////
 
-#pragma region UART_BASE_ADDR_1
 
 #define ULCON0_ADDR                         (UART_BASE_ADDR_1 + ULCONn_Offset)
 #define UCON0_ADDR                         (UART_BASE_ADDR_1 + UCONn_Offset)
