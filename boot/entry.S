@@ -28,8 +28,8 @@ vector_end:
 
 reset_handler:
     mrs     r0, cpsr
-    bic     r1, r0, #0x1F
-    orr     r1, r1, #ARM_MODE_BIT_SVC
+    ;bic     r1, r0, #0x1F
+    ;orr     r1, r1, #ARM_MODE_BIT_SVC
 
 dummy_handler:
     B   .
