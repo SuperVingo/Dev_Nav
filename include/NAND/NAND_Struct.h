@@ -433,7 +433,7 @@ typedef union NFSBLK_u
  * EBLK_ADDR0          |  [7:0]  |  RW  | The 1st block address of the block erase operation           |     0x00    |
  *                     |         |      | (Only bit[7:5] are valid.)                                   |             |
  * ------------------------------------------------------------------------------------------------------------------|
- * EBLK_ADDR1          |  [15:8] |  RW  | The 2nd block address of the block erase operation           |     0x00    |
+        uint32_t Reserved0:8;        //31:24
  * ------------------------------------------------------------------------------------------------------------------|
  * EBLK_ADDR2          | [23:16] |  RW  | The 3rd block address of the block erase operation           |     0x00    |
  * ------------------------------------------------------------------------------------------------------------------|
@@ -449,7 +449,7 @@ typedef union NFEBLK_u
     struct
     {
         uint32_t EBLK_ADDR0:8;       //7:0
-        uint32_t EBLK_ADDR1:8;       //7:0
+        uint32_t Reserved0:8;        //31:24
         uint32_t EBLK_ADDR2:8;       //7:0
         uint32_t Reserved0:8;        //31:24
     } bits;
@@ -637,4 +637,131 @@ typedef union NFECCERR0_4B_u
     } bits;
 } NFECCERR0_4B;
 
+/*
+ * NFECCERR1
+ * 
+ * Address = NAND Base Address + 0x0030
+ * Reset Value = 0x0000_0000
+ * 
+ * When ECC Type is 4-bit ECC
+ * 
+ *         Name        |   Bit   | Type |                         Description                          | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------------------|
+ * MLCErrLocation3     |  [9:0]  |   R  | Error byte location of 3rd bit error                         |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * RSVD                | [15:10] |  -   | Reserved                                                     |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * MLCErrLocation4     | [25:16] |   R  | Error byte location of 4th bit error                         |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * RSVD                | [31:26] |  -   | Reserved                                                     |    0x000    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * NOTE: These values are updated when ECCDecodeDone (NFSTAT[6]) is set ("1").
+ */
+
+typedef union NFECCERR1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t MLCErrLocation3:10;    //9:0
+        uint32_t Reserved0:6;           //15:10
+        uint32_t MLCErrLocation4:10;    //25:16
+        uint32_t Reserved1:6;           //31:26
+    } bits;
+} NFECCERR1;
+
+/*
+ * NFMECC0
+ * 
+ * Address = NAND Base Address + 0x0034
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ * When ECC Type is 1-bit ECC
+ * 
+ *         Name        |   Bit   | Type |                         Description                          | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------------------|
+ * MECC0               |  [7:0]  |   R  | ECC0 for data                                                |     0xFF    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * MECC1               |  [15:8] |   R  | ECC1 for data                                                |     0xFF    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * MECC2               | [23:16] |   R  | ECC2 for data                                                |     0xFF    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * MECC3               | [31:24] |   R  | ECC3 for data                                                |     0xFF    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * NOTE: The NAND flash controller generate NFMECC0/1 when read or write main area data while the MainECCLock
+ * (NFCONT[7]) bit is "0" (Unlock).
+ * 
+ * When ECC Type is 4-bit ECC
+ * 
+ *         Name        |   Bit   | Type |                         Description                          | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------------------|
+ * 1st Parity          |  [7:0]  |   R  | 1st Check parity generated from main area (512 bytes)        |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * 2nd Parity          |  [15:8] |   R  | 2nd Check parity generated from main area (512 bytes)        |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * 3rd Parity          | [23:16] |   R  | 3rd Check parity generated from main area (512 bytes)        |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * 4th Parity          | [31:24] |   R  | 4th Check parity generated from main area (512 bytes)        |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * NOTE: The NAND flash controller generate these ECC parity code when write main area data while the MainECCLock
+ * (NFCONT[7]) bit is "0" (Unlock).
+ */
+
+typedef union NFMECC0_1B_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t MECC0:8;       //7:0
+        uint32_t MECC1:8;       //15:8
+        uint32_t MECC2:8;       //23:16
+        uint32_t MECC3:8;       //31:24
+    } bits;
+} NFMECC0_1B;
+
+typedef union NFMECC0_4B_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t first_Parity:8;       //7:0
+        uint32_t second_Parity:8;      //15:8
+        uint32_t third_Parity:8;       //23:16
+        uint32_t fourth_Parity:8;      //31:24
+    } bits;
+} NFMECC0_4B;
+
+/*
+ * NFMECC1
+ * 
+ * Address = NAND Base Address + 0x0038
+ * Reset Value = 0xFFFF_FFFF
+ * 
+ * When ECC Type is 4-bit ECC
+ * 
+ *         Name        |   Bit   | Type |                         Description                          | Reset Value | 
+ * ------------------------------------------------------------------------------------------------------------------|
+ * 5th Parity          |  [7:0]  |   R  | 5th Check parity generated from main area (512 bytes)        |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * 6th Parity          |  [15:8] |   R  | 6th Check parity generated from main area (512 bytes)        |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * 7th Parity          | [23:16] |   R  | 7th Check parity generated from main area (512 bytes)        |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * RSVD                | [31:24] |  -   | Reserved                                                     |     0x00    |
+ * ------------------------------------------------------------------------------------------------------------------|
+ * NOTE: The NAND flash controller generate these ECC parity code when write main area data while the MainECCLock
+ * (NFCONT[7]) bit is "0" (Unlock).
+ */
+
+typedef union NFMECC1_u
+{
+    uint32_t all_val;
+    struct
+    {
+        uint32_t fifth_Parity:8;        //7:0
+        uint32_t sixth_Parity:8;        //15:8
+        uint32_t seventh_Parity:8;      //23:16
+        uint32_t Reserved0:8;           //31:24
+    } bits;
+} NFMECC1;
 #endif
