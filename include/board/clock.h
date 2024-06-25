@@ -265,7 +265,7 @@
 #define CLK_SRC_MASK_DMC_Offset          0x0300
 #define CLK_MUX_STAT_DMC_Offset          0x0400
 #define CLK_DIV_DMC0_Offset              0x0500
-#define CLK_DIV_DMC0_Offset              0x0504
+#define CLK_DIV_DMC1_Offset              0x0504
 #define CLK_DIV_STAT_DMC0_Offset         0x0600
 #define CLK_DIV_STAT_DMC1_Offset         0x0604
 #define CLK_GATE_BUS_DMC0_Offset         0x0700
@@ -321,7 +321,7 @@
 #define PTM_STATUS_Offset                0x5420
 
 #define CLK_DIV_ISP0_Offset              0x8300
-#define CLK_DIV_ISP0_Offset              0x8304
+#define CLK_DIV_ISP1_Offset              0x8304
 #define CLK_DIV_STAT_ISP0_Offset         0x8400
 #define CLK_DIV_STAT_ISP1_Offset         0x8404
 #define CLK_GATE_IP_ISP0_Offset          0x8800
