@@ -85,3 +85,7 @@ Principle 1 : Platform independence : 특정 soc / board에 의존하면 안됨
 
 ## Kernel Architecture
 
+Modular Monolithic Kernel
+
+kernel \- ARM SVC mode  
+user \- ARM user mode  
