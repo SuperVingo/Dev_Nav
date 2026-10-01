@@ -48,7 +48,7 @@ Networking
 
 01\. OS Goal / Requirement ↓ 02\. Kernel Architecture ↓ 03\. CPU / Privilege / Exception Model ↓ 04\. Memory Architecture ↓ 05\. Process / Thread Model ↓ 06\. Scheduler ↓ 07\. Interrupt / Timer ↓ 08\. Driver Architecture ↓ 09\. IPC ↓ 10\. VFS / Storage ↓ 11\. User ABI / Syscall ↓ 12\. Graphics / Input ↓ 13\. Navigation Services ↓ 14\. Security ↓ 15\. Boot / Update / Recovery  
 260914  
-[https://docs.google.com/document/d/18pzqJ3iSCR8r2IMkcbGWnGRJz7hVt54Xn9WMBzxp0c0/edit?tab=t.1vpa2vqjvv0t](https://docs.google.com/document/d/18pzqJ3iSCR8r2IMkcbGWnGRJz7hVt54Xn9WMBzxp0c0/edit)
+[https\://docs.google.com/document/d/18pzqJ3iSCR8r2IMkcbGWnGRJz7hVt54Xn9WMBzxp0c0/edit?tab=t.1vpa2vqjvv0t](https://docs.google.com/document/d/18pzqJ3iSCR8r2IMkcbGWnGRJz7hVt54Xn9WMBzxp0c0/edit)
 
 v0.1 OS Requirement 생성
 
