@@ -1,5 +1,3 @@
-# OS Specification
-
 The Samsung Exynos 4412 is a 32nm quad-core ARM Cortex-A9 system-on-chip introduced by Samsung in 2012 for smartphones and tablets. \[[1](https://www.notebookcheck.net/Samsung-Exynos-4412-Quad-ARM-SoC.86876.0.html), [2](https://versus.com/en/samsung-exynos-4412)\]
 
 Key Specifications
@@ -51,8 +49,6 @@ Networking
 [https\://docs.google.com/document/d/18pzqJ3iSCR8r2IMkcbGWnGRJz7hVt54Xn9WMBzxp0c0/edit?tab=t.1vpa2vqjvv0t](https://docs.google.com/document/d/18pzqJ3iSCR8r2IMkcbGWnGRJz7hVt54Xn9WMBzxp0c0/edit)
 
 v0.1 OS Requirement 생성
-
-# v0.1 OS Requirement
 
 # v0.1 OS Requirement
 
